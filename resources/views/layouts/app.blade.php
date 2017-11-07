@@ -14,6 +14,14 @@
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/estilo.css" rel="stylesheet">
 
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/style3.css') }}" rel="stylesheet">
+     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.css">
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -77,12 +85,29 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>    
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+              <ul class="nav nav-sidebar">
+                <li><a href="/usuarios"><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
+                <li><a href="/"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
+                <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i> Consultar Tickets</a></li>
+              </ul>
+            </div>
 
-        @yield('content')
+            @yield('content')
+
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="{{ asset('js/jquery2.0.3.min.js')}}"></script>
+    <script>window.jQuery || document.write('<script src="{{ asset("js/jquery2.0.3.min.js")}}"><\/script>')</script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.js"></script>
+    <script src="{{ asset('js/usuarios.js') }}"></script>
 </body>
 </html>
