@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Roles;
+use App\Role_Users;
 use Illuminate\Http\Request;
 use App\User;
 use App\Empresa;
@@ -18,8 +20,9 @@ class UsuarioController extends Controller
         ->get();
         //dd($users);
         $empresa = Empresa::all();
+        $roles = Roles::where('nombre','!=','Root')->get();
 
-        return view("usuarios", compact('users', 'empresa'));
+        return view("usuarios", compact('users', 'empresa','roles'));
     }
 
     public function create(Request $request){
@@ -47,6 +50,12 @@ class UsuarioController extends Controller
             $usuario->correo=$request->correo;
             $usuario->id_empresa=$request->empresa;
             $usuario->save();
+            
+            $id_usuario=User::max('id');
+            
+            $rol=new Role_Users;
+            $rol->create(['id_users'=>$id_usuario,'id_rol'=>$request->rol]);
+
 
             return "OK";
 

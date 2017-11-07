@@ -43,6 +43,15 @@
 				  @endforeach
 				</select>
 			</div>
+			<div class="form-group">
+				<label for="empresa">Rol</label>
+				<p id="errorRol" class="text-danger" style="font-size: 14px;"></p>
+				<select class="form-control" name="rol">
+					@foreach($roles as $r)
+						<option value="{{$r->id}}">{{$r->nombre}}</option>
+					@endforeach
+				</select>
+			</div>
         </form>
       </div>
       <div class="modal-footer">
