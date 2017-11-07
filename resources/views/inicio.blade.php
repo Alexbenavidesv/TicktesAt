@@ -10,25 +10,29 @@
   <div class="col-md-2"></div>
   <div class="col-md-8">
   	<h1 class="text-center">Reporte su caso</h1>
-  	<br>	
+  	<br>
+  	<div id="mensaje"></div>	
     <form>
+    {{ csrf_field() }}
 	  <div class="form-group">
+	  	<div id=error1"></div>
 	    <label for="descripcion">Describa su caso</label>
-	    <textarea class="form-control" rows="3" name="descripcion" maxlength="1000" style="resize: none;"></textarea>
+	    <textarea class="form-control" rows="3" name="descripcion" id="desc" maxlength="1000" style="resize: none;"></textarea>
 	  </div>
 	  <div class="form-group">
+	  	<div id="error2"></div>
 	    <label for="exampleInputFile">Evidencia 1</label>
-	    <input type="file" id="exampleInputFile" name="evidencia1">
+	    <input type="file" id="ev1" name="evidencia1">
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputFile">Evidencia 2</label>
-	    <input type="file" id="exampleInputFile" name="evidencia2">
+	    <input type="file" id="ev2" name="evidencia2">
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputFile">Evidencia 3</label>
-	    <input type="file" id="exampleInputFile" name="evidencia3">
+	    <input type="file" id="ev3" name="evidencia3">
 	  </div>
-	  <button type="submit" class="btn btn-primary">Generar Ticket</button>
+	  <button type="submit" class="btn btn-primary" id="guardar">Generar Ticket</button>
 	</form>
   </div>
   <div class="col-md-2"></div>

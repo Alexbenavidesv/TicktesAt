@@ -20,4 +20,4 @@ Route::post('logout', 'Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index');
 Route::get('usuarios', 'UsuarioController@listarUsuarios');
-Route::post('usuarios','UsuarioController@create');
+Route::post('guardar_ticket', 'TicketController@nuevoTicket');
