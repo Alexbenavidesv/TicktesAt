@@ -1,6 +1,59 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <div class="container">
+    <body>
+    <div class="login">
+        <div class="login-screen">
+            <div class="app-title">
+                <h1>Iniciar Sesión</h1>
+            </div>
+
+            <div class="login-form">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+
+                        <div class="col-md-12">
+                            <input id="email" type="text" class="login-field" name="email" value="{{ old('email') }}" required autofocus placeholder="Usuario" >
+
+                            <label class="login-field-icon fui-user" for="login-name"></label>
+
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+
+                        <div class="col-md-12">
+                            <input type="password" name="password" class="login-field" value="" placeholder="Contraseña" id="password" required>
+                            <label class="login-field-icon fui-lock" for="login-pass"></label>
+
+                            @if ($errors->has('password'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+
+                <button class="btn btn-primary btn-large btn-block" type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+    </div>
+<!--
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -64,5 +117,5 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 @endsection
