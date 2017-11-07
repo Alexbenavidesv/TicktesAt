@@ -20,6 +20,7 @@
 
     <link href="{{ asset('css/style3.css') }}" rel="stylesheet">
      <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.css">
 
     <!-- Scripts -->
     <script>
@@ -106,5 +107,7 @@
     <script src="{{ asset('js/jquery2.0.3.min.js')}}"></script>
     <script>window.jQuery || document.write('<script src="{{ asset("js/jquery2.0.3.min.js")}}"><\/script>')</script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.js"></script>
+    <script src="{{ asset('js/usuarios.js') }}"></script>
 </body>
 </html>

@@ -17,32 +17,46 @@
       </div>
       <div class="modal-body">
         <form action="">
+			{{ csrf_field() }}
         	<div class="form-group">
 			    <label for="nombre">Nombre</label>
-			    <input type="text" class="form-control" id="nombre" placeholder="Email">
+
+				<p id="errorNombre" class="text-danger" style="font-size: 14px;"></p>
+			    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre completo">
 			</div>
 			<div class="form-group">
 			    <label for="cedula">Cedula</label>
-			    <input type="text" class="form-control" id="cedula" placeholder="cedula">
+				<p id="errorCedula" class="text-danger" style="font-size: 14px;"></p>
+				<input type="text" class="form-control" name="email" id="cedula" placeholder="cedula">
 			</div>
 			<div class="form-group">
 			    <label for="correo">Correo</label>
-			    <input type="email" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				<p id="errorCorreo" class="text-danger" style="font-size: 14px;"></p>
+			    <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo">
 			</div>
 			<div class="form-group">
 			    <label for="empresa">Empresa</label>
-			    <select class="form-control">
-				  <option value="0">Seleccione una empresa</option>
+				<p id="errorEmpresa" class="text-danger" style="font-size: 14px;"></p>
+			    <select class="form-control" name="empresa">
 				  @foreach($empresa as $empre)
 				  <option value="{{$empre->id}}">{{$empre->nombre}}</option>
 				  @endforeach
 				</select>
 			</div>
+			<div class="form-group">
+				<label for="empresa">Rol</label>
+				<p id="errorRol" class="text-danger" style="font-size: 14px;"></p>
+				<select class="form-control" name="rol">
+					@foreach($roles as $r)
+						<option value="{{$r->id}}">{{$r->nombre}}</option>
+					@endforeach
+				</select>
+			</div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+        <button  class="btn btn-success"  id="guardarUser">Guardar</button>
+        <button  class="btn btn-danger" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
 
