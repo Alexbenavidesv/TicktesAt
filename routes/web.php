@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('inicio');
-});
+Route::get('/', 'TicketController@index');
 
 //Rutas para el inicio de sesion
 Route::get('login', 'Auth\LoginController@showLoginForm');
@@ -21,3 +19,4 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index');
+Route::get('usuarios', 'UsuarioController@listarUsuarios');

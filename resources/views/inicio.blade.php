@@ -14,7 +14,7 @@
     <form>
 	  <div class="form-group">
 	    <label for="descripcion">Describa su caso</label>
-	    <textarea class="form-control" rows="3" name="descripcion" maxlength="1000"></textarea>
+	    <textarea class="form-control" rows="3" name="descripcion" maxlength="1000" style="resize: none;"></textarea>
 	  </div>
 	  <div class="form-group">
 	    <label for="exampleInputFile">Evidencia 1</label>
