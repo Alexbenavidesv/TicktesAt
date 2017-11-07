@@ -89,7 +89,8 @@
           <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
-                <li class="active"><a href="/"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
+                <li><a href="/usuarios"><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
+                <li><a href="/"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
                 <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i> Consultar Tickets</a></li>
               </ul>
             </div>
