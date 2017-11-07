@@ -21,7 +21,7 @@ $('#guardar').click(function(e){
 			if (res=='ok') {
 				var url = window.location.href;
 				alert('Ticket generado con exito');
-    				$(location).attr('href', url);
+    			$(location).attr('href', url);
 			}else {
 				$('#mensaje').html('Error al generar el Ticket');
 				$('#error1').html('');

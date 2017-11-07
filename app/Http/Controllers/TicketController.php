@@ -27,11 +27,13 @@ class TicketController extends Controller
         $usuario = Auth::user()->id;
         $fecha = date("Y/m/d");
 
-        $ticket = new Ticket();
+        $ticket = new Ticket;
 
         $ticket->id_user = $usuario;
         $ticket->fecha = $fecha;
         $ticket->save();
+
+        $id_ticket = Ticket::max('id');
 
         return 'ok';
     }
