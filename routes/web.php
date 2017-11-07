@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Rutas para el inicio de sesion
+Route::get('login', 'Auth\LoginController@showLoginForm');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index');
