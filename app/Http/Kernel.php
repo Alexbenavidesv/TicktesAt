@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Sesion;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -52,5 +53,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'sesion' => \App\Http\Middleware\Sesion::class,
+        'sesionok' => \App\Http\Middleware\SesionOk::class,
     ];
 }

@@ -63,6 +63,8 @@
   </div>
 </div>
 
+
+
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 	<h1 class="text-center">Listado de usuarios</h1><br>
 	<button type="submit" class="btn btn-primary" style="width: 150px; margin-left: 110px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Crear usuario</button>
