@@ -12,23 +12,25 @@
   	<h1 class="text-center">Reporte su caso</h1>
   	<br>
   	<div id="mensaje"></div>	
-    <form>
+    <form id="formulario">
     {{ csrf_field() }}
 	  <div class="form-group">
-	  	<div id=error1"></div>
+	  	<div id="error1" style="color: red"></div>
 	    <label for="descripcion">Describa su caso</label>
 	    <textarea class="form-control" rows="3" name="descripcion" id="desc" maxlength="1000" style="resize: none;"></textarea>
 	  </div>
 	  <div class="form-group">
-	  	<div id="error2"></div>
+	  	<div id="error2" style="color: red"></div>
 	    <label for="exampleInputFile">Evidencia 1</label>
 	    <input type="file" id="ev1" name="evidencia1">
 	  </div>
 	  <div class="form-group">
+	  	<div id="error3" style="color: red"></div>
 	    <label for="exampleInputFile">Evidencia 2</label>
 	    <input type="file" id="ev2" name="evidencia2">
 	  </div>
 	  <div class="form-group">
+	  	<div id="error4" style="color: red"></div>
 	    <label for="exampleInputFile">Evidencia 3</label>
 	    <input type="file" id="ev3" name="evidencia3">
 	  </div>

@@ -28,3 +28,5 @@ Route::post('usuarios','UsuarioController@create');
 Route::get('cambiar_password', 'CambiarPasswordController@cambiarPassword')->middleware('auth','sesionok');
 Route::post('cambiar_password', 'CambiarPasswordController@password')->middleware('auth','sesionok');
 Route::get('cambiar_pass', 'CambiarPasswordController@cancelarPassword')->middleware('auth','sesionok');
+
+Route::get('consultartickets', 'TicketController@listarTickes');

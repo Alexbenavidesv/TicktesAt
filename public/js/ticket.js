@@ -1,29 +1,42 @@
 $('#guardar').click(function(e){
 	e.preventDefault();
-	var descripcion = $('#desc').val();
-	var evidencia1 = $('#ev1').val();
-	var evidencia2 = $('#ev2').val();
-	var evidencia3 = $('#ev3').val();
 	var token = $('input[name="_token"]').val();
+	var tokken = $('input[name="_token"]').val();
+  	var datos = new FormData($('#formulario')[0]);
 	//alert(descripcion);
 
 	$.ajax({
-		url: '',
+		url: 'guardar_ticket',
 		type: 'POST',
-		data: {
-			_token: token,
-			descripcion: descripcion,
-			evidencia1: evidencia1,
-			evidencia2: evidencia2,
-			evidencia3: evidencia3
-		},
+		headers: {'X-CSRF-TOKEN':tokken},
+	    type : 'POST',
+	    data: datos,
+	    contentType: false,
+	    processData: false,
 		success: function(res){
 			if (res=='ok') {
 				var url = window.location.href;
-				alert('Ticket generado con exito');
-    			$(location).attr('href', url);
+				swal({
+			        title: "Ticket añadido con exito",
+			        // text: "You will not be able to recover this imaginary file!",
+			        type: "success",
+			        confirmButtonText: "Ok",
+			        closeOnConfirm: false
+			      },
+			      function(isConfirm){
+			        if (isConfirm) {
+			          location.reload();
+			        }
+			      });
+    			$(location).attr('href', url+'consultartickets');
 			}else {
-				$('#mensaje').html('Error al generar el Ticket');
+				swal({
+		          title: "Ha ocurrido un error",
+		          // text: "You will not be able to recover this imaginary file!",
+		          type: "error",
+		          confirmButtonText: "Ok",
+		          closeOnConfirm: true
+		        });
 				$('#error1').html('');
 				$('#error2').html('');
 				$('#error3').html('');
@@ -44,10 +57,18 @@ $('#guardar').click(function(e){
 			}else{
 				$('#error2').html('');
 			}
+
+			if(errores.evidencia2){
+				$('#error3').html(errores.evidencia2);
+			}else{
+				$('#error3').html('');
+			}
+
+			if(errores.evidencia3){
+				$('#error4').html(errores.evidencia3);
+			}else{
+				$('#error4').html('');
+			}
 		}
 	});
 });
-
-
-
-    <script src="{{ asset('js/ticket.js') }}"></script>
