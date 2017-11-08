@@ -21,3 +21,4 @@ Route::post('logout', 'Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index');
 Route::get('usuarios', 'UsuarioController@listarUsuarios');
 Route::post('guardar_ticket', 'TicketController@nuevoTicket');
+Route::get('consultartickets', 'TicketController@listarTickes');
