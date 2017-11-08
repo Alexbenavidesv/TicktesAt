@@ -14,11 +14,12 @@ $('#guardar').click(function(e){
 	    contentType: false,
 	    processData: false,
 		success: function(res){
-			if (res=='ok') {
+			if (res!=null) {
 				var url = window.location.href;
 				swal({
-			        title: "Ticket añadido con exito",
+			        title: "Ticket añadido con exito, el numero de su Ticket es:"+' '+res,
 			        // text: "You will not be able to recover this imaginary file!",
+			        //timer: 3000,
 			        type: "success",
 			        confirmButtonText: "Ok",
 			        closeOnConfirm: false
@@ -26,9 +27,14 @@ $('#guardar').click(function(e){
 			      function(isConfirm){
 			        if (isConfirm) {
 			          location.reload();
+			          //window.location.href = "consultartickets";
 			        }
 			      });
-    			$(location).attr('href', url+'consultartickets');
+    			  //$(location).attr('href', url+'consultartickets');
+    			  $('#desc').val('');
+    			  $('#ev1').val('');
+    			  $('#ev2').val('');
+    			  $('#ev3').val('');
 			}else {
 				swal({
 		          title: "Ha ocurrido un error",
