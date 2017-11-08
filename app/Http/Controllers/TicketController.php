@@ -83,6 +83,8 @@ class TicketController extends Controller
     public function listarTickes(){
     	$iduser = Auth::user()->id;
 
+    	$consultores = Consultor::all();
+
     	$consulta = User::join('roles', 'users.id_rol', 'roles.id')
     	->where('users.id', $iduser)
     	->select('roles.nombre')
@@ -124,15 +126,36 @@ class TicketController extends Controller
     	}	
 
     	count($tickets);
-    	return view('listarTickes', compact('tickets'));
+    	return view('listarTickes', compact('tickets', 'consultores'));
     }
 
 
     public function verRespuestas($id){
-    	$respuesta = Ticket::where('ticket.id', $id)->get();
+    	$respuesta = Ticket::where('ticket.id', $id)
+    	->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+    	->join('consultores', 'ticket.id_consultor', 'consultores.id')
+    	->join('users', 'ticket.id_user', 'users.id')
+    	->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1')
+    	->get();
 
-    	dd($respuesta);
+    	//dd($respuesta);
 
-    	return view('respuesta');
+    	return view('respuesta', compact('respuesta'));
+    }
+
+    public function guardarRespuestas(Request $req){
+    	Validator::make($req->all(),
+            [
+                'respuesta' => 'required|string',
+                'evidencia1' => 'mimes:jpeg,bmp,png'
+            ],
+            [
+                'respuesta.required' => 'Usted debe ingresar una respuesta',
+                'respuesta.string' => 'La respuesta solo puede ser alfanumerica',
+                'evidencia1.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)'
+            ]
+        )->validate();
+
+        return 'ok';
     }
 }
