@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Ticket;
 use App\Respuesta;
 use App\User;
-use App\Role_users;
+use App\Empresa;
 
 
 class TicketController extends Controller
@@ -88,38 +88,43 @@ class TicketController extends Controller
     	->join('roles', 'role_users.id_rol', 'roles.id')
     	->select('roles.nombre')
     	->get();
-
+    	//dd($consulta);
     	$rol = $consulta[0]->nombre;
 
     	//dd($rol);
+    	
     	if ($rol == 'Root') {
     		$tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
-    					   ->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','ticket.id_consultor')
+    					   ->join('users', 'ticket.id_consultor', 'users.id')
+    					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+    					   ->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
+    					   ->orderBy('id', 'desc')
+    					   ->get();
+    	}elseif ($rol == 'Consultor') {
+    		$tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket') 					
+    					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+    					   ->where('consultores.id', $iduser)
+    					   ->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
     					   ->orderBy('id', 'desc')
     					   ->get();
     	}else{
-    		$consulta2 = User::join('empresa', 'users.id_empresa', 'empresa.id')
+    		$consulta2 = Empresa::join('users', 'empresa.id', 'users.id_empresa')
     		->where('users.id', $iduser)
-    		->select('empresa.id')
+    		->select('empresa.id AS empresa')
     		->get();
 
-    		$empresa = $consulta2[0]->id;
-
+    		$empresa = $consulta2[0]->empresa;
+    		//dd($empresa);
     		$tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
     					   ->join('users', 'ticket.id_user', 'users.id')
     					   ->where('id_empresa', $empresa)
-    					   ->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','ticket.id_consultor')
+    					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+    					   ->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
     					   ->orderBy('id', 'desc')
     					   ->get();
-    	}
-    	
-    	$var = $tickets[0]->id_consultor;
-    	$nomconsultor = '';
-    	if ($var!=null) {
-    		$consultor = User::where('id', $var)->get();
-    		$nomconsultor = $consultor[0]->name;
-    	}
+    	}	
 
-    	return view('listarTickes', compact('tickets', 'nomconsultor'));
+    	count($tickets);
+    	return view('listarTickes', compact('tickets'));
     }
 }
