@@ -74,7 +74,7 @@ class TicketController extends Controller
         }
         $respuesta->save();
 
-        return 'ok';
+        return $id_ticket;
     }
 
 
@@ -83,9 +83,8 @@ class TicketController extends Controller
     public function listarTickes(){
     	$iduser = Auth::user()->id;
 
-    	$consulta = User::join('role_users', 'users.id', 'role_users.id_users')
+    	$consulta = User::join('roles', 'users.id_rol', 'roles.id')
     	->where('users.id', $iduser)
-    	->join('roles', 'role_users.id_rol', 'roles.id')
     	->select('roles.nombre')
     	->get();
     	//dd($consulta);
@@ -126,5 +125,14 @@ class TicketController extends Controller
 
     	count($tickets);
     	return view('listarTickes', compact('tickets'));
+    }
+
+
+    public function verRespuestas($id){
+    	$respuesta = Ticket::where('ticket.id', $id)->get();
+
+    	dd($respuesta);
+
+    	return view('respuesta');
     }
 }
