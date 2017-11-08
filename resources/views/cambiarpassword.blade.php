@@ -19,7 +19,7 @@
 
             <div class="col-md-12">
                 <div id="error1" style="color: red"></div>
-                <input id="pass1" type="text" class="login-field" name="pass1"  autofocus placeholder="Nueva contraseña" style="margin-bottom: 20px" >
+                <input id="pass1" type="password" class="login-field" name="pass1"  autofocus placeholder="Nueva contraseña" style="margin-bottom: 20px" >
 
                 <label class="login-field-icon fui-user" for="login-name"></label>
 
@@ -31,7 +31,7 @@
 
             <div class="col-md-12">
                 <div id="error2" style="color: red"></div>
-                <input id="pass2" type="text" class="login-field" name="pass2"   placeholder="Confirmar contraseña" style="margin-bottom: 20px" >
+                <input id="pass2" type="password" class="login-field" name="pass2"   placeholder="Confirmar contraseña" style="margin-bottom: 20px" >
 
                 <label class="login-field-icon fui-user" for="login-name"></label>
 
