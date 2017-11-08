@@ -50,7 +50,8 @@
 			<td>{{$t->prioridad}}</td>
 			@endif
 			<td>{{$t->consultor}}</td>
-			<td><a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-reply-all" aria-hidden="true"></i></a</td>
+			<td><a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-reply-all" aria-hidden="true"></i></a></td>
+			<td><a type="button" href="" class="btn btn-success btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
 		</tbody>
 		@endforeach
 		@else
