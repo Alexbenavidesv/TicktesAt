@@ -14,27 +14,7 @@
         <h4 class="modal-title">Crear nuevo usuario</h4>
       </div>
       <div class="modal-body">
-        <form action="" id="formrespuesta">
-            {{ csrf_field() }}
-            <div class="form-group">
-              <div id="error1" style="color: red"></div>
-              <label for="descripcion">Respuesta</label>
-              <textarea class="form-control" rows="3" name="respuesta" id="respuesta" maxlength="1000" style="resize: none;"></textarea>
-            </div>
-
-            <div class="form-group">
-                <div id="error2" style="color: red"></div>
-                <label for="exampleInputFile">Evidencia 1</label>
-                <input type="file" id="ev1" name="evidencia1">
-            </div>
-            
-            <select class="form-control" name="finalizado" id="finalizado">
-              <label for="descripcion">Finalizado:</label>
-              <option value="NO">NO</option>
-              <option value="SI">SI</option>              
-            </select>
-            <input type="hidden" id="input" name="idticket" value="{{$respuesta[0]->id}}">
-        </form>
+        formulario
       </div>
       <div class="modal-footer">
         <button  class="btn btn-success"  id="responder">Responder</button>
