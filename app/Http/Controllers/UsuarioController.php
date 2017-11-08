@@ -32,6 +32,7 @@ class UsuarioController extends Controller
                 'email' => 'required|unique:users',
                 'correo' => 'required|email',
                 'empresa' => 'required',
+                'rol' => 'required',
             ], [
                 'nombre.required' => 'Debes ingresar el nombre',
                 'email.required' => 'Debes ingresar la cedula',
@@ -40,6 +41,7 @@ class UsuarioController extends Controller
                 'correo.email' => 'Ingresa un correo valido',
                 'telefono.min' => 'Ingresa un telefono valido',
                 'empresa.required' => 'Debes escoger una empresa',
+                'rol.required' => 'Debes escoger una rol',
 
             ])->validate();
 

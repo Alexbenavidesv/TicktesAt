@@ -6,10 +6,11 @@ $('#guardarUser').click(function (e) {
     var cedula=$('input[name="email"]').val();
     var correo=$('input[name="correo"]').val();
     var empresa=$('select[name="empresa"]').val();
+    var rol=$('select[name="rol"]').val();
 
     $.ajax({
         url : "usuarios",
-        data : {nombre: nombre, email: cedula, correo: correo, empresa: empresa, _token: tokken},
+        data : {nombre: nombre, email: cedula, correo: correo, empresa: empresa, rol: rol, _token: tokken},
         type : 'POST',
         success:function (respuesta) {
             // console.log(respuesta);
@@ -65,6 +66,12 @@ $('#guardarUser').click(function (e) {
                 }
                 else{
                     $('#errorEmpresa').html('');
+                }
+                if(errores.rol){
+                    $('#errorRol').html(errores.rol);
+                }
+                else{
+                    $('#errorRol').html('');
                 }
 
             }
