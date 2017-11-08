@@ -9,6 +9,7 @@ use App\Ticket;
 use App\Respuesta;
 use App\User;
 use App\Empresa;
+use App\Consultor;
 
 
 class TicketController extends Controller
@@ -143,8 +144,8 @@ class TicketController extends Controller
     	return view('respuesta', compact('respuesta'));
     }
 
-    public function guardarRespuestas(Request $req){
-    	Validator::make($req->all(),
+    public function guardarRespuestas(Request $request){
+    	Validator::make($request->all(),
             [
                 'respuesta' => 'required|string',
                 'evidencia1' => 'mimes:jpeg,bmp,png'
