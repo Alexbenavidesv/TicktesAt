@@ -14,9 +14,9 @@
 Route::get('/', 'TicketController@index')->middleware('auth','sesion');
 
 //Rutas para el inicio de sesion
-Route::get('login', 'Auth\LoginController@showLoginForm')->middleware('auth','sesion');
-Route::post('login', 'Auth\LoginController@login')->middleware('auth','sesion');
-Route::post('logout', 'Auth\LoginController@logout')->middleware('auth','sesion');
+Route::get('login', 'Auth\LoginController@showLoginForm');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout');
 
 Route::get('usuarios', 'UsuarioController@listarUsuarios')->middleware('auth','sesion');
 Route::post('guardar_ticket', 'TicketController@nuevoTicket')->middleware('auth','sesion');
