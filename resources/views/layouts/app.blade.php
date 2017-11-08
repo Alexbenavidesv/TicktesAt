@@ -111,5 +111,6 @@
     <script src="{{ asset('js/usuarios.js') }}"></script>
     <script src="{{ asset('js/ticket.js') }}"></script>
     <script src="{{ asset('js/empresa.js') }}"></script>
+    <script src="{{ asset('js/guardartickets.js') }}"></script>
 </body>
 </html>
