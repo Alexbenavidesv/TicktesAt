@@ -15,8 +15,7 @@ class UsuarioController extends Controller
 {
     public function listarUsuarios(){
         $users = User::join('empresa', 'users.id_empresa', 'empresa.id')
-        ->join('role_users', 'users.id', 'role_users.id_users')
-        ->join('roles', 'role_users.id_rol', 'roles.id')
+        ->join('roles', 'users.id_rol', 'roles.id')
         ->select('users.name', 'users.correo', 'empresa.nombre AS empresa', 'roles.nombre AS rol')
         ->get();
         //dd($users);
@@ -52,12 +51,10 @@ class UsuarioController extends Controller
             $usuario->password=bcrypt($request->email);
             $usuario->correo=$request->correo;
             $usuario->id_empresa=$request->empresa;
+            $usuario->id_rol=$request->rol;
             $usuario->save();
             
             $id_usuario=User::max('id');
-            
-            $rol=new Role_Users;
-            $rol->create(['id_users'=>$id_usuario,'id_rol'=>$request->rol]);
 
             if($request->rol==3) {
                 $consultor = new Consultor();

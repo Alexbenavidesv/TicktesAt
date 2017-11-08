@@ -90,6 +90,7 @@
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
                 <li><a href="/usuarios"><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
+                <li><a href="/empresas"><i class="fa fa-industry" aria-hidden="true"></i> Empresas</a></li>
                 <li><a href="/"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
                 <li><a href="/consultartickets"><i class="fa fa-search" aria-hidden="true"></i> Consultar Tickets</a></li>
               </ul>
@@ -109,5 +110,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.js"></script>
     <script src="{{ asset('js/usuarios.js') }}"></script>
     <script src="{{ asset('js/ticket.js') }}"></script>
+    <script src="{{ asset('js/empresa.js') }}"></script>
 </body>
 </html>
