@@ -7,6 +7,7 @@ use App\Role_Users;
 use Illuminate\Http\Request;
 use App\User;
 use App\Empresa;
+use App\Consultor;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -58,6 +59,12 @@ class UsuarioController extends Controller
             $rol=new Role_Users;
             $rol->create(['id_users'=>$id_usuario,'id_rol'=>$request->rol]);
 
+            if($request->rol==3) {
+                $consultor = new Consultor();
+                $consultor->id = $id_usuario;
+                $consultor->nombre = $request->nombre;
+                $consultor->save();
+            }
 
             return "OK";
 
