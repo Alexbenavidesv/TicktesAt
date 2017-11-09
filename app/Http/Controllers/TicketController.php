@@ -102,7 +102,7 @@ class TicketController extends Controller
                 ->join('users', 'ticket.id_consultor', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                ->select('ticket.id', 'ticket.tipo','ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
@@ -113,7 +113,7 @@ class TicketController extends Controller
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                 ->where('consultores.id', $iduser)
-                ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
@@ -130,7 +130,7 @@ class TicketController extends Controller
                 ->join('users', 'ticket.id_user', 'users.id')
                 ->where('id_empresa', $empresa)
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
+                ->select('ticket.id', 'ticket.tipo','ticket.estado' ,'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
         }
@@ -183,7 +183,7 @@ class TicketController extends Controller
                     ->join('empresa', 'users.id_empresa', 'empresa.id')
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->consultor($request->consultor_)
-                    ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                    ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                         'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                     ->orderBy('id', 'desc')
                     ->paginate(15);
@@ -193,9 +193,9 @@ class TicketController extends Controller
                     ->join('empresa', 'users.id_empresa', 'empresa.id')
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
-                    ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                    ->join('consultores','ticket.id_consultor', 'consultores.id')
                     ->where('consultores.id', $iduser)
-                    ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                    ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                         'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                     ->orderBy('id', 'desc')
                     ->paginate(15);
@@ -212,9 +212,9 @@ class TicketController extends Controller
                     ->where('respuesta.tipo', 'APERTURA')
                     ->join('users', 'ticket.id_user', 'users.id')
                     ->where('id_empresa', $empresa)
-                    ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                    ->join('consultores','ticket.id_consultor', 'consultores.id')
                     ->consultor($request->consultor_)
-                    ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
+                    ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
                     ->orderBy('id', 'desc')
                     ->paginate(15);
             }
