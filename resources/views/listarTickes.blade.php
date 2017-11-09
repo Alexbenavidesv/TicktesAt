@@ -62,9 +62,9 @@
 		@endif
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
-						<td>Pendiente</td>
+						<td><span class="label label-danger">Pendiente</span></td>
 					@else
-						<td>Cerrado</td>
+						<td><span class="label label-success">Cerrado</span></td>
 					@endif
 			@if(isset($t->empresa))
 			<td>{{$t->empresa}}</td>

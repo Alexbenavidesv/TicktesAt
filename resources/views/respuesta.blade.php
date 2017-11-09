@@ -45,7 +45,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Crear nuevo usuario</h4>
+        <h4 class="modal-title">Generar nueva respuesta</h4>
       </div>
       <div class="modal-body">
         <form id="formrespuesta" method="POST" action="/saveResponse" enctype="multipart/form-data">

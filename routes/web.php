@@ -11,16 +11,16 @@
 |
 */
 
-Route::get('/', 'TicketController@index')->middleware('auth','sesion');
+Route::get('/', 'TicketController@index')->middleware('auth','sesion', 'admin');
 
 //Rutas para el inicio de sesion
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 
-Route::get('usuarios', 'UsuarioController@listarUsuarios')->middleware('auth','sesion');
-Route::post('guardar_ticket', 'TicketController@nuevoTicket')->middleware('auth','sesion');
-Route::post('usuarios','UsuarioController@create')->middleware('auth','sesion');
+Route::get('usuarios', 'UsuarioController@listarUsuarios')->middleware('auth','sesion', 'root');
+Route::post('guardar_ticket', 'TicketController@nuevoTicket')->middleware('auth','sesion', 'admin');
+Route::post('usuarios','UsuarioController@create')->middleware('auth','sesion', 'root');
 
 
 //Rutas cambiar contraseña por primera vez
@@ -29,7 +29,7 @@ Route::post('cambiar_password', 'CambiarPasswordController@password')->middlewar
 Route::get('cambiar_pass', 'CambiarPasswordController@cancelarPassword')->middleware('auth','sesionok');
 
 Route::get('consultartickets', 'TicketController@listarTickes')->middleware('auth','sesion');
-Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesion');
+Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesion', 'root');
 Route::post('filtrar_tickets','TicketController@filtros')->middleware('auth','sesion');
 
 Route::get('respuesta/{id}', 'RespuestasController@verRespuestas')->middleware('auth','sesion');
@@ -37,7 +37,7 @@ Route::get('respuesta/{id}', 'RespuestasController@verRespuestas')->middleware('
 
 
 
-Route::get('empresas','EmpresaController@listarEmpresas')->middleware('auth','sesion');
-Route::post('empresas','EmpresaController@create')->middleware('auth','sesion');
+Route::get('empresas','EmpresaController@listarEmpresas')->middleware('auth','sesion', 'root');
+Route::post('empresas','EmpresaController@create')->middleware('auth','sesion', 'root');
 
 Route::post('saveResponse','RespuestasController@guardarRespuesta')->middleware('auth','sesion');
