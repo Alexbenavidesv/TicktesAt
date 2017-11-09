@@ -103,7 +103,7 @@ class TicketController extends Controller
     					   ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                                'consultores.nombre AS consultor','empresa.nombre AS empresa')
     					   ->orderBy('id', 'desc')
-    					   ->get();
+    					   ->paginate(15);
     	}
     	elseif ($rol == 'Consultor') {
     		$tickets = Ticket::join('users','ticket.id_user','users.id')
@@ -114,7 +114,7 @@ class TicketController extends Controller
     		    ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
     			->orderBy('id', 'desc')
-    			->get();
+                ->paginate(15);
     	}else{
     		$consulta2 = Empresa::join('users', 'empresa.id', 'users.id_empresa')
     		->where('users.id', $iduser)
@@ -129,10 +129,8 @@ class TicketController extends Controller
     					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
     					   ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
     					   ->orderBy('id', 'desc')
-    					   ->get();
-    	}	
-
-    	count($tickets);
+                ->paginate(15);
+    	}
     	return view('listarTickes', compact('tickets', 'consultores'));
     }
 
