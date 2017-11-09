@@ -26,6 +26,8 @@ $('#guardarEmpresa').click(function (e) {
                 });
             $('#nombre').val('');
             $('#nit').val('');
+            $('#empresas').hide();
+            location.href = '/empresas';
         },
         error:function (error) {
             var errores = JSON.parse(error.responseText);
