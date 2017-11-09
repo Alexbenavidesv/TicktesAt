@@ -6,7 +6,7 @@
 
 @section('content')
     <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
+    <div id="empresas" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -45,7 +45,7 @@
 
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
         <h1 class="text-center">Listado de empresas</h1><br>
-        <button type="submit" class="btn btn-primary" style="width: 150px; margin-left: 110px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Agregar empresa</button>
+        <button type="submit" class="btn btn-primary" style="width: 150px; margin-left: 110px;" data-toggle="modal" data-target="#empresas"><i class="fa fa-plus-square" aria-hidden="true"></i> Agregar empresa</button>
 
         @if(count($empresas)>0)
         <table class="table table-striped" align="center" style="width: 80%">

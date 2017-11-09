@@ -29,6 +29,8 @@ $('#guardarUser').click(function (e) {
             $('#nombre').val('');
             $('#cedula').val('');
             $('#correo').val('');
+            $('#usuarios').hide();
+            location.href = '/usuarios';
         },
         error:function (error) {
             var errores = JSON.parse(error.responseText);
