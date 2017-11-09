@@ -43,10 +43,13 @@
 			@endif
 			<td>{{$t->consultor}}</td>
 			<td>{{$t->tipo}}</td>
-			<td><a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+
+			<td>
+				<a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-reply-all" aria-hidden="true"></i></a>
 			@if($t->prioridad=='')
-			<td><a type="button" href="" class="btn btn-success btn-sm" data-toggle="modal" data-id="{{$t->id}}" data-target="#asignar{{$t->id}}" style="width: 30px" id="respuesta"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+			<a type="button" href="" class="btn btn-success btn-sm" data-toggle="modal" data-id="{{$t->id}}" data-target="#asignar{{$t->id}}" style="width: 30px" id="respuesta"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 				@endif
+			</td>
 		</tr>
 
 				<div id="asignar{{$t->id}}" class="modal fade" role="dialog">
@@ -91,7 +94,7 @@
 											<label for="">Tipo</label>
 											<p id="errorTipo{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
 											<select name="tipo{{$t->id}}" id="tipo{{$t->id}}" class="form-control">
-												<option value="">Selecciona un consultor...</option>
+												<option value="">Selecciona el tipo...</option>
 												<option value="Soporte">Soporte</option>
 												<option value="Desarrollo">Desarrollo</option>
 												</select>
@@ -113,8 +116,10 @@
 		@else
 		<div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
 		@endif
-		
+
+
 		
 	</table>
+	{{ $tickets->links() }}
 </div>
 @endsection
