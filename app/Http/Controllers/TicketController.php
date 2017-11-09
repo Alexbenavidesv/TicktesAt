@@ -14,12 +14,14 @@ use App\Consultor;
 
 class TicketController extends Controller
 {
-    public function index(){
-    	return view("inicio");
+    public function index()
+    {
+        return view("inicio");
     }
 
-    public function nuevoTicket(Request $req){
-    	Validator::make($req->all(),
+    public function nuevoTicket(Request $req)
+    {
+        Validator::make($req->all(),
             [
                 'descripcion' => 'required|string',
                 'evidencia1' => 'required|mimes:jpeg,bmp,png',
@@ -49,10 +51,10 @@ class TicketController extends Controller
 
         $id_ticket = Ticket::max('id');
         $tipo = 'APERTURA';
-        
+
         $img = $req->file('evidencia1');
-		$file_rout = time().'_'.$img->getClientOriginalName();//hora de unix
-        $img->move(public_path().'/imgEvidencia/', $file_rout);
+        $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
+        $img->move(public_path() . '/imgEvidencia/', $file_rout);
 
         $respuesta = new Respuesta();
 
@@ -62,16 +64,16 @@ class TicketController extends Controller
         $respuesta->tipo = $tipo;
         $respuesta->evidencia1 = $file_rout;
         if ($req->evidencia2) {
-        	$img2 = $req->file('evidencia2');
-			$file_rout2 = time().'_'.$img2->getClientOriginalName();//hora de unix
-	        $img2->move(public_path().'/imgEvidencia/', $file_rout2);
-        	$respuesta->evidencia2 = $file_rout2;
+            $img2 = $req->file('evidencia2');
+            $file_rout2 = time() . '_' . $img2->getClientOriginalName();//hora de unix
+            $img2->move(public_path() . '/imgEvidencia/', $file_rout2);
+            $respuesta->evidencia2 = $file_rout2;
         }
         if ($req->evidencia3) {
-        	$img3 = $req->file('evidencia3');
-			$file_rout3 = time().'_'.$img3->getClientOriginalName();//hora de unix
-	        $img3->move(public_path().'/imgEvidencia/', $file_rout3);
-        	$respuesta->evidencia3 = $file_rout3;
+            $img3 = $req->file('evidencia3');
+            $file_rout3 = time() . '_' . $img3->getClientOriginalName();//hora de unix
+            $img3->move(public_path() . '/imgEvidencia/', $file_rout3);
+            $respuesta->evidencia3 = $file_rout3;
         }
         $respuesta->save();
 
@@ -79,62 +81,64 @@ class TicketController extends Controller
     }
 
 
+    public function listarTickes()
+    {
+        $iduser = Auth::user()->id;
 
+        $consultores = Consultor::where('id', '!=', 1)->get();
 
-    public function listarTickes(){
-    	$iduser = Auth::user()->id;
+        $consulta = User::join('roles', 'users.id_rol', 'roles.id')
+            ->where('users.id', $iduser)
+            ->select('roles.nombre')
+            ->get();
+        //dd($consulta);
+        $rol = $consulta[0]->nombre;
 
-    	$consultores = Consultor::where('id','!=',1)->get();
+        //dd($rol);
 
-    	$consulta = User::join('roles', 'users.id_rol', 'roles.id')
-    	->where('users.id', $iduser)
-    	->select('roles.nombre')
-    	->get();
-    	//dd($consulta);
-    	$rol = $consulta[0]->nombre;
-
-    	//dd($rol);
-    	
-    	if ($rol == 'Root') {
-    		$tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
-    					   ->join('users', 'ticket.id_consultor', 'users.id')
-                           ->join('empresa','users.id_empresa','empresa.id')
-    					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-    					   ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
-                               'consultores.nombre AS consultor','empresa.nombre AS empresa')
-    					   ->orderBy('id', 'desc')
-    					   ->paginate(15);
-    	}
-    	elseif ($rol == 'Consultor') {
-    		$tickets = Ticket::join('users','ticket.id_user','users.id')
-                ->join('empresa','users.id_empresa','empresa.id')
-                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
-    		    ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-    			->where('consultores.id', $iduser)
-    		    ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+        if ($rol == 'Root') {
+            $tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->join('users', 'ticket.id_consultor', 'users.id')
+                ->join('empresa', 'users.id_empresa', 'empresa.id')
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
-    			->orderBy('id', 'desc')
+                ->orderBy('id', 'desc')
                 ->paginate(15);
-    	}else{
-    		$consulta2 = Empresa::join('users', 'empresa.id', 'users.id_empresa')
-    		->where('users.id', $iduser)
-    		->select('empresa.id AS empresa')
-    		->get();
+        } elseif ($rol == 'Consultor') {
+            $tickets = Ticket::join('users', 'ticket.id_user', 'users.id')
+                ->join('empresa', 'users.id_empresa', 'empresa.id')
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->where('consultores.id', $iduser)
+                ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                    'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
+                ->orderBy('id', 'desc')
+                ->paginate(15);
+        } else {
+            $consulta2 = Empresa::join('users', 'empresa.id', 'users.id_empresa')
+                ->where('users.id', $iduser)
+                ->select('empresa.id AS empresa')
+                ->get();
 
-    		$empresa = $consulta2[0]->empresa;
-    		//dd($empresa);
-    		$tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
-    					   ->join('users', 'ticket.id_user', 'users.id')
-                      	   ->where('id_empresa', $empresa)
-    					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-    					   ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
-    					   ->orderBy('id', 'desc')
+            $empresa = $consulta2[0]->empresa;
+            //dd($empresa);
+            $tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->join('users', 'ticket.id_user', 'users.id')
+                ->where('id_empresa', $empresa)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
+                ->orderBy('id', 'desc')
                 ->paginate(15);
-    	}
-    	return view('listarTickes', compact('tickets', 'consultores'));
+        }
+        return view('listarTickes', compact('tickets', 'consultores'));
     }
 
-    public function asignar(Request $request){
+    public function asignar(Request $request)
+    {
         Validator::make($request->all(),
             [
                 'prioridad' => 'required',
@@ -148,39 +152,79 @@ class TicketController extends Controller
             ]
         )->validate();
 
-        Ticket::where('id',$request->id_ticket)
-            ->update(['prioridad'=>$request->prioridad,'id_consultor'=>$request->consultor,'tipo'=>$request->tipo]);
+        Ticket::where('id', $request->id_ticket)
+            ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo]);
 
         return "OK";
     }
 
+    public function filtros(Request $request)
+    {
+        if ($request->prioridad_ != '' || $request->consultor_ != '') {
 
-   /* public function verRespuestas($id){
-    	$respuesta = Ticket::where('ticket.id', $id)
-    	->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
-    	->join('consultores', 'ticket.id_consultor', 'consultores.id')
-    	->join('users', 'ticket.id_user', 'users.id')
-    	->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1')
-    	->get();
+            $iduser = Auth::user()->id;
 
-    	//dd($respuesta);
+            $consultores = Consultor::where('id', '!=', 1)->get();
 
-    	return view('respuesta', compact('respuesta'));
-    }
+            $consulta = User::join('roles', 'users.id_rol', 'roles.id')
+                ->where('users.id', $iduser)
+                ->select('roles.nombre')
+                ->get();
+            //dd($consulta);
+            $rol = $consulta[0]->nombre;
 
-    public function guardarRespuestas(Request $request){
-    	Validator::make($request->all(),
-            [
-                'respuesta' => 'required|string',
-                'evidencia1' => 'mimes:jpeg,bmp,png'
-            ],
-            [
-                'respuesta.required' => 'Usted debe ingresar una respuesta',
-                'respuesta.string' => 'La respuesta solo puede ser alfanumerica',
-                'evidencia1.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)'
-            ]
-        )->validate();
+            //dd($rol);
 
-        return 'ok';
-    }*/
+            if ($rol == 'Root') {
+                $tickets = Ticket::prioridad($request->prioridad_)
+                    ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                    ->where('respuesta.tipo', 'APERTURA')
+                    ->join('users', 'ticket.id_consultor', 'users.id')
+                    ->join('empresa', 'users.id_empresa', 'empresa.id')
+                    ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                    ->consultor($request->consultor_)
+                    ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                        'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
+                    ->orderBy('id', 'desc')
+                    ->paginate(15);
+            } elseif ($rol == 'Consultor') {
+                $tickets = Ticket::prioridad($request->prioridad_)
+                ->join('users', 'ticket.id_user', 'users.id')
+                    ->join('empresa', 'users.id_empresa', 'empresa.id')
+                    ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                    ->where('respuesta.tipo', 'APERTURA')
+                    ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                    ->where('consultores.id', $iduser)
+                    ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                        'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
+                    ->orderBy('id', 'desc')
+                    ->paginate(15);
+            } else {
+                $consulta2 = Empresa::join('users', 'empresa.id', 'users.id_empresa')
+                    ->where('users.id', $iduser)
+                    ->select('empresa.id AS empresa')
+                    ->get();
+
+                $empresa = $consulta2[0]->empresa;
+                //dd($empresa);
+                $tickets = Ticket::prioridad($request->prioridad_)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                    ->where('respuesta.tipo', 'APERTURA')
+                    ->join('users', 'ticket.id_user', 'users.id')
+                    ->where('id_empresa', $empresa)
+                    ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                    ->consultor($request->consultor_)
+                    ->select('ticket.id', 'ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
+                    ->orderBy('id', 'desc')
+                    ->paginate(15);
+            }
+            return view('listarTickes', compact('tickets', 'consultores'));
+        }
+
+
+       else{
+           return redirect('consultartickets');
+       }
+}
+
 }
