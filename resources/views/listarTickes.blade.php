@@ -73,7 +73,7 @@
 			<td>{{$t->tipo}}</td>
 
 			<td>
-				<a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-reply-all" aria-hidden="true"></i></a>
+				<a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-eye" aria-hidden="true"></i></a>
 			@if($t->prioridad=='')
 			<a type="button" href="" class="btn btn-success btn-sm" data-toggle="modal" data-id="{{$t->id}}" data-target="#asignar{{$t->id}}" style="width: 30px" id="respuesta"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 				@endif
@@ -144,9 +144,6 @@
 		@else
 		<div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
 		@endif
-
-
-		
 	</table>
 		</div>
 	</div>
