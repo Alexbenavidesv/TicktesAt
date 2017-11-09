@@ -143,7 +143,7 @@
 							</div>
 							<div class="modal-footer">
 								<button  class="btn btn-success" onclick="asignar({{$t->id}})">Asignar</button>
-								<button  class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+								<button  class="btn btn-danger" onclick="cerrar({{$t->id}})">Cerrar</button>
 							</div>
 						</div>
 
@@ -158,4 +158,11 @@
 	</div>
 	{{ $tickets->links() }}
 </div>
+<script>
+	function cerrar(id){
+		//alert('cerrando');
+		$('#asignar'+id).hide();
+		location.href = '/consultartickets';
+	};
+</script>
 @endsection

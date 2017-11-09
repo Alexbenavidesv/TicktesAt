@@ -35,9 +35,11 @@ function asignar(id_ticket) {
             $(errprio).html('');
             $(errcons).html('');
             $(errtip).html('');
-            $(prio).val('')
-            $(cons).val('')
-            $(tip).val('')
+            $(prio).val('');
+            $(cons).val('');
+            $(tip).val('');
+            $('#asignar'+id_ticket).hide();
+            location.href = '/consultartickets';
         },
         error:function (error) {
             var errores = JSON.parse(error.responseText);
