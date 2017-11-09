@@ -44,6 +44,7 @@
 		@if(count($tickets)>0)
 		<thead>
 			<th>Numero</th>
+			<th>Estado</th>
 			@if(isset($tickets[0]->empresa))
 			<th>Empresa</th>
 			@endif
@@ -60,9 +61,15 @@
 				<tr class="success">
 		@endif
 			<td>{{$t->id}}</td>
+					@if($t->estado==0)
+						<td>Pendiente</td>
+					@else
+						<td>Cerrado</td>
+					@endif
 			@if(isset($t->empresa))
 			<td>{{$t->empresa}}</td>
 			@endif
+
 			<td>{{$t->fecha}}</td>
 			@if($t->prioridad=='')
 			<td>No asignada</td>
