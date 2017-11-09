@@ -93,8 +93,10 @@
     <!-- Timeline -->
     <div class="timeline">
         <h1 class="text-center">Respuestas</h1>
+        @if(Auth::user()->id_rol !=2)
         @if($estado!=1)
         <button type="button" class="btn btn-primary" style="width: 150px; margin-left: 0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Generar respuesta</button><br><br>
+        @endif
         @endif
         @foreach($respuesta as $r)
         @if($r->tipo=='APERTURA')

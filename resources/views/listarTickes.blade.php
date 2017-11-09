@@ -24,7 +24,7 @@
 				<option value="Media">Media</option>
 				<option value="Baja">Baja</option>
 			</select> <br>
-				@if(Auth::user()->id_rol !=3)
+				@if(Auth::user()->id_rol ==1)
 			<label for="">Consultor</label>
 			<select name="consultor_" id="consultor_" class="form-control">
 				<option value="">Seleccione ...</option>
@@ -74,8 +74,10 @@
 
 			<td>
 				<a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-eye" aria-hidden="true"></i></a>
-			@if($t->prioridad=='')
+			@if(Auth::user()->id_rol ==1)
+				@if($t->prioridad=='')
 			<a type="button" href="" class="btn btn-success btn-sm" data-toggle="modal" data-id="{{$t->id}}" data-target="#asignar{{$t->id}}" style="width: 30px" id="respuesta"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+				@endif
 				@endif
 			</td>
 		</tr>
