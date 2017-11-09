@@ -9,7 +9,37 @@
 
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
-	<h1 class="text-center">Listado de Tickets</h1><br>
+	<h1 class="text-center">Listado de Tickets</h1>
+
+	<div class="row">
+
+		<div class="col-md-2 text-center">
+			<h4 ><span class="label label-primary">FILTRAR TICKETS</span></h4><br>
+			<form action="/filtrar_tickets" method="POST">
+				{{csrf_field() }}
+			<label for="">Prioridad</label>
+			<select name="prioridad_" id="" class="form-control">
+				<option value="">Seleccione ...</option>
+				<option value="Alta">Alta</option>
+				<option value="Media">Media</option>
+				<option value="Baja">Baja</option>
+			</select> <br>
+				@if(Auth::user()->id_rol !=3)
+			<label for="">Consultor</label>
+			<select name="consultor_" id="consultor_" class="form-control">
+				<option value="">Seleccione ...</option>
+				@foreach($consultores as $consultor)
+					<option value="{{$consultor->id}}">{{$consultor->nombre}}</option>
+				@endforeach
+			</select><br>
+				@endif
+
+			<button class="btn btn-success " style="width: 100%">
+				<span class="fa fa-search"></span> Filtrar
+			</button>
+			</form>
+		</div>
+		<div class="col-md-10">
 	<table class="table table-striped" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 		<thead>
@@ -17,7 +47,6 @@
 			@if(isset($tickets[0]->empresa))
 			<th>Empresa</th>
 			@endif
-			<th>Descripcion</th>
 			<th>Fecha</th>
 			<th>Prioridad</th>
 			<th>Consultor</th>
@@ -34,7 +63,6 @@
 			@if(isset($t->empresa))
 			<td>{{$t->empresa}}</td>
 			@endif
-			<td>{{$t->descripcion}}</td>
 			<td>{{$t->fecha}}</td>
 			@if($t->prioridad=='')
 			<td>No asignada</td>
@@ -117,6 +145,8 @@
 		<div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
 		@endif
 	</table>
+		</div>
+	</div>
 	{{ $tickets->links() }}
 </div>
 @endsection
