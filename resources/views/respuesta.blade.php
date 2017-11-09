@@ -10,9 +10,33 @@
     transition: 300ms all ease;
   }
   .grande{
-    width: 600px;
+    display:inline-block;
+    border:0;
+    width:500px;
+    position: relative;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1); 
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1); 
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 200ms ease-in;
+    transform: scale(1);  
   }
 
+  .grande:hover
+  {
+    box-shadow: 0px 0px 150px #000000;
+    z-index: 2;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.5);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.5);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.5);
+    transition: all 200ms ease-in;
+    transform: scale(1.5);
+  }
 </style>
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -86,13 +110,14 @@
         <article class="panel panel-default panel-outline">
             <div class="panel-body d-inline-block">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
                         <img id="thumb" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}"/ width="300" onclick="zoom();">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <img id="thumbev2" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia2)}}"/ width="300" onclick="zoom2();">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <img id="thumbev3" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia3)}}"/ width="300" onclick="zoom4();">
                     </div>
                 </div>
@@ -112,7 +137,10 @@
 
         <article class="panel panel-default panel-outline">
             <div class="panel-body d-inline-block">
-                <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/>
+                </div>
             </div>
         </article>
         @endif
@@ -129,7 +157,10 @@
 
         <article class="panel panel-default panel-outline">
             <div class="panel-body d-inline-block">
-                <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/>
+                </div>
             </div>
         </article>
         @endif
