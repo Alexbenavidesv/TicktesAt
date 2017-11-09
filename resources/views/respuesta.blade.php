@@ -45,7 +45,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Crear nuevo usuario</h4>
+        <h4 class="modal-title">Generar nueva respuesta</h4>
       </div>
       <div class="modal-body">
         <form id="formrespuesta" method="POST" action="/saveResponse" enctype="multipart/form-data">
@@ -93,7 +93,7 @@
     <!-- Timeline -->
     <div class="timeline">
         <h1 class="text-center">Respuestas</h1>
-        @if(Auth::user()->id_rol !=2)
+        @if(Auth::user()->id_rol !=2 && $respuesta[0]->consultor!=1)
         @if($estado!=1)
         <button type="button" class="btn btn-primary" style="width: 150px; margin-left: 0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Generar respuesta</button><br><br>
         @endif

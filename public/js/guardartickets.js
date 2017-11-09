@@ -13,7 +13,7 @@ $('#guardarRes').click(function(e){
 	}
 
 	if (ext != '') {
-		if (ext!=".jpg" && ext!=".jpeg" && ext!=".png") {
+		if (ext!=".jpg" && ext!=".jpeg" && ext!=".png" && ext!=".PNG" && ext!=".JPEG" && ext!=".JPG") {
 			$('#err2').html('El archivo debe ser una imagen (.jpg, .jpeg, .png)');
 			e.preventDefault();
 		}else{
