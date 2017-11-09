@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Validator;
 class UsuarioController extends Controller
 {
     public function listarUsuarios(){
-        $users = User::join('empresa', 'users.id_empresa', 'empresa.id')
+        $users = User::where('users.id','!=',1)
+            ->where('users.id','!=',2)
+       -> join('empresa', 'users.id_empresa', 'empresa.id')
         ->join('roles', 'users.id_rol', 'roles.id')
         ->select('users.name', 'users.correo', 'empresa.nombre AS empresa', 'roles.nombre AS rol')
         ->get();
