@@ -84,7 +84,7 @@ class TicketController extends Controller
     public function listarTickes(){
     	$iduser = Auth::user()->id;
 
-    	$consultores = Consultor::all();
+    	$consultores = Consultor::where('id','!=',1)->get();
 
     	$consulta = User::join('roles', 'users.id_rol', 'roles.id')
     	->where('users.id', $iduser)
@@ -98,17 +98,23 @@ class TicketController extends Controller
     	if ($rol == 'Root') {
     		$tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
     					   ->join('users', 'ticket.id_consultor', 'users.id')
+                           ->join('empresa','users.id_empresa','empresa.id')
     					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-    					   ->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
+    					   ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                               'consultores.nombre AS consultor','empresa.nombre AS empresa')
     					   ->orderBy('id', 'desc')
     					   ->get();
-    	}elseif ($rol == 'Consultor') {
-    		$tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket') 					
-    					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-    					   ->where('consultores.id', $iduser)
-    					   ->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
-    					   ->orderBy('id', 'desc')
-    					   ->get();
+    	}
+    	elseif ($rol == 'Consultor') {
+    		$tickets = Ticket::join('users','ticket.id_user','users.id')
+                ->join('empresa','users.id_empresa','empresa.id')
+                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+    		    ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+    			->where('consultores.id', $iduser)
+    		    ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                    'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
+    			->orderBy('id', 'desc')
+    			->get();
     	}else{
     		$consulta2 = Empresa::join('users', 'empresa.id', 'users.id_empresa')
     		->where('users.id', $iduser)
@@ -119,9 +125,9 @@ class TicketController extends Controller
     		//dd($empresa);
     		$tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
     					   ->join('users', 'ticket.id_user', 'users.id')
-    					   ->where('id_empresa', $empresa)
+                      	   ->where('id_empresa', $empresa)
     					   ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-    					   ->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
+    					   ->select('ticket.id','ticket.tipo', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad','consultores.nombre AS consultor')
     					   ->orderBy('id', 'desc')
     					   ->get();
     	}	
@@ -130,8 +136,28 @@ class TicketController extends Controller
     	return view('listarTickes', compact('tickets', 'consultores'));
     }
 
+    public function asignar(Request $request){
+        Validator::make($request->all(),
+            [
+                'prioridad' => 'required',
+                'consultor' => 'required',
+                'tipo' => 'required',
+            ],
+            [
+                'prioridad.required' => 'Debes escoger una prioridad',
+                'consultor.required' => 'Debes escoger un consultor',
+                'tipo.required' => 'Debes escoger un tipo',
+            ]
+        )->validate();
 
-    public function verRespuestas($id){
+        Ticket::where('id',$request->id_ticket)
+            ->update(['prioridad'=>$request->prioridad,'id_consultor'=>$request->consultor,'tipo'=>$request->tipo]);
+
+        return "OK";
+    }
+
+
+   /* public function verRespuestas($id){
     	$respuesta = Ticket::where('ticket.id', $id)
     	->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
     	->join('consultores', 'ticket.id_consultor', 'consultores.id')
@@ -158,5 +184,5 @@ class TicketController extends Controller
         )->validate();
 
         return 'ok';
-    }
+    }*/
 }

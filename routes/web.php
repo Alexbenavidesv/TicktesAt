@@ -29,6 +29,7 @@ Route::post('cambiar_password', 'CambiarPasswordController@password')->middlewar
 Route::get('cambiar_pass', 'CambiarPasswordController@cancelarPassword')->middleware('auth','sesionok');
 
 Route::get('consultartickets', 'TicketController@listarTickes')->middleware('auth','sesion');
+Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesion');
 
 Route::get('respuesta/{id}', 'RespuestasController@verRespuestas')->middleware('auth','sesion');
 
