@@ -30,8 +30,12 @@ Route::get('cambiar_pass', 'CambiarPasswordController@cancelarPassword')->middle
 
 Route::get('consultartickets', 'TicketController@listarTickes')->middleware('auth','sesion');
 
-Route::get('respuesta/{id}', 'TicketController@verRespuestas')->middleware('auth','sesion');
-Route::post('guardarespuesta', 'TicketController@guardarRespuestas')->middleware('auth','sesion');
+Route::get('respuesta/{id}', 'RespuestasController@verRespuestas')->middleware('auth','sesion');
+
+
+
 
 Route::get('empresas','EmpresaController@listarEmpresas')->middleware('auth','sesion');
 Route::post('empresas','EmpresaController@create')->middleware('auth','sesion');
+
+Route::post('saveResponse','RespuestasController@guardarRespuesta')->middleware('auth','sesion');
