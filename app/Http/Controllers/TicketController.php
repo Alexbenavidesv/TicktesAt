@@ -225,6 +225,55 @@ class TicketController extends Controller
        else{
            return redirect('consultartickets');
        }
-}
+    }
+
+    public function ticketsNoAsignados(){
+        $tickets = Ticket::where('ticket.id_consultor', 1)
+            ->join('users', 'ticket.id_user', 'users.id')
+            ->join('empresa', 'users.id_empresa', 'empresa.id')
+            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+            //->where('consultores.id', $iduser)
+            ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                'consultores.nombre AS consultor', 'empresa.nombre AS empresa', 'users.id AS iduser', 'users.name AS nomusuario')
+            ->orderBy('id', 'desc')
+            ->paginate(15);
+
+            //dd($tickets);
+
+            return view('noasignados', compact('tickets'));
+    }
+
+    public function guardarAsignacion(Request $request){
+        Validator::make($request->all(),
+            [
+                'prioridad' => 'required',
+                'consultor' => 'required',
+                'tipo' => 'required',
+            ],
+            [
+                'prioridad.required' => 'Debes escoger una prioridad',
+                'consultor.required' => 'Debes escoger un consultor',
+                'tipo.required' => 'Debes escoger un tipo',
+            ]
+        )->validate();
+
+        $idticket = $request->id_ticket;
+
+        //dd($idticket);
+
+        $ticket = Ticket::findOrFail($idticket);
+
+        $ticket->prioridad = $request->prioridad;
+        $ticket->id_consultor = $request->consultor;
+        $ticket->tipo = $request->tipo;
+        $ticket->save();  
+
+        /*Ticket::where('id', $request->id_ticket)
+            ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo]);*/
+
+        return "OK";
+    }
 
 }

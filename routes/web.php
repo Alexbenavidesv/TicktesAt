@@ -41,3 +41,6 @@ Route::get('empresas','EmpresaController@listarEmpresas')->middleware('auth','se
 Route::post('empresas','EmpresaController@create')->middleware('auth','sesion', 'root');
 
 Route::post('saveResponse','RespuestasController@guardarRespuesta')->middleware('auth','sesion');
+
+Route::get('consultarticketsna', 'TicketController@ticketsNoAsignados')->middleware('auth','sesion');
+Route::post('guardarasignacion', 'TicketController@asignar');
