@@ -64,9 +64,8 @@ class RespuestasController extends Controller
     }
 
     public function descargar($archivo){
-        $public_path = storage_path('imgEvidencia');
-        $url = $public_path.'/'.$archivo;
-        if (Storage::disk('imgEvidencia')->exists($archivo)){
+        $url = public_path().'/imgEvidencia/'.$archivo;
+        if (file_exists($url)){
             return response()->download($url);
         }
         abort(404);

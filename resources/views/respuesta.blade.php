@@ -113,16 +113,24 @@
             <div class="panel-body d-inline-block">
                 <div class="row">
                     <div class="col-md-1"></div>
+                    @if($r->evidencia1!='')
                     <div class="col-md-3">
-                        <img id="thumb" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}"/ width="300" onclick="zoom();">
-                        <a href="{{url('/descarga', $r->evidencia1)}}">Descargar</a>
+                        <img id="thumb" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}"/ width="300" onclick="zoom();"><br>
+                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia1}}</a>
                     </div>
+                    @endif
+                    @if($r->evidencia2!='')
                     <div class="col-md-3">
-                        <img id="thumbev2" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia2)}}"/ width="300" onclick="zoom2();">
+                        <img id="thumbev2" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia2)}}"/ width="300" onclick="zoom2();"><br>
+                        <a href="{{url('/descarga', $r->evidencia2)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia2}}</a>
                     </div>
+                    @endif
+                    @if($r->evidencia3!='')
                     <div class="col-md-3">
-                        <img id="thumbev3" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia3)}}"/ width="300" onclick="zoom4();">
+                        <img id="thumbev3" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia3)}}"/ width="300" onclick="zoom4();"><br>
+                        <a href="{{url('/descarga', $r->evidencia3)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia3}}</a>
                     </div>
+                    @endif
                 </div>
             </div>
         </article>
@@ -139,12 +147,15 @@
         </article>
 
         <article class="panel panel-default panel-outline">
+          @if($r->evidencia1!='')
             <div class="panel-body d-inline-block">
                 <div class="row">
                     <div class="col-md-2"></div>
-                    <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/>
+                    <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/><br>
+                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia1}}</a>
                 </div>
             </div>
+          @endif
         </article>
         @endif
 
@@ -159,12 +170,15 @@
         </article>
 
         <article class="panel panel-default panel-outline">
+          @if($r->evidencia1!='')
             <div class="panel-body d-inline-block">
                 <div class="row">
                     <div class="col-md-2"></div>
-                    <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/>
+                    <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/><br>
+                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia1}}</a>
                 </div>
             </div>
+          @endif
         </article>
         @endif
         @endforeach
