@@ -105,7 +105,7 @@
                 <h2 class="panel-title">Respuesta de apertura <strong>Ticket #{{$r->id}}</strong> Abierto por: {{$r->nomusuario}} - {{$r->empresa}}</h2>
             </div>
             <div class="panel-body">
-                <strong><pre>{{$r->descripcion}}</pre></strong>
+                <strong>{{$r->descripcion}}</strong>
             </div>
         </article>
         
@@ -142,7 +142,7 @@
                 <h2 class="panel-title">Respuesta de seguimiento <strong>Ticket #{{$r->id}}</strong> <strong>En seguimiento</strong></h2>
             </div>
             <div class="panel-body">
-                <pre>{{$r->descripcion}}</pre>
+                <pre style="font-family: sans-serif; font-size: 12px">{{$r->descripcion}}</pre>
             </div>
         </article>
 
@@ -162,10 +162,15 @@
         @if($r->tipo=='CIERRE')
         <article class="panel panel-success">
             <div class="panel-heading">
-                <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong></h2>
+                  <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong></h2>
+                  <input type="hidden" id="idrespuesta" name="idrespuesta" value="{{$r->idresp}}">
+                  <input type="hidden" id="estadoticket" name="estadoticket" value="{{$estado}}">
+                  @if(Auth::user()->id_rol != 2)
+                  <button type="button" class="btn btn-success btn-sm" style="width: 30px" data-toggle="modal" data-target="#editarespuesta" id="editempresa"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                  @endif
             </div>
             <div class="panel-body">
-                <pre>{{$r->descripcion}}</pre>
+                <pre id="descripcioncaso" style="font-family: sans-serif; font-size: 12px">{{$r->descripcion}}</pre>
             </div>
         </article>
 
@@ -177,6 +182,26 @@
                     <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/><br>
                         <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia1}}</a>
                 </div>
+            </div>
+
+            <div id="editarespuesta" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Crear nueva empresa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button  class="btn btn-success"  onclick="">Editar</button>
+                        <button  class="btn btn-danger" onclick="">Cerrar</button>
+                    </div>
+                </div>
+              </div>
             </div>
           @endif
         </article>
