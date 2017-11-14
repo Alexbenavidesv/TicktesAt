@@ -21,6 +21,7 @@ Route::post('logout', 'Auth\LoginController@logout');
 Route::get('usuarios', 'UsuarioController@listarUsuarios')->middleware('auth','sesion', 'root');
 Route::post('guardar_ticket', 'TicketController@nuevoTicket')->middleware('auth','sesion', 'admin');
 Route::post('usuarios','UsuarioController@create')->middleware('auth','sesion', 'root');
+Route::post('editar_usuario','UsuarioController@editar')->middleware('auth','sesion', 'root');
 
 
 //Rutas cambiar contraseña por primera vez
