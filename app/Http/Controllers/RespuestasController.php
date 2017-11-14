@@ -71,4 +71,22 @@ class RespuestasController extends Controller
         }
         abort(404);
     }
+
+
+    public function editar(Request $request){
+        $idrespuesta = $request->idrespu;
+        $respuesta = Respuesta::findOrFail($idrespuesta);
+        //dd($idrespuesta);
+        $respuesta->descripcion = $request->respuupdt;
+
+        if ($request->evidenciaedit) {
+            $img = $request->file('evidenciaedit');
+            //dd($img);
+            $file_rout = time().'_'.$img->getClientOriginalName();//hora de unix
+            $img->move(public_path().'/imgEvidencia/', $file_rout);
+            $respuesta->evidencia1 = $file_rout;
+        }
+        $respuesta->save();
+        return back()->withInput();
+    }
 }
