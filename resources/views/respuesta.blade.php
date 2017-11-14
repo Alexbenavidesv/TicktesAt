@@ -115,6 +115,7 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-3">
                         <img id="thumb" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}"/ width="300" onclick="zoom();">
+                        <a href="{{url('/descarga', $r->evidencia1)}}">Descargar</a>
                     </div>
                     <div class="col-md-3">
                         <img id="thumbev2" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia2)}}"/ width="300" onclick="zoom2();">

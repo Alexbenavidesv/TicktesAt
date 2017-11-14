@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Ticket;
 use App\Respuesta;
 use App\User;
@@ -60,5 +61,14 @@ class RespuestasController extends Controller
         $ticket->save();
 
         return back()->withInput();
+    }
+
+    public function descargar($archivo){
+        $public_path = storage_path('imgEvidencia');
+        $url = $public_path.'/'.$archivo;
+        if (Storage::disk('imgEvidencia')->exists($archivo)){
+            return response()->download($url);
+        }
+        abort(404);
     }
 }

@@ -38,4 +38,18 @@ class EmpresaController extends Controller
         }
     }
 
+    public function editar(Request $req){
+        Validator::make($req->all(), [
+                'nombre' => 'required',
+                'nit' => 'required|unique:empresa',
+            ], [
+                'nombre.required' => 'Debes ingresar el nombre',
+                'nit.required' => 'Debes ingresar el nit',
+                'nit.unique' => 'Ya existe el nit registrado',
+
+            ])->validate();
+        
+        return "ok";
+    }  
+
 }

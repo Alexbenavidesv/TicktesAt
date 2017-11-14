@@ -24,16 +24,16 @@ class TicketController extends Controller
         Validator::make($req->all(),
             [
                 'descripcion' => 'required|string',
-                'evidencia1' => 'mimes:jpeg,bmp,png',
-                'evidencia2' => 'mimes:jpeg,bmp,png',
-                'evidencia3' => 'mimes:jpeg,bmp,png'
+                'evidencia1' => 'mimes:jpeg,bmp,png,zip,rar|max:5120',
+                'evidencia2' => 'mimes:jpeg,bmp,png,zip,rar|max:5120',
+                'evidencia3' => 'mimes:jpeg,bmp,png,zip,rar|max:5120'
             ],
             [
                 'descripcion.required' => 'Usted debe ingresar una descripción',
                 'descripcion.string' => 'La descripcion solo puede ser alfanumerica',
-                'evidencia1.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)',
-                'evidencia2.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)',
-                'evidencia3.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)'
+                'evidencia1.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip',
+                'evidencia2.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip',
+                'evidencia3.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip'
             ]
         )->validate();
 
@@ -277,5 +277,4 @@ class TicketController extends Controller
 
         return "OK";
     }
-
 }

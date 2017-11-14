@@ -167,6 +167,7 @@
     <script src="{{ asset('js/asignar.js') }}"></script>
     <script src="{{ asset('js/inicio.js') }}"></script>
     <script src="{{ asset('js/guardartickets.js') }}"></script>
+    <script src="{{ asset('js/editarempresa1.js') }}"></script>
     <script src="{{ asset('js/editarUsuario.js') }}"></script>
 </body>
 </html>
