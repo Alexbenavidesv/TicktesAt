@@ -18,7 +18,7 @@ class UsuarioController extends Controller
             ->where('users.id','!=',2)
        -> join('empresa', 'users.id_empresa', 'empresa.id')
         ->join('roles', 'users.id_rol', 'roles.id')
-        ->select('users.id','users.name','users.email', 'users.correo','empresa.id AS id_empresa', 'empresa.nombre AS empresa','roles.id AS id_rol', 'roles.nombre AS rol')
+        ->select('users.id','users.name','users.email', 'users.correo','users.telefono','empresa.id AS id_empresa', 'empresa.nombre AS empresa','roles.id AS id_rol', 'roles.nombre AS rol')
         ->get();
         //dd($users);
         $empresa = Empresa::all();
@@ -79,6 +79,7 @@ class UsuarioController extends Controller
                 'nombre' => 'required',
                 'email' => 'required|unique:users,id,'.$request->id_user,
                 'correo' => 'required|email',
+                'telefono' => 'required|min:7',
                 'empresa' => 'required',
                 'rol' => 'required',
             ], [
@@ -87,6 +88,7 @@ class UsuarioController extends Controller
                 'email.unique' => 'Ya existe la identificación',
                 'correo.required' => 'Debes ingresar un correo',
                 'correo.email' => 'Ingresa un correo valido',
+                'telefono.required' => 'Debes ingresar un teléfono',
                 'telefono.min' => 'Ingresa un telefono valido',
                 'empresa.required' => 'Debes escoger una empresa',
                 'rol.required' => 'Debes escoger una rol',
@@ -98,6 +100,7 @@ class UsuarioController extends Controller
             $usuario->name=$request->nombre;
             $usuario->email=$request->email;
             $usuario->correo=$request->correo;
+            $usuario->telefono=$request->telefono;
             $usuario->id_empresa=$request->empresa;
             $usuario->id_rol=$request->rol;
             $usuario->save();

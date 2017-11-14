@@ -118,15 +118,15 @@
 										<div class="col-md-6">
 											<div class="form-group">
 											<label for="nombre">Nombre</label>
-											<p id="errorNombreEditar" class="text-danger" style="font-size: 14px;"></p>
-											<input type="text" class="form-control" name="nombreEditar" id="nombreEditar" value="{{$us->name}}">
+											<p id="errorNombreEditar{{$us->id}}" class="text-danger" style="font-size: 14px;"></p>
+											<input type="text" class="form-control" name="nombreEditar{{$us->id}}" id="nombreEditar{{$us->id}}" value="{{$us->name}}">
 											</div>
 											</div>
 										<div class="col-md-6">
 											<div class="form-group">
 											<label for="cedula">Cedula</label>
-											<p id="errorCedulaEditar" class="text-danger" style="font-size: 14px;"></p>
-											<input type="text" class="form-control" name="emailEditar" id="cedulaEditar" value="{{$us->email}}">
+											<p id="errorCedulaEditar{{$us->id}}" class="text-danger" style="font-size: 14px;"></p>
+											<input type="text" class="form-control" name="emailEditar{{$us->id}}" id="cedulaEditar{{$us->id}}" value="{{$us->email}}">
 											</div>
 											</div>
 									</div>
@@ -135,18 +135,31 @@
 										<div class="col-md-6">
 											<div class="form-group">
 											<label for="correo">Correo</label>
-											<p id="errorCorreoEditar" class="text-danger" style="font-size: 14px;"></p>
-											<input type="email" class="form-control" name="correoEditar" id="correoEditar"value="{{$us->correo}}">
+											<p id="errorCorreoEditar{{$us->id}}" class="text-danger" style="font-size: 14px;"></p>
+											<input type="email" class="form-control" name="correoEditar{{$us->id}}" id="correoEditar{{$us->id}}" value="{{$us->correo}}">
 											</div>
 											</div>
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="telefono">Teléfono</label>
+												<p id="errorTelefonoEditar{{$us->id}}" class="text-danger" style="font-size: 14px;"></p>
+												<input type="text" class="form-control" name="telefonoEditar{{$us->id}}" id="telefonoEditar{{$us->id}}" value="{{$us->telefono}}">
+											</div>
+										</div>
+
+
+
+
+
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="empresa">Empresa</label>
-												<p id="errorEmpresaEditar" class="text-danger" style="font-size: 14px;"></p>
-												<select class="form-control" name="empresaEditar">
+												<p id="errorEmpresaEditar{{$us->id}}" class="text-danger" style="font-size: 14px;"></p>
+												<select class="form-control" name="empresaEditar{{$us->id}}" id="empresaEditar{{$us->id}}">
 													@foreach($empresa as $empre)
 														@if($us->id_empresa==$empre->id)
-														<option selected value="{{$empre->id}}">{{$empre->nombre}}</option>
+															<option selected value="{{$empre->id}}">{{$empre->nombre}}</option>
 														@else
 															<option  value="{{$empre->id}}">{{$empre->nombre}}</option>
 														@endif
@@ -159,8 +172,8 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="rol">Rol</label>
-												<p id="errorRol" class="text-danger" style="font-size: 14px;"></p>
-												<select class="form-control" name="rolEditar">
+												<p id="errorRol{{$us->id}}" class="text-danger" style="font-size: 14px;"></p>
+												<select class="form-control" name="rolEditar{{$us->id}}" id="rolEditar{{$us->id}}">
 													@foreach($roles as $r)
 														@if($us->id_rol==$r->id)
 														<option selected value="{{$r->id}}">{{$r->nombre}}</option>
@@ -173,8 +186,6 @@
 										</div>
 
 									</div>
-
-									<input type="hidden" value="{{$us->id}}"  id="id_user{{$us->id}}" name="id_user{{$us->id}}">
 								</form>
 							</div>
 						</div>
