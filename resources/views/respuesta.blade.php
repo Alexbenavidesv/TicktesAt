@@ -102,7 +102,7 @@
         @if($r->tipo=='APERTURA')
         <article class="panel panel-danger panel-outline">
             <div class="panel-heading icon">
-                <h2 class="panel-title">Respuesta de apertura <strong>Ticket #{{$r->id}}</strong></h2>
+                <h2 class="panel-title">Respuesta de apertura <strong>Ticket #{{$r->id}} Usuario: {{$r->nomusuario}}</strong></h2>
             </div>
             <div class="panel-body">
                 <strong>{{$r->descripcion}}</strong>
