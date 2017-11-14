@@ -13,7 +13,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/estilo.css" rel="stylesheet">
-
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.css">
 
     <!-- Scripts -->
@@ -38,10 +38,12 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <b>   {{ config('app.name', 'TicktesAT') }}  </b>
+                <a class="navbar-brand" href="{{ url('/') }}" >
+                    <li class="fa fa-ticket" style="font-size: 1.5em;"></li>
+                    <span style="font-weight: bold; font-size: 1.5em;">Tickets</span> <span style="font-weight: bold; font-size: 1.5em; color: deepskyblue;">AT</span>
                 </a>
             </div>
+
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
