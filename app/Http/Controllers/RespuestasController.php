@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Ticket;
 use App\Respuesta;
 use App\User;
@@ -18,7 +19,7 @@ class RespuestasController extends Controller
     	->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
     	->join('consultores', 'ticket.id_consultor', 'consultores.id')
     	->join('users', 'ticket.id_user', 'users.id')
-    	->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1', 'ticket.estado', 'respuesta.evidencia2', 'respuesta.evidencia3', 'respuesta.id AS resp','consultores.id AS consultor')
+    	->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1', 'ticket.estado', 'respuesta.evidencia2', 'respuesta.evidencia3', 'respuesta.id AS resp','consultores.id AS consultor', 'users.name AS nomusuario')
     	->get();
 
     	$estado =  $respuesta[0]->estado;
@@ -60,5 +61,13 @@ class RespuestasController extends Controller
         $ticket->save();
 
         return back()->withInput();
+    }
+
+    public function descargar($archivo){
+        $url = public_path().'/imgEvidencia/'.$archivo;
+        if (file_exists($url)){
+            return response()->download($url);
+        }
+        abort(404);
     }
 }

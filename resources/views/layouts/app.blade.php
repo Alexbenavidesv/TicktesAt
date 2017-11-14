@@ -139,10 +139,13 @@
                 <li id="btnusuarios"><a href="/usuarios" ><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
                 <li id="btnempresas"><a href="/empresas"><i class="fa fa-industry" aria-hidden="true"></i> Empresas</a></li>
                   @endif
-                      @if(Auth::user()->id_rol ==2)
+                @if(Auth::user()->id_rol ==2)
                 <li id="btntickets"><a href="/"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
                 @endif
                 <li id="btnconsultartickets"><a href="/consultartickets"><i class="fa fa-search" aria-hidden="true"></i> Consultar Tickets</a></li>
+                @if(Auth::user()->id_rol ==3)
+                <li id="btnconsultartickets"><a href="/consultarticketsna"><i class="fa fa-minus-square-o" aria-hidden="true"></i> Tickets no asignados</a></li>
+                @endif
               </ul>
             </div>
 
@@ -164,6 +167,7 @@
     <script src="{{ asset('js/asignar.js') }}"></script>
     <script src="{{ asset('js/inicio.js') }}"></script>
     <script src="{{ asset('js/guardartickets.js') }}"></script>
+    <script src="{{ asset('js/editarempresa1.js') }}"></script>
     <script src="{{ asset('js/editarUsuario.js') }}"></script>
 </body>
 </html>

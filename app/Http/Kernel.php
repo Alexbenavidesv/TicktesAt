@@ -57,5 +57,6 @@ class Kernel extends HttpKernel
         'sesionok' => \App\Http\Middleware\SesionOk::class,
         'root' => \App\Http\Middleware\Root::class,
         'admin' => \App\Http\Middleware\Admin::class,
+        'consultor' => \App\Http\Middleware\Consultor::class,
     ];
 }

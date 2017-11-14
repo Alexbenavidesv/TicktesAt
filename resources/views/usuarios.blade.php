@@ -29,6 +29,13 @@
 				<p id="errorCedula" class="text-danger" style="font-size: 14px;"></p>
 				<input type="text" class="form-control" name="email" id="cedula" placeholder="cedula">
 			</div>
+
+			<div class="form-group">
+				<label for="telefono">Teléfono</label>
+				<p id="errorTelefono" class="text-danger" style="font-size: 14px;"></p>
+				<input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono">
+			</div>
+
 			<div class="form-group">
 			    <label for="correo">Correo</label>
 				<p id="errorCorreo" class="text-danger" style="font-size: 14px;"></p>

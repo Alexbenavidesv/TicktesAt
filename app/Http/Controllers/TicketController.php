@@ -24,17 +24,16 @@ class TicketController extends Controller
         Validator::make($req->all(),
             [
                 'descripcion' => 'required|string',
-                'evidencia1' => 'required|mimes:jpeg,bmp,png',
-                'evidencia2' => 'mimes:jpeg,bmp,png',
-                'evidencia3' => 'mimes:jpeg,bmp,png'
+                'evidencia1' => 'mimes:jpeg,bmp,png,zip,rar|max:5120',
+                'evidencia2' => 'mimes:jpeg,bmp,png,zip,rar|max:5120',
+                'evidencia3' => 'mimes:jpeg,bmp,png,zip,rar|max:5120'
             ],
             [
                 'descripcion.required' => 'Usted debe ingresar una descripción',
                 'descripcion.string' => 'La descripcion solo puede ser alfanumerica',
-                'evidencia1.required' => 'Debe ingresar por lo menos la primera evidencia',
-                'evidencia1.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)',
-                'evidencia2.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)',
-                'evidencia3.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)'
+                'evidencia1.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip',
+                'evidencia2.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip',
+                'evidencia3.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip'
             ]
         )->validate();
 
@@ -52,17 +51,20 @@ class TicketController extends Controller
         $id_ticket = Ticket::max('id');
         $tipo = 'APERTURA';
 
-        $img = $req->file('evidencia1');
-        $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
-        $img->move(public_path() . '/imgEvidencia/', $file_rout);
-
         $respuesta = new Respuesta();
+
+        if ($req->evidencia1) {
+            $img = $req->file('evidencia1');
+            $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
+            $img->move(public_path() . '/imgEvidencia/', $file_rout);
+            $respuesta->evidencia1 = $file_rout;
+        }
 
         $respuesta->descripcion = $req->descripcion;
         $respuesta->id_ticket = $id_ticket;
         $respuesta->fecha = $fecha;
         $respuesta->tipo = $tipo;
-        $respuesta->evidencia1 = $file_rout;
+
         if ($req->evidencia2) {
             $img2 = $req->file('evidencia2');
             $file_rout2 = time() . '_' . $img2->getClientOriginalName();//hora de unix
@@ -99,7 +101,7 @@ class TicketController extends Controller
         if ($rol == 'Root') {
             $tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
-                ->join('users', 'ticket.id_consultor', 'users.id')
+                ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                 ->select('ticket.id', 'ticket.tipo','ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
@@ -225,6 +227,54 @@ class TicketController extends Controller
        else{
            return redirect('consultartickets');
        }
-}
+    }
 
+    public function ticketsNoAsignados(){
+        $tickets = Ticket::where('ticket.id_consultor', 1)
+            ->join('users', 'ticket.id_user', 'users.id')
+            ->join('empresa', 'users.id_empresa', 'empresa.id')
+            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+            //->where('consultores.id', $iduser)
+            ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                'consultores.nombre AS consultor', 'empresa.nombre AS empresa', 'users.id AS iduser', 'users.name AS nomusuario')
+            ->orderBy('id', 'desc')
+            ->paginate(15);
+
+            //dd($tickets);
+
+            return view('noasignados', compact('tickets'));
+    }
+
+    public function guardarAsignacion(Request $request){
+        Validator::make($request->all(),
+            [
+                'prioridad' => 'required',
+                'consultor' => 'required',
+                'tipo' => 'required',
+            ],
+            [
+                'prioridad.required' => 'Debes escoger una prioridad',
+                'consultor.required' => 'Debes escoger un consultor',
+                'tipo.required' => 'Debes escoger un tipo',
+            ]
+        )->validate();
+
+        $idticket = $request->id_ticket;
+
+        //dd($idticket);
+
+        $ticket = Ticket::findOrFail($idticket);
+
+        $ticket->prioridad = $request->prioridad;
+        $ticket->id_consultor = $request->consultor;
+        $ticket->tipo = $request->tipo;
+        $ticket->save();  
+
+        /*Ticket::where('id', $request->id_ticket)
+            ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo]);*/
+
+        return "OK";
+    }
 }
