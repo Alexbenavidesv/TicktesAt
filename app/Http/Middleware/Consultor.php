@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Closure;
 
 class Consultor
