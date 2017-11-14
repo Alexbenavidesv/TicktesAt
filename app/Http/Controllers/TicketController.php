@@ -23,14 +23,14 @@ class TicketController extends Controller
     {
         Validator::make($req->all(),
             [
-                'descripcion' => 'string',
-                'evidencia1' => 'required|mimes:jpeg,bmp,png',
+                'descripcion' => 'required|string',
+                'evidencia1' => 'mimes:jpeg,bmp,png',
                 'evidencia2' => 'mimes:jpeg,bmp,png',
                 'evidencia3' => 'mimes:jpeg,bmp,png'
             ],
             [
+                'descripcion.required' => 'Usted debe ingresar una descripción',
                 'descripcion.string' => 'La descripcion solo puede ser alfanumerica',
-                'evidencia1.required' => 'Debe ingresar por lo menos la primera evidencia',
                 'evidencia1.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)',
                 'evidencia2.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)',
                 'evidencia3.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)'
@@ -51,17 +51,20 @@ class TicketController extends Controller
         $id_ticket = Ticket::max('id');
         $tipo = 'APERTURA';
 
-        $img = $req->file('evidencia1');
-        $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
-        $img->move(public_path() . '/imgEvidencia/', $file_rout);
-
         $respuesta = new Respuesta();
+
+        if ($req->evidencia1) {
+            $img = $req->file('evidencia1');
+            $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
+            $img->move(public_path() . '/imgEvidencia/', $file_rout);
+            $respuesta->evidencia1 = $file_rout;
+        }
 
         $respuesta->descripcion = $req->descripcion;
         $respuesta->id_ticket = $id_ticket;
         $respuesta->fecha = $fecha;
         $respuesta->tipo = $tipo;
-        $respuesta->evidencia1 = $file_rout;
+
         if ($req->evidencia2) {
             $img2 = $req->file('evidencia2');
             $file_rout2 = time() . '_' . $img2->getClientOriginalName();//hora de unix
@@ -98,7 +101,7 @@ class TicketController extends Controller
         if ($rol == 'Root') {
             $tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
-                ->join('users', 'ticket.id_consultor', 'users.id')
+                ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                 ->select('ticket.id', 'ticket.tipo','ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',

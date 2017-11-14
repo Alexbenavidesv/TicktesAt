@@ -22,7 +22,7 @@ class UsuarioController extends Controller
         ->get();
         //dd($users);
         $empresa = Empresa::all();
-        $roles = Roles::where('nombre','!=','Root')->get();
+        $roles = Roles::all();
 
         return view("usuarios", compact('users', 'empresa','roles'));
     }
