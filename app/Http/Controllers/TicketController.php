@@ -23,13 +23,12 @@ class TicketController extends Controller
     {
         Validator::make($req->all(),
             [
-                'descripcion' => 'required|string',
+                'descripcion' => 'string',
                 'evidencia1' => 'required|mimes:jpeg,bmp,png',
                 'evidencia2' => 'mimes:jpeg,bmp,png',
                 'evidencia3' => 'mimes:jpeg,bmp,png'
             ],
             [
-                'descripcion.required' => 'Usted debe ingresar una descripción',
                 'descripcion.string' => 'La descripcion solo puede ser alfanumerica',
                 'evidencia1.required' => 'Debe ingresar por lo menos la primera evidencia',
                 'evidencia1.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, bmp, png)',
