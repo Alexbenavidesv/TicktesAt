@@ -41,13 +41,20 @@ class EmpresaController extends Controller
     public function editar(Request $req){
         Validator::make($req->all(), [
                 'nombre' => 'required',
-                'nit' => 'required|unique:empresa',
+                'nit' => 'required|unique:empresa,id,'.$req->idempre,
             ], [
                 'nombre.required' => 'Debes ingresar el nombre',
                 'nit.required' => 'Debes ingresar el nit',
                 'nit.unique' => 'Ya existe el nit registrado',
 
             ])->validate();
+
+        $idEmpre = $req->idempre;
+
+        $empresa = Empresa::findOrFail($idEmpre);
+        $empresa->nombre = $req->nombre;
+        $empresa->nit = $req->nit;
+        $empresa->save();
         
         return "ok";
     }  

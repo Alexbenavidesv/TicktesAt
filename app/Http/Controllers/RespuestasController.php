@@ -19,7 +19,8 @@ class RespuestasController extends Controller
     	->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
     	->join('consultores', 'ticket.id_consultor', 'consultores.id')
     	->join('users', 'ticket.id_user', 'users.id')
-    	->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1', 'ticket.estado', 'respuesta.evidencia2', 'respuesta.evidencia3', 'respuesta.id AS resp','consultores.id AS consultor', 'users.name AS nomusuario')
+        ->join('empresa', 'users.id_empresa', 'empresa.id')
+    	->select('ticket.id', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1', 'ticket.estado', 'respuesta.evidencia2', 'respuesta.evidencia3', 'respuesta.id AS resp','consultores.id AS consultor', 'users.name AS nomusuario', 'empresa.nombre AS empresa')
     	->get();
 
     	$estado =  $respuesta[0]->estado;

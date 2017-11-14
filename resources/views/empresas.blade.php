@@ -94,17 +94,22 @@
                                 <form>
                                   {{ csrf_field() }}
                                   <div class="form-group">
+                                    <p id="errornombreupdt{{$e->id}}" class="text-danger" style="font-size: 14px;">
+                                    </p>
                                     <label for="nempre">Nombre</label>
-                                    <input type="text" class="form-control" id="nempre" name="nempre" value="{{$e->nombre}}">
+                                    <input type="text" class="form-control" id="nempre{{$e->id}}" name="nempre" value="{{$e->nombre}}">
                                   </div>
                                   <div class="form-group">
+                                    <p id="errornitupdt{{$e->id}}" class="text-danger" style="font-size: 14px;">
+                                    </p>
                                     <label for="nitempre">Nit</label>
-                                    <input type="text" class="form-control" id="nitempre" name="nitempre" value="{{$e->nit}}">
+                                    <input type="text" class="form-control" id="nitempre{{$e->id}}" name="nitempre" value="{{$e->nit}}">
+                                    <input type="hidden" id="idempreupdt{{$e->id}}" name="idempreupdt" value="{{$e->id}}">
                                   </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button  class="btn btn-success"  id="editarEmpresa">Editar</button>
+                                <button  class="btn btn-success"  onclick="editarEmpresa({{$e->id}})">Editar</button>
                                 <button  class="btn btn-danger" onclick="cerrar({{$e->id}})">Cerrar</button>
                             </div>
                         </div>
