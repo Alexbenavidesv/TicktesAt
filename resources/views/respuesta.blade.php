@@ -102,10 +102,10 @@
         @if($r->tipo=='APERTURA')
         <article class="panel panel-danger panel-outline">
             <div class="panel-heading icon">
-                <h2 class="panel-title">Respuesta de apertura <strong>Ticket #{{$r->id}} Abierto por: {{$r->nomusuario}}</strong></h2>
+                <h2 class="panel-title">Respuesta de apertura <strong>Ticket #{{$r->id}}</strong> Abierto por: {{$r->nomusuario}} - {{$r->empresa}}</h2>
             </div>
             <div class="panel-body">
-                <strong>{{$r->descripcion}}</strong>
+                <strong><pre>{{$r->descripcion}}</pre></strong>
             </div>
         </article>
         
@@ -142,7 +142,7 @@
                 <h2 class="panel-title">Respuesta de seguimiento <strong>Ticket #{{$r->id}}</strong> <strong>En seguimiento</strong></h2>
             </div>
             <div class="panel-body">
-                {{$r->descripcion}}
+                <pre>{{$r->descripcion}}</pre>
             </div>
         </article>
 
@@ -165,7 +165,7 @@
                 <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong></h2>
             </div>
             <div class="panel-body">
-                {{$r->descripcion}}
+                <pre>{{$r->descripcion}}</pre>
             </div>
         </article>
 
