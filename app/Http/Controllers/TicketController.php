@@ -51,17 +51,20 @@ class TicketController extends Controller
         $id_ticket = Ticket::max('id');
         $tipo = 'APERTURA';
 
-        $img = $req->file('evidencia1');
-        $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
-        $img->move(public_path() . '/imgEvidencia/', $file_rout);
-
         $respuesta = new Respuesta();
+
+        if ($req->evidencia1) {
+            $img = $req->file('evidencia1');
+            $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
+            $img->move(public_path() . '/imgEvidencia/', $file_rout);
+            $respuesta->evidencia1 = $file_rout;
+        }
 
         $respuesta->descripcion = $req->descripcion;
         $respuesta->id_ticket = $id_ticket;
         $respuesta->fecha = $fecha;
         $respuesta->tipo = $tipo;
-        $respuesta->evidencia1 = $file_rout;
+
         if ($req->evidencia2) {
             $img2 = $req->file('evidencia2');
             $file_rout2 = time() . '_' . $img2->getClientOriginalName();//hora de unix
