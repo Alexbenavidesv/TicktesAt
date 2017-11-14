@@ -183,28 +183,43 @@
                         <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia1}}</a>
                 </div>
             </div>
-
+          @endif
+        </article>
             <div id="editarespuesta" class="modal fade" role="dialog">
               <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Crear nueva empresa</h4>
+                        <h4 class="modal-title">Editar respuesta</h4>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="/editarRespuesta" method="POST" enctype="multipart/form-data">
+                           {{ csrf_field() }}
+                           <div class="form-group">
+                            <p id="errordescrespuesta" class="text-danger" style="font-size: 14px;">
+                            </p>
+                            <label for="nempre">Descripcion</label>
+                            <textarea class="form-control" rows="3" name="respuupdt" id="respuupdt" maxlength="1000" style="resize: none;">{{$r->descripcion}}</textarea>
+                           </div>
+                           <div class="form-group">
+                            <div id="errorevidenciares" style="color: red"></div>
+                            <label for="evidenciaedit">Evidencia</label><br>
+                            <p>{{$r->evidencia1}}</p>
+                            <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/><br>
+                            <input type="file" id="evidenciaedit" name="evidenciaedit">
+                          </div>
+                          <input type="hidden" id="idrespu" name="idrespu" value="{{$r->idresp}}">
+                          <input type="hidden" id="idticketupdt" name="idticketupdt" value="{{$r->id}}">
+                          <div class="modal-footer">
+                              <button type="submit" class="btn btn-success"  id="respuestaupdt">Editar</button>
+                              <button  class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                          </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button  class="btn btn-success"  onclick="">Editar</button>
-                        <button  class="btn btn-danger" onclick="">Cerrar</button>
                     </div>
                 </div>
               </div>
             </div>
-          @endif
-        </article>
         @endif
         @endforeach
     </div>
