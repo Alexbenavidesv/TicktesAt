@@ -6,11 +6,12 @@ $('#guardarUser').click(function (e) {
     var cedula=$('input[name="email"]').val();
     var correo=$('input[name="correo"]').val();
     var empresa=$('select[name="empresa"]').val();
+    var telefono=$('select[name="telefono"]').val();
     var rol=$('select[name="rol"]').val();
 
     $.ajax({
         url : "usuarios",
-        data : {nombre: nombre, email: cedula, correo: correo, empresa: empresa, rol: rol, _token: tokken},
+        data : {nombre: nombre, email: cedula, correo: correo, empresa: empresa, rol: rol, telefono: telefono, _token: tokken},
         type : 'POST',
         success:function (respuesta) {
             // console.log(respuesta);
@@ -29,6 +30,7 @@ $('#guardarUser').click(function (e) {
             $('#nombre').val('');
             $('#cedula').val('');
             $('#correo').val('');
+            $('#telefono').val('');
             $('#usuarios').hide();
             location.href = '/usuarios';
         },
@@ -74,6 +76,12 @@ $('#guardarUser').click(function (e) {
                 }
                 else{
                     $('#errorRol').html('');
+                }
+                if(errores.telefono){
+                    $('#errorTelefono').html(errores.telefono);
+                }
+                else{
+                    $('#errorTelefono').html('');
                 }
 
             }

@@ -34,6 +34,7 @@ class UsuarioController extends Controller
                 'email' => 'required|unique:users',
                 'correo' => 'required|email',
                 'empresa' => 'required',
+                'telefono' => 'required|min:7',
                 'rol' => 'required',
             ], [
                 'nombre.required' => 'Debes ingresar el nombre',
@@ -41,6 +42,7 @@ class UsuarioController extends Controller
                 'email.unique' => 'Ya existe la identificación',
                 'correo.required' => 'Debes ingresar un correo',
                 'correo.email' => 'Ingresa un correo valido',
+                'telefono.required' => 'Debes ingresar un teléfono',
                 'telefono.min' => 'Ingresa un telefono valido',
                 'empresa.required' => 'Debes escoger una empresa',
                 'rol.required' => 'Debes escoger una rol',
@@ -52,6 +54,7 @@ class UsuarioController extends Controller
             $usuario->email=$request->email;
             $usuario->password=bcrypt($request->email);
             $usuario->correo=$request->correo;
+            $usuario->telefono=$request->telefono;
             $usuario->id_empresa=$request->empresa;
             $usuario->id_rol=$request->rol;
             $usuario->save();
