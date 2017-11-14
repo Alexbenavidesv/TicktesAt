@@ -50,6 +50,6 @@ class EmpresaController extends Controller
             ])->validate();
         
         return "ok";
-    }
+    }  
 
 }
