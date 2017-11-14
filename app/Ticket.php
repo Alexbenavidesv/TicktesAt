@@ -23,4 +23,10 @@ class Ticket extends Model
             return $query->where('ticket.id_consultor', $consultor);
         }
     }
+
+    public function scopeEstado($query,$estado){
+        if (trim($estado) != "") {
+            return $query->where('ticket.estado', $estado);
+        }
+    }
 }

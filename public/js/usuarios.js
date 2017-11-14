@@ -6,9 +6,8 @@ $('#guardarUser').click(function (e) {
     var cedula=$('input[name="email"]').val();
     var correo=$('input[name="correo"]').val();
     var empresa=$('select[name="empresa"]').val();
-    var telefono=$('select[name="telefono"]').val();
+    var telefono=$('input[name="telefono"]').val();
     var rol=$('select[name="rol"]').val();
-
     $.ajax({
         url : "usuarios",
         data : {nombre: nombre, email: cedula, correo: correo, empresa: empresa, rol: rol, telefono: telefono, _token: tokken},

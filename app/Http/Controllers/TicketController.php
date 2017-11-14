@@ -162,7 +162,7 @@ class TicketController extends Controller
 
     public function filtros(Request $request)
     {
-        if ($request->prioridad_ != '' || $request->consultor_ != '') {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != '') {
 
             $iduser = Auth::user()->id;
 
@@ -179,6 +179,7 @@ class TicketController extends Controller
 
             if ($rol == 'Root') {
                 $tickets = Ticket::prioridad($request->prioridad_)
+                    ->estado($request->estado)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->join('users', 'ticket.id_consultor', 'users.id')
@@ -191,6 +192,7 @@ class TicketController extends Controller
                     ->paginate(15);
             } elseif ($rol == 'Consultor') {
                 $tickets = Ticket::prioridad($request->prioridad_)
+                    ->estado($request->estado)
                 ->join('users', 'ticket.id_user', 'users.id')
                     ->join('empresa', 'users.id_empresa', 'empresa.id')
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -210,6 +212,7 @@ class TicketController extends Controller
                 $empresa = $consulta2[0]->empresa;
                 //dd($empresa);
                 $tickets = Ticket::prioridad($request->prioridad_)
+                    ->estado($request->estado)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->join('users', 'ticket.id_user', 'users.id')
