@@ -101,7 +101,7 @@ class TicketController extends Controller
         if ($rol == 'Root') {
             $tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
-                ->join('users', 'ticket.id_consultor', 'users.id')
+                ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                 ->select('ticket.id', 'ticket.tipo','ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
