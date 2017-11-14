@@ -17,6 +17,14 @@
 			<h4 ><span class="label label-primary">FILTRAR TICKETS</span></h4><br>
 			<form action="/filtrar_tickets" method="POST">
 				{{csrf_field() }}
+
+				<label for="">Estado</label>
+				<select name="estado" id="" class="form-control">
+					<option value="">Seleccione ...</option>
+					<option value="0">Pendiente</option>
+					<option value="1">Cerrado</option>
+				</select> <br>
+
 			<label for="">Prioridad</label>
 			<select name="prioridad_" id="" class="form-control">
 				<option value="">Seleccione ...</option>
