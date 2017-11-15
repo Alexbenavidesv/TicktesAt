@@ -64,6 +64,7 @@ class TicketController extends Controller
         $respuesta->id_ticket = $id_ticket;
         $respuesta->fecha = $fecha;
         $respuesta->tipo = $tipo;
+        $respuesta->id_userres = Auth::user()->id;
 
         if ($req->evidencia2) {
             $img2 = $req->file('evidencia2');
@@ -87,7 +88,9 @@ class TicketController extends Controller
     {
         $iduser = Auth::user()->id;
 
-        $consultores = Consultor::where('id', '!=', 1)->get();
+        $consultores = User::where('users.id_rol', '!=', 2)
+            ->select('users.id', 'users.name')
+            ->get();
 
         $consulta = User::join('roles', 'users.id_rol', 'roles.id')
             ->where('users.id', $iduser)
@@ -166,7 +169,9 @@ class TicketController extends Controller
 
             $iduser = Auth::user()->id;
 
-            $consultores = Consultor::where('id', '!=', 1)->get();
+            $consultores = User::where('users.id_rol', '!=', 2)
+            ->select('users.id', 'users.name')
+            ->get();
 
             $consulta = User::join('roles', 'users.id_rol', 'roles.id')
                 ->where('users.id', $iduser)
@@ -291,6 +296,66 @@ class TicketController extends Controller
         $ticket->estado=0;
         $ticket->save();
 
-return $id_ticket;
+        return $id_ticket;
+    }
+
+
+    public function misTickets(){
+        $iduser = Auth::user()->id;
+
+        $consultores = User::where('users.id_rol', '!=', 2)
+            ->select('users.id', 'users.name')
+            ->get();
+
+        $tickets = Ticket::join('users', 'ticket.id_user', 'users.id')
+                ->join('empresa', 'users.id_empresa', 'empresa.id')
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->where('consultores.id', $iduser)
+                ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                    'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
+                ->orderBy('id', 'desc')
+                ->paginate(15);
+
+        return view('mistickets', compact('tickets', 'consultores'));
+    }
+
+
+    public function filtros2(Request $request)
+    {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != '') {
+
+            $iduser = Auth::user()->id;
+
+            $consultores = User::where('users.id_rol', '!=', 2)
+            ->select('users.id', 'users.name')
+            ->get();
+
+            $consulta = User::join('roles', 'users.id_rol', 'roles.id')
+                ->where('users.id', $iduser)
+                ->select('roles.nombre')
+                ->get();
+            //dd($consulta);
+            $rol = $consulta[0]->nombre;
+
+            //dd($rol);
+            $tickets = Ticket::prioridad($request->prioridad_)
+                ->estado($request->estado)
+            ->join('users', 'ticket.id_user', 'users.id')
+                ->join('empresa', 'users.id_empresa', 'empresa.id')
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->join('consultores','ticket.id_consultor', 'consultores.id')
+                ->where('consultores.id', $iduser)
+                ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                    'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
+                ->orderBy('id', 'desc')
+                ->paginate(15);
+           
+            return view('mistickets', compact('tickets', 'consultores'));
+        }else{
+           return redirect('misTickets');
+       }
     }
 }

@@ -15,7 +15,7 @@
 
 		<div class="col-md-2 text-center">
 			<h4 ><span class="label label-primary">FILTRAR TICKETS</span></h4><br>
-			<form action="/filtrar_tickets" method="POST">
+			<form action="/filtrar_tickets2" method="POST">
 				{{csrf_field() }}
 
 				<label for="">Estado</label>

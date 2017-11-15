@@ -62,7 +62,7 @@ class UsuarioController extends Controller
             
             $id_usuario=User::max('id');
 
-            if($request->rol==3) {
+            if($request->rol!=2) {
                 $consultor = new Consultor();
                 $consultor->id = $id_usuario;
                 $consultor->nombre = $request->nombre;
@@ -106,7 +106,7 @@ class UsuarioController extends Controller
             $usuario->id_rol=$request->rol;
             $usuario->save();
 
-            if($request->rol==3) {
+            if($request->rol!=2) {
                 $consultor = Consultor::find($request->id_user);
                 $consultor->nombre = $request->nombre;
                 $consultor->save();

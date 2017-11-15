@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'TicketController@index')->middleware('auth','sesion', 'admin');
+Route::get('/', 'TicketController@index')->middleware('auth','sesion', 'adminroot');
 
 //Rutas para el inicio de sesion
 Route::get('login', 'Auth\LoginController@showLoginForm');
@@ -19,7 +19,7 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 
 Route::get('usuarios', 'UsuarioController@listarUsuarios')->middleware('auth','sesion', 'root');
-Route::post('guardar_ticket', 'TicketController@nuevoTicket')->middleware('auth','sesion', 'admin');
+Route::post('guardar_ticket', 'TicketController@nuevoTicket')->middleware('auth','sesion', 'adminroot');
 Route::post('usuarios','UsuarioController@create')->middleware('auth','sesion', 'root');
 Route::post('editar_usuario','UsuarioController@editar')->middleware('auth','sesion', 'root');
 
@@ -32,6 +32,7 @@ Route::get('cambiar_pass', 'CambiarPasswordController@cancelarPassword')->middle
 Route::get('consultartickets', 'TicketController@listarTickes')->middleware('auth','sesion');
 Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesion', 'root');
 Route::post('filtrar_tickets','TicketController@filtros')->middleware('auth','sesion');
+Route::post('filtrar_tickets2','TicketController@filtros2')->middleware('auth','sesion', 'root');
 Route::get('reabrir_ticket/{id}','TicketController@reabrir')->middleware('auth','sesion','root');
 
 Route::get('respuesta/{id}', 'RespuestasController@verRespuestas')->middleware('auth','sesion');
@@ -44,11 +45,13 @@ Route::post('empresas','EmpresaController@create')->middleware('auth','sesion', 
 
 Route::post('saveResponse','RespuestasController@guardarRespuesta')->middleware('auth','sesion');
 
-Route::get('consultarticketsna', 'TicketController@ticketsNoAsignados')->middleware('auth','sesion');
-Route::post('guardarasignacion', 'TicketController@asignar')->middleware('auth','sesion', 'consultor');
+Route::get('consultarticketsna', 'TicketController@ticketsNoAsignados')->middleware('auth','sesion', 'rootconsultor');
+Route::post('guardarasignacion', 'TicketController@asignar')->middleware('auth','sesion', 'rootconsultor');
 
 Route::post('editarEmpresa', 'EmpresaController@editar')->middleware('auth','sesion', 'root');
 
 Route::get('descarga/{parametro}', 'RespuestasController@descargar');
 
 Route::post('editarRespuesta', 'RespuestasController@editar')->middleware('auth','sesion', 'consultor');
+
+Route::get('misTickets', 'TicketController@misTickets')->middleware('auth','sesion', 'root');
