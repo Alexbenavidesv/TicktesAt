@@ -38,7 +38,7 @@ class TicketController extends Controller
         )->validate();
 
         $usuario = Auth::user()->id;
-        $fecha = date("Y/m/d");
+        $fecha = date("Y/m/d H:i:s");
 
         $ticket = new Ticket;
 
