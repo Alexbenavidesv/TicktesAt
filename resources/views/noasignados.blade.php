@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+<h1 class="text-center">Tickets no asignados</h1>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 	<table class="table table-striped" align="center" style="width: 100%">
 		@if(count($tickets)>0)
@@ -47,9 +48,9 @@
 
 			<td>
 				<a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-eye" aria-hidden="true"></i></a>
-			@if(Auth::user()->id_rol==3)
+			@if(Auth::user()->id_rol!=2)
 				@if($t->prioridad=='')
-			<a type="button" href="" class="btn btn-success btn-sm" data-toggle="modal" data-id="{{$t->id}}" data-target="#asignar1{{$t->id}}" style="width: 30px" id="respuesta"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+			<a type="button" href="" class="btn btn-success btn-sm" data-toggle="modal" data-id="{{$t->id}}" data-target="#asignar1{{$t->id}}" style="width: 30px" id="respuesta"><i class="fa fa-cogs" aria-hidden="true"></i></a>
 				@endif
 				@endif
 			</td>
@@ -92,6 +93,10 @@
 									<option value="">Selecciona el tipo...</option>
 									<option value="Soporte">Soporte</option>
 									<option value="Desarrollo">Desarrollo</option>
+									<option value="Presentación">Presentación</option>
+									<option value="Reporte">Reporte</option>
+									<option value="Capacitación">Capacitación</option>
+									<option value="Instalación">Instalación</option>
 								</select>
 							</div>
 							<input type="hidden" value="{{$t->id}}"  id="id_ticket{{$t->id}}" name="id_ticket{{$t->id}}">
