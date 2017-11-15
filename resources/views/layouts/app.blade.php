@@ -169,5 +169,6 @@
     <script src="{{ asset('js/guardartickets.js') }}"></script>
     <script src="{{ asset('js/editarempresa1.js') }}"></script>
     <script src="{{ asset('js/editarUsuario.js') }}"></script>
+    <script src="{{ asset('js/editarespuesta.js') }}"></script>
 </body>
 </html>

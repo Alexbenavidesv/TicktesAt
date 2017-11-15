@@ -20,7 +20,7 @@ class RespuestasController extends Controller
     	->join('consultores', 'ticket.id_consultor', 'consultores.id')
     	->join('users', 'ticket.id_user', 'users.id')
         ->join('empresa', 'users.id_empresa', 'empresa.id')
-    	->select('ticket.id', 'respuesta.id AS idresp', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1', 'ticket.estado', 'respuesta.evidencia2', 'respuesta.evidencia3', 'respuesta.id AS resp','consultores.id AS consultor', 'users.name AS nomusuario', 'empresa.nombre AS empresa')
+    	->select('ticket.id', 'respuesta.id AS idresp', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1', 'ticket.estado', 'respuesta.evidencia2', 'respuesta.evidencia3', 'respuesta.id AS resp','consultores.id AS consultor', 'users.name AS nomusuario', 'empresa.nombre AS empresa', 'respuesta.respuestanv')
     	->get();
 
     	$estado =  $respuesta[0]->estado;
@@ -44,6 +44,7 @@ class RespuestasController extends Controller
         $respuesta->id_ticket = $request->idticket;
         $respuesta->fecha = $fecha;
         $respuesta->tipo = $tipo;
+        $respuesta->respuestanv = $request->respunv;
 
         if ($request->evidencia) {
         	$img = $request->file('evidencia');
@@ -70,5 +71,23 @@ class RespuestasController extends Controller
             return response()->download($url);
         }
         abort(404);
+    }
+
+
+    public function editar(Request $request){
+        $idrespuesta = $request->idrespu;
+        $respuesta = Respuesta::findOrFail($idrespuesta);
+        //dd($idrespuesta);
+        $respuesta->descripcion = $request->respuupdt;
+
+        if ($request->evidenciaedit) {
+            $img = $request->file('evidenciaedit');
+            //dd($img);
+            $file_rout = time().'_'.$img->getClientOriginalName();//hora de unix
+            $img->move(public_path().'/imgEvidencia/', $file_rout);
+            $respuesta->evidencia1 = $file_rout;
+        }
+        $respuesta->save();
+        return back()->withInput();
     }
 }

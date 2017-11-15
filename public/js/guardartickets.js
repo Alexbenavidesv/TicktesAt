@@ -2,6 +2,7 @@ $('#guardarRes').click(function(e){
 	//e.preventDefault();
 
 	var respuesta = $('#respu').val();
+	var respuestanv = $('#respunv').val();
 	var eviden = $('#evidencia').val();
 	var idticket = $('#idticket').val();
 	var ext = eviden.substring(eviden.lastIndexOf("."));
@@ -12,8 +13,9 @@ $('#guardarRes').click(function(e){
 		e.preventDefault();		
 	}
 
+
 	if (ext != '') {
-		if (ext!=".jpg" && ext!=".jpeg" && ext!=".png" && ext!=".PNG" && ext!=".JPEG" && ext!=".JPG") {
+		if (ext!=".jpg" && ext!=".jpeg" && ext!=".png" && ext!=".PNG" && ext!=".JPEG" && ext!=".JPG" && ext!="rar" && ext!="zip") {
 			$('#err2').html('El archivo debe ser una imagen (.jpg, .jpeg, .png)');
 			e.preventDefault();
 		}else{

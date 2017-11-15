@@ -49,3 +49,5 @@ Route::post('guardarasignacion', 'TicketController@asignar')->middleware('auth',
 Route::post('editarEmpresa', 'EmpresaController@editar')->middleware('auth','sesion', 'root');
 
 Route::get('descarga/{parametro}', 'RespuestasController@descargar');
+
+Route::post('editarRespuesta', 'RespuestasController@editar')->middleware('auth','sesion', 'root');
