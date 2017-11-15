@@ -118,7 +118,7 @@
         @if($r->tipo=='APERTURA')
         <article class="panel panel-danger panel-outline">
             <div class="panel-heading icon">
-                <h2 class="panel-title"><strong>Ticket #{{$r->id}}</strong> Abierto por: {{$r->nomusuario}} - {{$r->empresa}} - {{$r->telefono}}</h2>
+                <h2 class="panel-title"><strong>Ticket #{{$r->id}}</strong> Abierto por: {{$r->nomusuario}} - {{$r->empresa}} - {{$r->telefono}} - {{$r->fecha}}</h2>
             </div>
             <div class="panel-body">
                 <strong>{{$r->descripcion}}</strong>
@@ -154,7 +154,7 @@
         @if($r->tipo=='SEGUIMIENTO')
         <article class="panel panel-primary">
             <div class="panel-heading">
-                <h2 class="panel-title">Respuesta <strong>Ticket #{{$r->id}}</strong> Responde: {{$usuariorespuesta[$i]}}</h2>
+                <h2 class="panel-title">Respuesta <strong>Ticket #{{$r->id}}</strong> Responde: {{$usuariorespuesta[$i]}} - {{$r->fecha}}</h2>
             </div>
             <div class="panel-body">
                 {{$r->descripcion}}
@@ -184,7 +184,7 @@
         @if($r->tipo=='CIERRE')
         <article class="panel panel-success">
             <div class="panel-heading">
-                  <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong> - Cerrado por: {{$usuariorespuesta[$i]}}</h2>
+                  <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong> - Cerrado por: {{$usuariorespuesta[$i]}} - {{$r->fecha}}</h2>
                   <input type="hidden" id="idrespuesta" name="idrespuesta" value="{{$r->idresp}}">
                   <input type="hidden" id="estadoticket" name="estadoticket" value="{{$estado}}">
                   @if(Auth::user()->id_rol == 3)
