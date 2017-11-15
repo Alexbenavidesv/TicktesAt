@@ -21,6 +21,7 @@
     <link href="{{ asset('css/style3.css') }}" rel="stylesheet">
      <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 
     <style>
         .navbar-login
@@ -171,6 +172,15 @@
     <script src="{{ asset('js/editarUsuario.js') }}"></script>
     <script src="{{ asset('js/editarespuesta.js') }}"></script>
     <script src="{{ asset('js/reabrir.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+<script >
+    $(document).ready(function() {
+        $('.consultorSelect').select2();
+        $('.tipoSelect').select2();
+        $('.prioridadSelect').select2();
+        $('.estadoSelect').select2();
+    });
+</script>
     <script src="{{ asset('js/solicitar.js') }}"></script>
 </body>
 </html>

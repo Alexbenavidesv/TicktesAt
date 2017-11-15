@@ -19,27 +19,27 @@
 				{{csrf_field() }}
 
 				<label for="">Estado</label>
-				<select name="estado" id="" class="form-control">
+				<select name="estado" id="" class="estadoSelect" style="width: 100%">
 					<option value="">Seleccione ...</option>
 					<option value="0">Pendiente</option>
 					<option value="1">Cerrado</option>
-				</select> <br>
+				</select> <br><br>
 
 			<label for="">Prioridad</label>
-			<select name="prioridad_" id="" class="form-control">
+			<select name="prioridad_" id="" class="prioridadSelect" style="width: 100%">
 				<option value="">Seleccione ...</option>
 				<option value="Alta">Alta</option>
 				<option value="Media">Media</option>
 				<option value="Baja">Baja</option>
-			</select> <br>
+			</select> <br><br>
 				@if(Auth::user()->id_rol ==1)
 			<label for="">Consultor</label>
-			<select name="consultor_" id="consultor_" class="form-control">
+			<select name="consultor_" id="consultor_" class="consultorSelect" style="width: 100%">
 				<option value="">Seleccione ...</option>
 				@foreach($consultores as $consultor)
 					<option value="{{$consultor->id}}">{{$consultor->nombre}}</option>
 				@endforeach
-			</select><br>
+			</select><br><br>
 				@endif
 
 			<button class="btn btn-success " style="width: 100%">
@@ -111,7 +111,7 @@
 							</div>
 							<div class="modal-body">
 								<div class="alert alert-info text-center">
-									<small><b>Una vez asignada la prioridad y el consultor no lo podra modificar.</b></small>
+									<small><b>Aqui asignará el ticket a un consultor</b></small>
 								</div>
 
 								<div class="row text-center">
@@ -120,7 +120,7 @@
 									<div class="col-md-6">
 										<label for="">Prioridad</label>
 										<p id="errorPrioridad{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
-										<select name="prioridad{{$t->id}}" id="prioridad{{$t->id}}" class="form-control">
+										<select name="prioridad{{$t->id}}" id="prioridad{{$t->id}}" class="prioridadSelect" style="width: 90%">
 											<option value="">Selecciona una prioridad...</option>
 											<option value="Baja">Baja</option>
 											<option value="Media">Media</option>
@@ -130,7 +130,7 @@
 									<div class="col-md-6">
 										<label for="">Consultor</label>
 										<p id="errorConsultor{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
-										<select name="consultor{{$t->id}}" id="consultor{{$t->id}}" class="form-control">
+										<select name="consultor{{$t->id}}" id="consultor{{$t->id}}" class="consultorSelect" style="width: 90%">
 											<option value="">Selecciona un consultor...</option>
 										@foreach($consultores as $consultor)
 												<option value="{{$consultor->id}}">{{$consultor->nombre}}</option>
@@ -141,11 +141,14 @@
 										<div class="col-md-6">
 											<label for="">Tipo</label>
 											<p id="errorTipo{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
-											<select name="tipo{{$t->id}}" id="tipo{{$t->id}}" class="form-control">
+											<select name="tipo{{$t->id}}" id="tipo{{$t->id}}" class="tipoSelect" style="width: 90%">
 												<option value="">Selecciona el tipo...</option>
 												<option value="Soporte">Soporte</option>
 												<option value="Desarrollo">Desarrollo</option>
+												<option value="Presentación">Presentación</option>
+												<option value="Reporte">Reporte</option>
 												<option value="Capacitación">Capacitación</option>
+												<option value="Instalación">Instalación</option>
 												</select>
 										</div>
 
@@ -181,5 +184,7 @@
 		$('#asignar'+id).hide();
 		location.href = '/consultartickets';
 	};
+
+
 </script>
 @endsection

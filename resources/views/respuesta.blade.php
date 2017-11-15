@@ -110,7 +110,11 @@
         <button type="button" class="btn btn-primary" style="width: 150px; margin-left: 0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Generar respuesta</button><br><br>
         @endif
         @endif
+        <?php 
+        $i=0;
+         ?>
         @foreach($respuesta as $r)
+           
         @if($r->tipo=='APERTURA')
         <article class="panel panel-danger panel-outline">
             <div class="panel-heading icon">
@@ -120,7 +124,7 @@
                 <strong>{{$r->descripcion}}</strong>
             </div>
         </article>
-        
+     
         <article class="panel panel-default panel-outline">
             <div class="panel-body d-inline-block">
                 <div class="row">
@@ -147,11 +151,10 @@
             </div>
         </article>
         @endif
-
         @if($r->tipo=='SEGUIMIENTO')
         <article class="panel panel-primary">
             <div class="panel-heading">
-                <h2 class="panel-title">Respuesta <strong>Ticket #{{$r->id}}</strong></h2>
+                <h2 class="panel-title">Respuesta <strong>Ticket #{{$r->id}}</strong> Responde: {{$usuariorespuesta[$i]}}</h2>
             </div>
             <div class="panel-body">
                 {{$r->descripcion}}
@@ -181,7 +184,7 @@
         @if($r->tipo=='CIERRE')
         <article class="panel panel-success">
             <div class="panel-heading">
-                  <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong></h2>
+                  <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong> - Cerrado por: {{$usuariorespuesta[$i]}}</h2>
                   <input type="hidden" id="idrespuesta" name="idrespuesta" value="{{$r->idresp}}">
                   <input type="hidden" id="estadoticket" name="estadoticket" value="{{$estado}}">
                   @if(Auth::user()->id_rol == 3)
@@ -252,7 +255,9 @@
                 </div>
               </div>
             </div>
+          
         @endif
+          <?php $i++; ?>
         @endforeach
     </div>
     <!-- /Timeline -->
