@@ -110,7 +110,11 @@
         <button type="button" class="btn btn-primary" style="width: 150px; margin-left: 0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Generar respuesta</button><br><br>
         @endif
         @endif
+        <?php 
+        $i=0;
+         ?>
         @foreach($respuesta as $r)
+           
         @if($r->tipo=='APERTURA')
         <article class="panel panel-danger panel-outline">
             <div class="panel-heading icon">
@@ -120,7 +124,7 @@
                 <strong>{{$r->descripcion}}</strong>
             </div>
         </article>
-        
+     
         <article class="panel panel-default panel-outline">
             <div class="panel-body d-inline-block">
                 <div class="row">
@@ -147,9 +151,6 @@
             </div>
         </article>
         @endif
-        <?php 
-        $i=0;
-         ?>
         @if($r->tipo=='SEGUIMIENTO')
         <article class="panel panel-primary">
             <div class="panel-heading">
@@ -254,8 +255,9 @@
                 </div>
               </div>
             </div>
+          
         @endif
-        <?php $i++; ?>
+          <?php $i++; ?>
         @endforeach
     </div>
     <!-- /Timeline -->
