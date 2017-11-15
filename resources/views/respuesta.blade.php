@@ -147,11 +147,13 @@
             </div>
         </article>
         @endif
-
+        <?php 
+        $i=0;
+         ?>
         @if($r->tipo=='SEGUIMIENTO')
         <article class="panel panel-primary">
             <div class="panel-heading">
-                <h2 class="panel-title">Respuesta <strong>Ticket #{{$r->id}}</strong></h2>
+                <h2 class="panel-title">Respuesta <strong>Ticket #{{$r->id}}</strong> Responde: {{$usuariorespuesta[$i]}}</h2>
             </div>
             <div class="panel-body">
                 {{$r->descripcion}}
@@ -253,6 +255,7 @@
               </div>
             </div>
         @endif
+        <?php $i++; ?>
         @endforeach
     </div>
     <!-- /Timeline -->
