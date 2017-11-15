@@ -68,8 +68,14 @@
             <label for="evidencia">Evidencia</label>
             <input type="file" id="evidencia" name="evidencia">
           </div>
-
-          <div class="form-group">
+          @if(Auth::user()->id_rol !=2)
+           <div class="checkbox">
+             <label>
+              <input type="checkbox" value="" id="reasignar" name="reasignar"> Solicitar reasignación
+            </label>
+           </div>
+          @endif
+          <div class="form-group" id="select">
               <label for="finalizado">¿Finalizado?</label>
               <select class="form-control" name="finalizado" id="finalizado">
                   <option value="NO">NO</option>
@@ -99,7 +105,7 @@
     <!-- Timeline -->
     <div class="timeline">
         <h1 class="text-center">Respuestas</h1>
-        @if(Auth::user()->id_rol !=1)
+        @if(Auth::user()->id == $idconsultor||Auth::user()->id == $iduser)
         @if($estado!=1)
         <button type="button" class="btn btn-primary" style="width: 150px; margin-left: 0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Generar respuesta</button><br><br>
         @endif
@@ -108,7 +114,7 @@
         @if($r->tipo=='APERTURA')
         <article class="panel panel-danger panel-outline">
             <div class="panel-heading icon">
-                <h2 class="panel-title">Respuesta de apertura <strong>Ticket #{{$r->id}}</strong> Abierto por: {{$r->nomusuario}} - {{$r->empresa}}</h2>
+                <h2 class="panel-title"><strong>Ticket #{{$r->id}}</strong> Abierto por: {{$r->nomusuario}} - {{$r->empresa}} - {{$r->telefono}}</h2>
             </div>
             <div class="panel-body">
                 <strong>{{$r->descripcion}}</strong>
@@ -145,15 +151,15 @@
         @if($r->tipo=='SEGUIMIENTO')
         <article class="panel panel-primary">
             <div class="panel-heading">
-                <h2 class="panel-title">Respuesta de seguimiento <strong>Ticket #{{$r->id}}</strong> <strong>En seguimiento</strong></h2>
+                <h2 class="panel-title">Respuesta <strong>Ticket #{{$r->id}}</strong></h2>
             </div>
             <div class="panel-body">
-                <pre style="font-family: sans-serif; font-size: 12px">{{$r->descripcion}}</pre>
+                {{$r->descripcion}}
             </div>
             @if(Auth::user()->id_rol !=2)
             @if($r->respuestanv!='')
             <div class="panel-body">
-                <pre style="font-family: sans-serif; font-size: 12px">{{$r->respuestanv}}</pre>
+                {{$r->respuestanv}}
             </div>
             @endif
             @endif
@@ -183,12 +189,12 @@
                   @endif
             </div>
             <div class="panel-body">
-                <pre id="descripcioncaso" style="font-family: sans-serif; font-size: 12px">{{$r->descripcion}}</pre>
+                {{$r->descripcion}}
             </div>
             @if(Auth::user()->id_rol !=2)
             @if($r->respuestanv!='')
             <div class="panel-body">
-                <pre style="font-family: sans-serif; font-size: 12px">{{$r->respuestanv}}</pre>
+                {{$r->respuestanv}}
             </div>
             @endif
             @endif
@@ -251,7 +257,7 @@
     </div>
     <!-- /Timeline -->
 </div>
-<script type="text/javascript">
+<script>
   var zoom = function() {
     var thumb = document.getElementById("thumb");
     if (thumb.className == "thumb") {

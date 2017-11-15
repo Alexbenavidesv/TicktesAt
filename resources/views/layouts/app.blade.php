@@ -171,5 +171,6 @@
     <script src="{{ asset('js/editarUsuario.js') }}"></script>
     <script src="{{ asset('js/editarespuesta.js') }}"></script>
     <script src="{{ asset('js/reabrir.js') }}"></script>
+    <script src="{{ asset('js/solicitar.js') }}"></script>
 </body>
 </html>
