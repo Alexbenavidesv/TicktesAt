@@ -79,6 +79,7 @@ class RespuestasController extends Controller
         $respuesta = Respuesta::findOrFail($idrespuesta);
         //dd($idrespuesta);
         $respuesta->descripcion = $request->respuupdt;
+        $respuesta->respuestanv = $request->respuupdtnv;
 
         if ($request->evidenciaedit) {
             $img = $request->file('evidenciaedit');

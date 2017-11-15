@@ -9,6 +9,6 @@ class Respuesta extends Model
     protected $table='respuesta';
 
     protected $fillable=[
-        'descripcion', 'id_ticket', 'fecha', 'tipo','evidencia1','evidencia2','evidencia3'
+        'descripcion', 'respuestanv', 'id_ticket', 'fecha', 'tipo','evidencia1','evidencia2','evidencia3'
     ];
 }
