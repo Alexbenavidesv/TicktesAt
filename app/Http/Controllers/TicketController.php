@@ -280,4 +280,17 @@ class TicketController extends Controller
 
         return "OK";
     }
+
+    public function reabrir($id_ticket){
+
+        $respuesta=Respuesta::where('tipo','CIERRE')
+            ->where('id_ticket',$id_ticket)
+            ->update(['tipo' => 'SEGUIMIENTO']);
+
+        $ticket = Ticket::findOrFail($id_ticket);
+        $ticket->estado=0;
+        $ticket->save();
+
+return $id_ticket;
+    }
 }

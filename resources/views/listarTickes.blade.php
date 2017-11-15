@@ -91,8 +91,11 @@
 				<a type="button" href="/respuesta/{{$t->id}}" class="btn btn-primary btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-eye" aria-hidden="true"></i></a>
 			@if(Auth::user()->id_rol ==1)
 				@if($t->prioridad=='')
-			<a type="button" href="" class="btn btn-success btn-sm" data-toggle="modal" data-id="{{$t->id}}" data-target="#asignar{{$t->id}}" style="width: 30px" id="respuesta"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+			<a type="button" href="" class="btn btn-success btn-sm" data-toggle="modal" data-id="{{$t->id}}" data-target="#asignar{{$t->id}}" style="width: 30px" id="respuesta"><i class="fa fa-cogs" aria-hidden="true"></i></a>
 				@endif
+				@if($t->estado==1)
+						<a class="btn btn-info btn-sm"  style="width: 30px" onclick="reabrir({{$t->id}})"><i class="fa fa-undo" aria-hidden="true"></i></a>
+					@endif
 				@endif
 			</td>
 		</tr>
@@ -158,8 +161,12 @@
 
 					</div>
 				</div>
+
+
+
+
 		@endforeach
-		@else
+				@else
 		<div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
 		@endif
 	</table>
@@ -167,6 +174,7 @@
 	</div>
 	{{ $tickets->links() }}
 </div>
+
 <script>
 	function cerrar(id){
 		//alert('cerrando');

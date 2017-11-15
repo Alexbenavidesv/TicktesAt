@@ -1,6 +1,5 @@
 $('#guardar').click(function(e){
 	e.preventDefault();
-	var token = $('input[name="_token"]').val();
 	var tokken = $('input[name="_token"]').val();
   	var datos = new FormData($('#formulario')[0]);
 	//alert(descripcion);
@@ -9,7 +8,6 @@ $('#guardar').click(function(e){
 		url: 'guardar_ticket',
 		type: 'POST',
 		headers: {'X-CSRF-TOKEN':tokken},
-	    type : 'POST',
 	    data: datos,
 	    contentType: false,
 	    processData: false,
