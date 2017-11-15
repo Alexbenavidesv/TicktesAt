@@ -25,7 +25,7 @@ class RespuestasController extends Controller
 
     	$estado =  $respuesta[0]->estado;
         $idconsultor = $respuesta[0]->consultor;
-        //$iduser = $respuesta[0]->iduser;
+        $iduser = $respuesta[0]->iduser;
     	//dd($estado);
         $usuariorespuesta = array();
         foreach ($respuesta as $res) {
