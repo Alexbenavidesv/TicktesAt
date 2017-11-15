@@ -181,5 +181,6 @@
         $('.estadoSelect').select2();
     });
 </script>
+    <script src="{{ asset('js/solicitar.js') }}"></script>
 </body>
 </html>
