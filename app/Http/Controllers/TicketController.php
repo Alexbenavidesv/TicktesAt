@@ -10,6 +10,7 @@ use App\Respuesta;
 use App\User;
 use App\Empresa;
 use App\Consultor;
+use DB;
 
 
 class TicketController extends Controller
@@ -37,48 +38,59 @@ class TicketController extends Controller
             ]
         )->validate();
 
-        $usuario = Auth::user()->id;
-        $fecha = date("Y/m/d H:i:s");
+        DB::beginTransaction();
 
-        $ticket = new Ticket;
+        try {
+            $usuario = Auth::user()->id;
+            $fecha = date("Y/m/d H:i:s");
 
-        $ticket->id_user = $usuario;
-        $ticket->save();
+            $ticket = new Ticket;
+
+            $ticket->id_user = $usuario;
+            $ticket->save();
 
 
-        //***************INSERTAR RESPUESTA*****************
+            //***************INSERTAR RESPUESTA*****************
 
-        $id_ticket = Ticket::max('id');
-        $tipo = 'APERTURA';
+            $id_ticket = Ticket::max('id');
+            $tipo = 'APERTURA';
 
-        $respuesta = new Respuesta();
+            $respuesta = new Respuesta();
 
-        if ($req->evidencia1) {
-            $img = $req->file('evidencia1');
-            $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
-            $img->move(public_path() . '/imgEvidencia/', $file_rout);
-            $respuesta->evidencia1 = $file_rout;
+            $respuesta->descripcion = $req->descripcion;
+            $respuesta->id_ticket = $id_ticket;
+            $respuesta->fecha = $fecha;
+            $respuesta->tipo = $tipo;
+            $respuesta->id_userres = Auth::user()->id;
+
+
+            if ($req->evidencia1) {
+                $img = $req->file('evidencia1');
+                $file_rout = time() . '_' . $img->getClientOriginalName();//hora de unix
+                $img->move(public_path() . '/imgEvidencia/', $file_rout);
+                $respuesta->evidencia1 = $file_rout;
+            }
+
+            if ($req->evidencia2) {
+                $img2 = $req->file('evidencia2');
+                $file_rout2 = time() . '_' . $img2->getClientOriginalName();//hora de unix
+                $img2->move(public_path() . '/imgEvidencia/', $file_rout2);
+                $respuesta->evidencia2 = $file_rout2;
+            }
+            if ($req->evidencia3) {
+                $img3 = $req->file('evidencia3');
+                $file_rout3 = time() . '_' . $img3->getClientOriginalName();//hora de unix
+                $img3->move(public_path() . '/imgEvidencia/', $file_rout3);
+                $respuesta->evidencia3 = $file_rout3;
+            }
+            $respuesta->save();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
         }
+            
 
-        $respuesta->descripcion = $req->descripcion;
-        $respuesta->id_ticket = $id_ticket;
-        $respuesta->fecha = $fecha;
-        $respuesta->tipo = $tipo;
-        $respuesta->id_userres = Auth::user()->id;
-
-        if ($req->evidencia2) {
-            $img2 = $req->file('evidencia2');
-            $file_rout2 = time() . '_' . $img2->getClientOriginalName();//hora de unix
-            $img2->move(public_path() . '/imgEvidencia/', $file_rout2);
-            $respuesta->evidencia2 = $file_rout2;
-        }
-        if ($req->evidencia3) {
-            $img3 = $req->file('evidencia3');
-            $file_rout3 = time() . '_' . $img3->getClientOriginalName();//hora de unix
-            $img3->move(public_path() . '/imgEvidencia/', $file_rout3);
-            $respuesta->evidencia3 = $file_rout3;
-        }
-        $respuesta->save();
 
         return $id_ticket;
     }
@@ -111,6 +123,8 @@ class TicketController extends Controller
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
+
+            //echo $tickets;
         } elseif ($rol == 'Consultor') {
             $tickets = Ticket::join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
@@ -139,6 +153,7 @@ class TicketController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(15);
         }
+        //dd($tickets);
         return view('listarTickes', compact('tickets', 'consultores'));
     }
 
