@@ -50,4 +50,4 @@ Route::post('editarEmpresa', 'EmpresaController@editar')->middleware('auth','ses
 
 Route::get('descarga/{parametro}', 'RespuestasController@descargar');
 
-Route::post('editarRespuesta', 'RespuestasController@editar')->middleware('auth','sesion', 'admin');
+Route::post('editarRespuesta', 'RespuestasController@editar')->middleware('auth','sesion', 'consultor');

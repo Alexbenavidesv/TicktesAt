@@ -151,9 +151,11 @@
                 <pre style="font-family: sans-serif; font-size: 12px">{{$r->descripcion}}</pre>
             </div>
             @if(Auth::user()->id_rol !=2)
+            @if($r->respuestanv!='')
             <div class="panel-body">
                 <pre style="font-family: sans-serif; font-size: 12px">{{$r->respuestanv}}</pre>
             </div>
+            @endif
             @endif
         </article>
 
@@ -176,7 +178,7 @@
                   <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong></h2>
                   <input type="hidden" id="idrespuesta" name="idrespuesta" value="{{$r->idresp}}">
                   <input type="hidden" id="estadoticket" name="estadoticket" value="{{$estado}}">
-                  @if(Auth::user()->id_rol != 2)
+                  @if(Auth::user()->id_rol == 3)
                   <button type="button" class="btn btn-success btn-sm" style="width: 30px" data-toggle="modal" data-target="#editarespuesta" id="editempresa"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                   @endif
             </div>
@@ -184,9 +186,11 @@
                 <pre id="descripcioncaso" style="font-family: sans-serif; font-size: 12px">{{$r->descripcion}}</pre>
             </div>
             @if(Auth::user()->id_rol !=2)
+            @if($r->respuestanv!='')
             <div class="panel-body">
                 <pre style="font-family: sans-serif; font-size: 12px">{{$r->respuestanv}}</pre>
             </div>
+            @endif
             @endif
         </article>
 
@@ -213,17 +217,23 @@
                         <form action="/editarRespuesta" method="POST" enctype="multipart/form-data">
                            {{ csrf_field() }}
                            <div class="form-group">
-                            <p id="errordescrespuesta" class="text-danger" style="font-size: 14px;">
-                            </p>
-                            <label for="nempre">Descripcion</label>
-                            <textarea class="form-control" rows="3" name="respuupdt" id="respuupdt" maxlength="1000" style="resize: none;">{{$r->descripcion}}</textarea>
+                              <p id="errordescrespuesta" class="text-danger" style="font-size: 14px;">
+                              </p>
+                              <label for="nempre">Descripcion</label>
+                              <textarea class="form-control" rows="3" name="respuupdt" id="respuupdt" maxlength="1000" style="resize: none;">{{$r->descripcion}}</textarea>
                            </div>
                            <div class="form-group">
-                            <div id="errorevidenciares" style="color: red"></div>
-                            <label for="evidenciaedit">Evidencia</label><br>
-                            <p>{{$r->evidencia1}}</p>
-                            <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/><br>
-                            <input type="file" id="evidenciaedit" name="evidenciaedit">
+                              <p id="errordescrespuestanv" class="text-danger" style="font-size: 14px;">
+                              </p>
+                              <label for="respuupdtnv">Descripcion no visible al cliente</label>
+                              <textarea class="form-control" rows="3" name="respuupdtnv" id="respuupdtnv" maxlength="1000" style="resize: none;">{{$r->respuestanv}}</textarea>
+                           </div>
+                           <div class="form-group">
+                              <div id="errorevidenciares" style="color: red"></div>
+                              <label for="evidenciaedit">Evidencia</label><br>
+                              <p>{{$r->evidencia1}}</p>
+                              <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/><br>
+                              <input type="file" id="evidenciaedit" name="evidenciaedit">
                           </div>
                           <input type="hidden" id="idrespu" name="idrespu" value="{{$r->idresp}}">
                           <input type="hidden" id="idticketupdt" name="idticketupdt" value="{{$r->id}}">
