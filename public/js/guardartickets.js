@@ -17,8 +17,8 @@ $('#guardarRes').click(function(e){
 
 
 	if (ext != '') {
-		if (ext!=".jpg" && ext!=".jpeg" && ext!=".png" && ext!=".PNG" && ext!=".JPEG" && ext!=".JPG" && ext!="rar" && ext!="zip") {
-			$('#err2').html('El archivo debe ser una imagen (.jpg, .jpeg, .png)');
+		if (ext!=".jpg" && ext!=".jpeg" && ext!=".png" && ext!=".PNG" && ext!=".JPEG" && ext!=".JPG" && ext!=".rar" && ext!=".zip") {
+			$('#err2').html('El archivo debe ser .jpg, .jpeg, .png, .rar, .zip');
 			e.preventDefault();
 		}else{
 			$('#err2').html('');

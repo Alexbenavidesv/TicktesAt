@@ -14,7 +14,7 @@ $('#respuestaupdt').click(function(en) {
 	}
 	
 	if (exten != '') {
-		if (exten!=".jpg" && exten!=".jpeg" && exten!=".png" && exten!=".PNG" && exten!=".JPEG" && exten!=".JPG" && exten!="rar" && exten!="zip") {
+		if (exten!=".jpg" && exten!=".jpeg" && exten!=".png" && exten!=".PNG" && exten!=".JPEG" && exten!=".JPG" && exten!=".rar" && exten!=".zip") {
 			$('#errorevidenciares').html('ingrese un archivo valido (.jpg, .jpeg, .png .rar .zip)');
 			en.preventDefault();
 		}else{

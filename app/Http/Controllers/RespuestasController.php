@@ -20,15 +20,29 @@ class RespuestasController extends Controller
     	->join('consultores', 'ticket.id_consultor', 'consultores.id')
     	->join('users', 'ticket.id_user', 'users.id')
         ->join('empresa', 'users.id_empresa', 'empresa.id')
-    	->select('ticket.id', 'respuesta.id AS idresp', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1', 'ticket.estado', 'respuesta.evidencia2', 'respuesta.evidencia3', 'respuesta.id AS resp','consultores.id AS consultor', 'users.name AS nomusuario', 'users.telefono', 'empresa.nombre AS empresa', 'respuesta.respuestanv', 'ticket.id_user AS iduser')
+    	->select('ticket.id', 'respuesta.id AS idresp', 'respuesta.descripcion', 'respuesta.fecha', 'respuesta.tipo', 'respuesta.evidencia1', 'ticket.estado', 'respuesta.evidencia2', 'respuesta.evidencia3', 'respuesta.id AS resp','consultores.id AS consultor', 'users.name AS nomusuario', 'users.telefono', 'empresa.nombre AS empresa', 'respuesta.respuestanv', 'ticket.id_user AS iduser', 'respuesta.id_userres')
     	->get();
 
     	$estado =  $respuesta[0]->estado;
         $idconsultor = $respuesta[0]->consultor;
-        $iduser = $respuesta[0]->iduser;
+        //$iduser = $respuesta[0]->iduser;
     	//dd($estado);
+        $usuariorespuesta = array();
+        foreach ($respuesta as $res) {
+            if ($res->id_userres!=0) {
+                $usuariores = User::where('id', $res->id_userres)
+                ->select('users.name')
+                ->get();
 
-    	return view('respuesta', compact('respuesta', 'estado', 'idconsultor', 'iduser'));
+                $usuariorespuesta[]=$usuariores[0]->name;
+            }else{
+                $usuariorespuesta[]='';
+            }
+        }
+
+        //dd($usuariorespuesta);
+
+    	return view('respuesta', compact('respuesta', 'estado', 'idconsultor', 'iduser', 'usuariorespuesta'));
     }
 
     public function guardarRespuesta(Request $request){
@@ -47,6 +61,7 @@ class RespuestasController extends Controller
         $respuesta->fecha = $fecha;
         $respuesta->tipo = $tipo;
         $respuesta->respuestanv = $request->respunv;
+        $respuesta->id_userres = Auth::user()->id;
 
         if ($request->evidencia) {
         	$img = $request->file('evidencia');
