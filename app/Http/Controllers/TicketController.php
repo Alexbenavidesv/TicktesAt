@@ -182,7 +182,7 @@ class TicketController extends Controller
                     ->estado($request->estado)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
-                    ->join('users', 'ticket.id_consultor', 'users.id')
+                    ->join('users', 'ticket.id_user', 'users.id')
                     ->join('empresa', 'users.id_empresa', 'empresa.id')
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->consultor($request->consultor_)
