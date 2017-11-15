@@ -58,6 +58,12 @@
           </div>
 
           <div class="form-group">
+            <div id="err1" style="color: red"></div>
+            <label for="respuesta">Respuesta no visible al cliente</label>
+            <textarea class="form-control" rows="3" name="respunv" id="respunv" maxlength="1000" style="resize: none;"></textarea>
+          </div>
+
+          <div class="form-group">
             <div id="err2" style="color: red"></div>
             <label for="evidencia">Evidencia</label>
             <input type="file" id="evidencia" name="evidencia">
@@ -144,6 +150,11 @@
             <div class="panel-body">
                 <pre style="font-family: sans-serif; font-size: 12px">{{$r->descripcion}}</pre>
             </div>
+            @if(Auth::user()->id_rol !=2)
+            <div class="panel-body">
+                <pre style="font-family: sans-serif; font-size: 12px">{{$r->respuestanv}}</pre>
+            </div>
+            @endif
         </article>
 
         <article class="panel panel-default panel-outline">
@@ -172,6 +183,11 @@
             <div class="panel-body">
                 <pre id="descripcioncaso" style="font-family: sans-serif; font-size: 12px">{{$r->descripcion}}</pre>
             </div>
+            @if(Auth::user()->id_rol !=2)
+            <div class="panel-body">
+                <pre style="font-family: sans-serif; font-size: 12px">{{$r->respuestanv}}</pre>
+            </div>
+            @endif
         </article>
 
         <article class="panel panel-default panel-outline">
