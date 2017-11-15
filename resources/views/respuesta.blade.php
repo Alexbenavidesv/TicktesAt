@@ -184,7 +184,7 @@
         @if($r->tipo=='CIERRE')
         <article class="panel panel-success">
             <div class="panel-heading">
-                  <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong></h2>
+                  <h2 class="panel-title">Respuesta de cierre <strong>Ticket #{{$r->id}}</strong> <strong>Ticket cerrado</strong> - Cerrado por: {{$usuariorespuesta[$i]}}</h2>
                   <input type="hidden" id="idrespuesta" name="idrespuesta" value="{{$r->idresp}}">
                   <input type="hidden" id="estadoticket" name="estadoticket" value="{{$estado}}">
                   @if(Auth::user()->id_rol == 3)
