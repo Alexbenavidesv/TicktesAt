@@ -145,7 +145,10 @@
 												<option value="">Selecciona el tipo...</option>
 												<option value="Soporte">Soporte</option>
 												<option value="Desarrollo">Desarrollo</option>
+												<option value="Presentación">Presentación</option>
+												<option value="Reporte">Reporte</option>
 												<option value="Capacitación">Capacitación</option>
+												<option value="Instalación">Instalación</option>
 												</select>
 										</div>
 
