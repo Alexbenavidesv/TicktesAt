@@ -31,7 +31,7 @@ class UsuarioController extends Controller
         if($request->isMethod('post')) {
             Validator::make($request->all(), [
                 'nombre' => 'required',
-                'email' => 'required|unique:users',
+                'email' => 'required|numeric|unique:users',
                 'correo' => 'required|email',
                 'empresa' => 'required',
                 'telefono' => 'required|min:7',
@@ -39,6 +39,7 @@ class UsuarioController extends Controller
             ], [
                 'nombre.required' => 'Debes ingresar el nombre',
                 'email.required' => 'Debes ingresar la cedula',
+                'email.numeric' => 'Solo caracteres numericos',
                 'email.unique' => 'Ya existe la identificación',
                 'correo.required' => 'Debes ingresar un correo',
                 'correo.email' => 'Ingresa un correo valido',

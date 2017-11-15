@@ -48,7 +48,7 @@
 			</form>
 		</div>
 		<div class="col-md-10">
-	<table class="table table-striped" align="center" style="width: 100%">
+	<table class="table table-striped table-condensed" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 		<thead>
 			<th>Numero</th>
