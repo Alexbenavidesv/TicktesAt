@@ -11,6 +11,8 @@ $('#guardarRes').click(function(e){
 	if (respuesta == '') {
 		$('#err1').html('Debe añadir una respuesta');
 		e.preventDefault();		
+	}else {
+		$('#err1').html('');
 	}
 
 

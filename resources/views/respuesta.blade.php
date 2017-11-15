@@ -56,13 +56,13 @@
             <label for="respuesta">Respuesta</label>
             <textarea class="form-control" rows="3" name="respu" id="respu" maxlength="1000" style="resize: none;"></textarea>
           </div>
-
+          @if(Auth::user()->id_rol !=2)
           <div class="form-group">
             <div id="err1" style="color: red"></div>
             <label for="respuesta">Respuesta no visible al cliente</label>
             <textarea class="form-control" rows="3" name="respunv" id="respunv" maxlength="1000" style="resize: none;"></textarea>
           </div>
-
+          @endif
           <div class="form-group">
             <div id="err2" style="color: red"></div>
             <label for="evidencia">Evidencia</label>
@@ -99,7 +99,7 @@
     <!-- Timeline -->
     <div class="timeline">
         <h1 class="text-center">Respuestas</h1>
-        @if(Auth::user()->id_rol !=2 && $respuesta[0]->consultor!=1)
+        @if(Auth::user()->id_rol !=1)
         @if($estado!=1)
         <button type="button" class="btn btn-primary" style="width: 150px; margin-left: 0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Generar respuesta</button><br><br>
         @endif
