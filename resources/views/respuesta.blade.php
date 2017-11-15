@@ -144,7 +144,7 @@
                     @if($r->evidencia3!='')
                     <div class="col-md-3">
                         <img id="thumbev3" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia3)}}"/ width="300" onclick="zoom4();"><br>
-                        <a href="{{url('/descarga', $r->evidencia3)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia3}}</a>
+                        <a href="{{url('/descarga', $r->evidencia3)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
                     </div>
                     @endif
                 </div>
@@ -174,7 +174,7 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/><br>
-                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia1}}</a>
+                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
                 </div>
             </div>
           @endif
@@ -209,7 +209,7 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <img id="thumbcierre" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="zoom3();"/><br>
-                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia1}}</a>
+                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
                 </div>
             </div>
           @endif

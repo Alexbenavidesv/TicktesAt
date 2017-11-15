@@ -79,7 +79,7 @@
 			@endif
 
 			<td>{{$t->fecha}}</td>
-			@if($t->prioridad=='')
+			@if($t->prioridad==NULL)
 			<td>No asignada</td>
 			@else
 			<td>{{$t->prioridad}}</td>
