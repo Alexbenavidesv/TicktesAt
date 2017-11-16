@@ -71,6 +71,10 @@
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
 						<td><span class="label label-danger">Pendiente</span></td>
+					@elseif($t->estado==2)
+						<td><span class="label label-warning">En proceso</span></td>
+					@elseif($t->estado==3)
+						<td><span class="label label-primary">Por confirmar</span></td>
 					@else
 						<td><span class="label label-success">Cerrado</span></td>
 					@endif

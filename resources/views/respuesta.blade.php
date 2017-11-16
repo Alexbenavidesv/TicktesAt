@@ -75,15 +75,18 @@
             </label>
            </div>
           @endif
-
-          <!--<div class="form-group" id="select">
-              <label for="finalizado">¿Finalizado?</label>
-              <select class="form-control" name="finalizado" id="finalizado">
-                  <option value="NO">NO</option>
-                  <option value="SI">SI</option>
+          @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 3)
+          <div class="form-group" id="select">
+              <label for="finalizado">Estado</label>
+              <select class="form-control" name="estadoresp" id="estadoresp">
+                  <option value="0">PENDIENTE</option>
+                  <option value="2">EN PROCESO</option>
+                  <option value="3">POR CONFIRMAR</option>
+                  <option value="1">CERRADO</option>
               </select>
-          </div>-->
-
+          </div>
+          @endif
+          @if(Auth::user()->id_rol == 2)
           <div class="form-group" id="select">
               <label for="finalizado">¿Finalizado?</label>
               <select class="form-control" name="finalizado" id="finalizado">
@@ -91,7 +94,7 @@
                   <option value="SI">SI</option>
               </select>
           </div>
-
+          @endif
           <div class="form-group">
             <input type="hidden" id="idticket" name="idticket" value="{{$respuesta[0]->id}}">
           </div>
