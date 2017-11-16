@@ -8,12 +8,31 @@ $('#guardarRes').click(function(e){
 	var ext = eviden.substring(eviden.lastIndexOf("."));
 
 	//alert(ext);
-	if (respuesta == '') {
-		$('#err1').html('Debe añadir una respuesta');
-		e.preventDefault();		
-	}else {
-		$('#err1').html('');
+
+  if  ( $("#estadoresp").length > 0 ){
+  	if($('#estadoresp').val()=='2'){
+  	//	alert("En proceso");
+	}else{
+
+        if (respuesta == '') {
+            $('#err1').html('Debe añadir una respuesta');
+            e.preventDefault();
+        }else {
+            $('#err1').html('');
+        }
 	}
+    }else{
+
+
+      if (respuesta == '') {
+          $('#err1').html('Debe añadir una respuesta');
+          e.preventDefault();
+      }else {
+          $('#err1').html('');
+      }
+
+  }
+
 
 
 	if (ext != '') {
