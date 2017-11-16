@@ -50,11 +50,24 @@ class RespuestasController extends Controller
         $fecha = date("Y/m/d H:i:s");
 
         $tipo = '';
-        if ($request->finalizado == 'NO') {
-        	$tipo = 'SEGUIMIENTO';
-        }else{
-        	$tipo = 'CIERRE';
+
+
+        if ($request->finalizado) {
+            if ($request->finalizado == 'NO') {
+            $tipo = 'SEGUIMIENTO';
+            }else{
+                $tipo = 'CIERRE';
+            }
         }
+
+        if ($request->estadoresp) {
+            if ($request->estadoresp == '1') {
+                $tipo = 'CIERRE';
+            }else{
+                $tipo = 'SEGUIMIENTO';
+            }
+        }
+        
 
         $respuesta->descripcion = $request->respu;
         $respuesta->id_ticket = $request->idticket;
@@ -76,6 +89,23 @@ class RespuestasController extends Controller
         //dd($ticket);
         if ($tipo=='CIERRE') {
         	$ticket->estado = 1;
+        }
+
+        if ($request->estadoresp) {
+            switch ($request->estadoresp) {
+                case '0':
+                    $ticket->estado = 0;
+                    break;
+                case '1':
+                    $ticket->estado = 1;
+                    break;
+                case '2':
+                    $ticket->estado = 2;
+                    break;
+                case '3':
+                    $ticket->estado = 3;
+                    break;
+            }
         }
 
         if ($request->reasignar==1) {
