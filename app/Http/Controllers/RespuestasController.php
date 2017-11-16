@@ -52,17 +52,18 @@ class RespuestasController extends Controller
 
         $tipo = '';
 
-
-        if ($request->finalizado) {
+        //dd($request->finalizado);
+        if ($request->finalizado!='' || $request->finalizado!=null) {
             if ($request->finalizado == 'NO') {
             $tipo = 'SEGUIMIENTO';
             }else{
                 $tipo = 'CIERRE';
             }
         }
+        
+        if ($request->estadoresp!='') {
+            if ($request->estadoresp == 1) {
 
-        if ($request->estadoresp) {
-            if ($request->estadoresp == '1') {
                 $tipo = 'CIERRE';
             }else{
                 $tipo = 'SEGUIMIENTO';
