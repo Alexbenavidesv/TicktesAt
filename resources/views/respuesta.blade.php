@@ -141,13 +141,13 @@
                     @if($r->evidencia1!='')
                     <div class="col-md-3">
                         <img id="thumb" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}"/ width="300" onclick="zoom();"><br>
-                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia1}}</a>
+                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
                     </div>
                     @endif
                     @if($r->evidencia2!='')
                     <div class="col-md-3">
                         <img id="thumbev2" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia2)}}"/ width="300" onclick="zoom2();"><br>
-                        <a href="{{url('/descarga', $r->evidencia2)}}"><i class="fa fa-download" aria-hidden="true"></i> {{$r->evidencia2}}</a>
+                        <a href="{{url('/descarga', $r->evidencia2)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
                     </div>
                     @endif
                     @if($r->evidencia3!='')
