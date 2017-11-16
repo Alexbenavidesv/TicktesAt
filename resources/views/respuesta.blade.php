@@ -165,7 +165,7 @@
         @endif
 
 
-            @if($r->tipo=='SEGUIMIENTO' && trim($r->descripcion)!='' && trim($r->respuestanv)!='')
+            @if($r->tipo=='SEGUIMIENTO' && (trim($r->descripcion)!='' || trim($r->respuestanv)!=''))
                 <article class="panel panel-primary">
                     <div class="panel-heading">
                         <h2 class="panel-title"><i class="fa fa-user" aria-hidden="true"></i>   {{$usuariorespuesta[$i]}} <i class="fa fa-calendar" aria-hidden="true"></i>   {{$r->fecha}}</h2>
