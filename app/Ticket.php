@@ -29,4 +29,16 @@ class Ticket extends Model
             return $query->where('ticket.estado', $estado);
         }
     }
+
+    public function scopeEmpresa($query,$empresa){
+        if (trim($empresa) != "") {
+            return $query->where('empresa.id',$empresa);
+        }
+    }
+
+    public function scopeTipo($query,$tipo){
+        if (trim($tipo) != "") {
+            return $query->where('ticket.tipo',$tipo);
+        }
+    }
 }
