@@ -71,7 +71,14 @@
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
 						<td><span class="label label-danger">Pendiente</span></td>
-					@else
+					@endif
+					@if($t->estado==2)
+						<td><span class="label label-warning">En proceso</span></td>
+					@endif
+					@if($t->estado==3)
+						<td><span class="label label-primary">Por confirmar</span></td>
+					@endif
+					@if($t->estado==1)
 						<td><span class="label label-success">Cerrado</span></td>
 					@endif
 			@if(isset($t->empresa))
