@@ -22,6 +22,8 @@
 				<select name="estado" id="" class="estadoSelect" style="width: 100%">
 					<option value="">Seleccione ...</option>
 					<option value="0">Pendiente</option>
+					<option value="2">En proceso</option>
+					<option value="3">Por confirmar</option>
 					<option value="1">Cerrado</option>
 				</select> <br><br>
 
