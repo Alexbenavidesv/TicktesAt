@@ -46,22 +46,24 @@ class RespuestasController extends Controller
     }
 
     public function guardarRespuesta(Request $request){
+        date_default_timezone_set('America/Bogota');
         $respuesta = new Respuesta();
         $fecha = date("Y/m/d H:i:s");
 
         $tipo = '';
 
-
-        if ($request->finalizado) {
+        //dd($request->finalizado);
+        if ($request->finalizado!='' || $request->finalizado!=null) {
             if ($request->finalizado == 'NO') {
             $tipo = 'SEGUIMIENTO';
             }else{
                 $tipo = 'CIERRE';
             }
         }
+        
+        if ($request->estadoresp!='') {
+            if ($request->estadoresp == 1) {
 
-        if ($request->estadoresp) {
-            if ($request->estadoresp == '1') {
                 $tipo = 'CIERRE';
             }else{
                 $tipo = 'SEGUIMIENTO';
