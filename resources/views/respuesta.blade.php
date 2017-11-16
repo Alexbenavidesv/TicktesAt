@@ -37,6 +37,13 @@
     transition: all 200ms ease-in;
     transform: scale(1.5);
   }
+
+  .btn span.fa {
+      opacity: 0;
+  }
+  .btn.active span.fa {
+      opacity: 1;
+  }
 </style>
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -69,16 +76,24 @@
             <input type="file" id="evidencia" name="evidencia">
           </div>
           @if(Auth::user()->id_rol !=2)
-           <div class="checkbox">
-             <label>
-              <input type="checkbox" value="" id="reasignar" name="reasignar"> Solicitar reasignación
-            </label>
-           </div>
+
+                <div class="checkbox" style="background-color: lightgrey; border-radius: 0.1em;">
+                    <input  style="margin-left: 3px" type="checkbox" value="" id="reasignar" name="reasignar">  <label style="font-size: 1.2em;"> <b>Solicitar reasignación</b></label>
+                </div>
+
+              <div id="area" style="display: none">
+                  <br>
+                  <label for="">Seleccione el area a donde va a reasignar el ticket</label>
+                  <select name="area_" id="area_" class="form-control" style="width: 70%">
+                      <option value="Desarrollo">Desarrollo</option>
+                      <option value="Soporte">Soporte</option>
+                  </select>
+              </div>
           @endif
           @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 3)
           <div class="form-group" id="select">
               <label for="finalizado">Estado</label>
-              <select class="form-control" name="estadoresp" id="estadoresp">
+              <select class="form-control" name="estadoresp" id="estadoresp" style="width: 70%">
                   <option value="0">PENDIENTE</option>
                   <option value="2">EN PROCESO</option>
                   <option value="3">POR CONFIRMAR</option>
@@ -89,7 +104,7 @@
           @if(Auth::user()->id_rol == 2)
           <div class="form-group" id="select">
               <label for="finalizado">¿Finalizado?</label>
-              <select class="form-control" name="finalizado" id="finalizado">
+              <select class="form-control" name="finalizado" id="finalizado" style="width: 70%">
                   <option value="NO">NO</option>
                   <option value="SI">SI</option>
               </select>

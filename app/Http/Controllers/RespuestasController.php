@@ -111,9 +111,11 @@ class RespuestasController extends Controller
         }
 
         if ($request->reasignar==1) {
+
             $ticket->prioridad = NULL;
             $ticket->id_consultor = 1;
             $ticket->tipo = 'Sin asignar';
+            $ticket->area = $request->area_;
         }
 
         $ticket->save();

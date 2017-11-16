@@ -34,6 +34,7 @@ Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesi
 Route::post('filtrar_tickets','TicketController@filtros')->middleware('auth','sesion');
 Route::post('filtrar_tickets2','TicketController@filtros2')->middleware('auth','sesion', 'root');
 Route::get('reabrir_ticket/{id}','TicketController@reabrir')->middleware('auth','sesion','root');
+Route::get('tickets_reasignar','TicketController@lista_reasignar')->middleware('auth','sesion','root');
 
 Route::get('respuesta/{id}', 'RespuestasController@verRespuestas')->middleware('auth','sesion');
 

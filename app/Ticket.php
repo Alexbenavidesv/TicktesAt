@@ -9,7 +9,7 @@ class Ticket extends Model
     protected $table='ticket';
 
     protected $fillable=[
-        'id_user', 'prioridad', 'id_consultor', 'fecha','estado'
+        'id_user', 'prioridad','tipo' ,'id_consultor', 'area','estado'
     ];
 
     public function scopePrioridad($query,$prioridad){
