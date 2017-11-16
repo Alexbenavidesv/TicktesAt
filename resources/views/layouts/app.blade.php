@@ -182,6 +182,7 @@
         $('.tipoSelect').select2();
         $('.prioridadSelect').select2();
         $('.estadoSelect').select2();
+        $('.empresaSelect').select2();
     });
 </script>
     <script src="{{ asset('js/solicitar.js') }}"></script>

@@ -104,6 +104,8 @@ class TicketController extends Controller
             ->select('users.id', 'users.name')
             ->get();
 
+        $empresas=Empresa::all();
+
         $consulta = User::join('roles', 'users.id_rol', 'roles.id')
             ->where('users.id', $iduser)
             ->select('roles.nombre')
@@ -154,7 +156,7 @@ class TicketController extends Controller
                 ->paginate(15);
         }
         //dd($tickets);
-        return view('listarTickes', compact('tickets', 'consultores'));
+        return view('listarTickes', compact('tickets', 'consultores','empresas'));
     }
 
     public function asignar(Request $request)
@@ -180,13 +182,16 @@ class TicketController extends Controller
 
     public function filtros(Request $request)
     {
-        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != '') {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='') {
 
             $iduser = Auth::user()->id;
 
             $consultores = User::where('users.id_rol', '!=', 2)
             ->select('users.id', 'users.name')
             ->get();
+
+
+            $empresas=Empresa::all();
 
             $consulta = User::join('roles', 'users.id_rol', 'roles.id')
                 ->where('users.id', $iduser)
@@ -200,10 +205,12 @@ class TicketController extends Controller
             if ($rol == 'Root') {
                 $tickets = Ticket::prioridad($request->prioridad_)
                     ->estado($request->estado)
+                    ->tipo($request->tipo_)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->join('users', 'ticket.id_user', 'users.id')
                     ->join('empresa', 'users.id_empresa', 'empresa.id')
+                    ->empresa($request->empresa)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->consultor($request->consultor_)
                     ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
@@ -213,8 +220,10 @@ class TicketController extends Controller
             } elseif ($rol == 'Consultor') {
                 $tickets = Ticket::prioridad($request->prioridad_)
                     ->estado($request->estado)
+                    ->tipo($request->tipo_)
                 ->join('users', 'ticket.id_user', 'users.id')
                     ->join('empresa', 'users.id_empresa', 'empresa.id')
+                    ->empresa($request->empresa)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->join('consultores','ticket.id_consultor', 'consultores.id')
@@ -233,6 +242,7 @@ class TicketController extends Controller
                 //dd($empresa);
                 $tickets = Ticket::prioridad($request->prioridad_)
                     ->estado($request->estado)
+                    ->tipo($request->tipo_)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->join('users', 'ticket.id_user', 'users.id')
@@ -243,7 +253,7 @@ class TicketController extends Controller
                     ->orderBy('id', 'desc')
                     ->paginate(15);
             }
-            return view('listarTickes', compact('tickets', 'consultores'));
+            return view('listarTickes', compact('tickets', 'consultores','empresas'));
         }
 
 
@@ -322,6 +332,8 @@ class TicketController extends Controller
             ->select('users.id', 'users.name')
             ->get();
 
+        $empresas=Empresa::all();
+
         $tickets = Ticket::join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -333,19 +345,22 @@ class TicketController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(15);
 
-        return view('mistickets', compact('tickets', 'consultores'));
+        return view('mistickets', compact('tickets', 'consultores','empresas'));
     }
 
 
     public function filtros2(Request $request)
     {
-        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != '') {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='') {
 
             $iduser = Auth::user()->id;
 
             $consultores = User::where('users.id_rol', '!=', 2)
-            ->select('users.id', 'users.name')
-            ->get();
+                ->select('users.id', 'users.name')
+                ->get();
+
+
+            $empresas=Empresa::all();
 
             $consulta = User::join('roles', 'users.id_rol', 'roles.id')
                 ->where('users.id', $iduser)
@@ -357,8 +372,10 @@ class TicketController extends Controller
             //dd($rol);
             $tickets = Ticket::prioridad($request->prioridad_)
                 ->estado($request->estado)
+                ->tipo($request->tipo_)
             ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
+                ->empresa($request->empresa)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('consultores','ticket.id_consultor', 'consultores.id')
@@ -368,7 +385,7 @@ class TicketController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(15);
            
-            return view('mistickets', compact('tickets', 'consultores'));
+            return view('mistickets', compact('tickets', 'consultores','empresas'));
         }else{
            return redirect('misTickets');
        }

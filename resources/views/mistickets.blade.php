@@ -40,8 +40,29 @@
 					<option value="{{$consultor->id}}">{{$consultor->name}}</option>
 				@endforeach
 			</select><br><br>
+
+					<label for="">Empresa</label>
+					<select name="empresa" id="empresa" class="empresaSelect" style="width: 100%">
+						<option value="">Seleccione ...</option>
+						@foreach($empresas as $empresa)
+							<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+						@endforeach
+					</select><br><br>
+
 				@endif
 
+				<label for="">Tipo</label>
+				<select name="tipo_" id="tipo_" class="tipoSelect" style="width: 100%">
+					<option value="">Seleccione ...</option>
+					<option value="Sin asignar">Sin asignar</option>
+					<option value="Soporte">Soporte</option>
+					<option value="Desarrollo">Desarrollo</option>
+					<option value="Presentación">Presentación</option>
+					<option value="Reporte">Reporte</option>
+					<option value="Capacitación">Capacitación</option>
+					<option value="Instalación">Instalación</option>
+				</select>
+				<br><br>
 			<button class="btn btn-success " style="width: 100%">
 				<span class="fa fa-search"></span> Filtrar
 			</button>
