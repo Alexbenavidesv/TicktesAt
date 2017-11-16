@@ -46,6 +46,7 @@ class RespuestasController extends Controller
     }
 
     public function guardarRespuesta(Request $request){
+        date_default_timezone_set('America/Bogota');
         $respuesta = new Respuesta();
         $fecha = date("Y/m/d H:i:s");
 

@@ -22,6 +22,8 @@ class TicketController extends Controller
 
     public function nuevoTicket(Request $req)
     {
+        date_default_timezone_set('America/Bogota');
+        
         Validator::make($req->all(),
             [
                 'descripcion' => 'required|string',
