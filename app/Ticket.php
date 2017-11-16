@@ -9,7 +9,7 @@ class Ticket extends Model
     protected $table='ticket';
 
     protected $fillable=[
-        'id_user', 'prioridad', 'id_consultor', 'fecha','estado'
+        'id_user', 'prioridad','tipo' ,'id_consultor', 'area','estado'
     ];
 
     public function scopePrioridad($query,$prioridad){
@@ -27,6 +27,18 @@ class Ticket extends Model
     public function scopeEstado($query,$estado){
         if (trim($estado) != "") {
             return $query->where('ticket.estado', $estado);
+        }
+    }
+
+    public function scopeEmpresa($query,$empresa){
+        if (trim($empresa) != "") {
+            return $query->where('empresa.id',$empresa);
+        }
+    }
+
+    public function scopeTipo($query,$tipo){
+        if (trim($tipo) != "") {
+            return $query->where('ticket.tipo',$tipo);
         }
     }
 }

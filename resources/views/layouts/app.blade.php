@@ -150,6 +150,9 @@
                 @if(Auth::user()->id_rol !=2)
                 <li id="btnconsultartickets"><a href="/consultarticketsna"><i class="fa fa-minus-square-o" aria-hidden="true"></i> Tickets no asignados</a></li>
                 @endif
+                      @if(Auth::user()->id_rol ==1)
+                          <li><a href="/tickets_reasignar"><i class="fa fa-hourglass-end" aria-hidden="true"></i> Tickets por reasignar</a></li>
+                      @endif
               </ul>
             </div>
 
@@ -182,6 +185,7 @@
         $('.tipoSelect').select2();
         $('.prioridadSelect').select2();
         $('.estadoSelect').select2();
+        $('.empresaSelect').select2();
     });
 </script>
     <script src="{{ asset('js/solicitar.js') }}"></script>
