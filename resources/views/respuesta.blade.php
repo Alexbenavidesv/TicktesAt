@@ -163,35 +163,90 @@
             </div>
         </article>
         @endif
-        @if($r->tipo=='SEGUIMIENTO')
-        <article class="panel panel-primary">
-            <div class="panel-heading">
-                <h2 class="panel-title"><i class="fa fa-user" aria-hidden="true"></i>   {{$usuariorespuesta[$i]}} <i class="fa fa-calendar" aria-hidden="true"></i>   {{$r->fecha}}</h2>
-            </div>
-            <div class="panel-body">
-                {{$r->descripcion}}
-            </div>
-            @if(Auth::user()->id_rol !=2)
-            @if($r->respuestanv!='')
-            <div class="panel-body">
-                {{$r->respuestanv}}
-            </div>
-            @endif
-            @endif
-        </article>
 
-        <article class="panel panel-default panel-outline">
-          @if($r->evidencia1!='')
-            <div class="panel-body d-inline-block">
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/><br>
-                        <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
-                </div>
-            </div>
-          @endif
-        </article>
-        @endif
+
+            @if($r->tipo=='SEGUIMIENTO' && trim($r->descripcion)!='' && trim($r->respuestanv)!='')
+                <article class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h2 class="panel-title"><i class="fa fa-user" aria-hidden="true"></i>   {{$usuariorespuesta[$i]}} <i class="fa fa-calendar" aria-hidden="true"></i>   {{$r->fecha}}</h2>
+                    </div>
+                    <div class="panel-body">
+                        {{$r->descripcion}}
+                    </div>
+                    @if(Auth::user()->id_rol !=2)
+                        <div class="panel-body">
+                            {{$r->respuestanv}}
+                        </div>
+                    @endif
+                </article>
+
+                <article class="panel panel-default panel-outline">
+                    @if($r->evidencia1!='')
+                        <div class="panel-body d-inline-block">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/><br>
+                                <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
+                            </div>
+                        </div>
+                    @endif
+                </article>
+            @endif
+
+            @if($r->tipo=='SEGUIMIENTO' && trim($r->descripcion)!='' && trim($r->respuestanv)=='')
+                <article class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h2 class="panel-title"><i class="fa fa-user" aria-hidden="true"></i>   {{$usuariorespuesta[$i]}} <i class="fa fa-calendar" aria-hidden="true"></i>   {{$r->fecha}}</h2>
+                    </div>
+                    <div class="panel-body">
+                        {{$r->descripcion}}
+                    </div>
+                    @if(Auth::user()->id_rol !=2)
+                        <div class="panel-body">
+                            {{$r->respuestanv}}
+                        </div>
+                    @endif
+                </article>
+
+                <article class="panel panel-default panel-outline">
+                    @if($r->evidencia1!='')
+                        <div class="panel-body d-inline-block">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/><br>
+                                <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
+                            </div>
+                        </div>
+                    @endif
+                </article>
+            @endif
+
+
+            @if($r->tipo=='SEGUIMIENTO' && trim($r->descripcion)=='' && trim($r->respuestanv)!='' && Auth::user()->id_rol !=2)
+                <article class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h2 class="panel-title"><i class="fa fa-user" aria-hidden="true"></i>   {{$usuariorespuesta[$i]}} <i class="fa fa-calendar" aria-hidden="true"></i>   {{$r->fecha}}</h2>
+                    </div>
+
+                        <div class="panel-body">
+                            {{$r->respuestanv}}
+                        </div>
+
+                </article>
+
+                <article class="panel panel-default panel-outline">
+                    @if($r->evidencia1!='')
+                        <div class="panel-body d-inline-block">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <img id="thumb1{{$r->resp}}" class="thumb" src="{{asset('imgEvidencia')}}/{{utf8_encode($r->evidencia1)}}" width="300" onclick="imagen({{$r->resp}});"/><br>
+                                <a href="{{url('/descarga', $r->evidencia1)}}"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
+                            </div>
+                        </div>
+                    @endif
+                </article>
+            @endif
+
 
         @if($r->tipo=='CIERRE')
         <article class="panel panel-success">
