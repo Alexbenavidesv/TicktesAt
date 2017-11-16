@@ -75,6 +75,15 @@
             </label>
            </div>
           @endif
+
+          <!--<div class="form-group" id="select">
+              <label for="finalizado">¿Finalizado?</label>
+              <select class="form-control" name="finalizado" id="finalizado">
+                  <option value="NO">NO</option>
+                  <option value="SI">SI</option>
+              </select>
+          </div>-->
+
           <div class="form-group" id="select">
               <label for="finalizado">¿Finalizado?</label>
               <select class="form-control" name="finalizado" id="finalizado">
@@ -105,7 +114,7 @@
     <!-- Timeline -->
     <div class="timeline">
         <h1 class="text-center">Respuestas</h1>
-        @if(Auth::user()->id == $idconsultor||Auth::user()->id == $iduser)
+        @if(Auth::user()->id == $idconsultor||Auth::user()->id == $iduser || Auth::user()->id_rol == 1)
         @if($estado!=1)
         <button type="button" class="btn btn-primary" style="width: 150px; margin-left: 0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Generar respuesta</button><br><br>
         @endif
