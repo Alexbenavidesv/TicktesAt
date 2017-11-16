@@ -22,7 +22,9 @@
 				<select name="estado" id="" class="estadoSelect" style="width: 100%">
 					<option value="">Seleccione ...</option>
 					<option value="0">Pendiente</option>
-					<option value="1">Cerrado</option>
+					<option value="2">En proceso</option>
+					<option value="3">Por confirmar</option>
+                    <option value="1">Cerrado</option>
 				</select> <br><br>
 
 			<label for="">Prioridad</label>
@@ -71,11 +73,14 @@
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
 						<td><span class="label label-danger">Pendiente</span></td>
-					@elseif($t->estado==2)
+                        @endif
+					@if($t->estado==2)
 						<td><span class="label label-warning">En proceso</span></td>
-					@elseif($t->estado==3)
+                        @endif
+					@if($t->estado==3)
 						<td><span class="label label-primary">Por confirmar</span></td>
-					@else
+                        @endif
+                    @if($t->estado==1)
 						<td><span class="label label-success">Cerrado</span></td>
 					@endif
 			@if(isset($t->empresa))
