@@ -394,19 +394,30 @@ class TicketController extends Controller
     }
 
     public function lista_reasignar(){
-      $tickets = Ticket::where('ticket.id_consultor', 1)
+        $areas=array();
+        $consultores = User::where('users.id_rol', '!=', 2)
+            ->select('users.id', 'users.name')
+            ->get();
+
+
+        $tickets = Ticket::where('ticket.id_consultor', 1)
             ->where('area','!=',NULL)
             ->join('users', 'ticket.id_user', 'users.id')
             ->join('empresa', 'users.id_empresa', 'empresa.id')
             ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
             ->where('respuesta.tipo', 'APERTURA')
             ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-            ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+            ->select('ticket.id', 'ticket.tipo','ticket.area', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                 'consultores.nombre AS consultor', 'empresa.nombre AS empresa', 'users.id AS iduser', 'users.name AS nomusuario')
             ->orderBy('id', 'desc')
-            ->paginate(15);
+            ->get();
 
+        foreach ($tickets as $area){
+            $areas[]=$area->area;
+        }
 
-        return view('reasignar', compact('tickets'));
+        $areas=array_unique($areas);
+
+        return view('reasignar', compact('tickets','areas','consultores'));
     }
 }
