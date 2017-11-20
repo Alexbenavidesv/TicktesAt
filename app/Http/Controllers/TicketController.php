@@ -187,7 +187,8 @@ class TicketController extends Controller
         //dd($rol);
 
         if ($rol == 'Root') {
-            $tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            $tickets = Ticket::where('ticket.estado','!=',1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
@@ -199,7 +200,8 @@ class TicketController extends Controller
 
             //echo $tickets;
         } elseif ($rol == 'Consultor') {
-            $tickets = Ticket::join('users', 'ticket.id_user', 'users.id')
+            $tickets = Ticket::where('ticket.estado','!=',1)
+            ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
@@ -217,7 +219,8 @@ class TicketController extends Controller
 
             $empresa = $consulta2[0]->empresa;
             //dd($empresa);
-            $tickets = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            $tickets = Ticket::where('ticket.estado','!=',1)
+            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('users', 'ticket.id_user', 'users.id')
                 ->where('id_empresa', $empresa)
