@@ -11,7 +11,7 @@
 	  <div class="col-md-8">
 	  	<form id="formvisitas" method="POST" action="/guardarVisita">
 	  		{{ csrf_field() }}
-	  		<div class="form-group">
+	  		<div class="form-group"  style="display: none" id="visempresa">
 	  			<p id="errorempresavis" class="text-danger" style="font-size: 14px;"></p>
 	  			<label for="empresa">Seleccione una empresa</label>
 	  			<select class="form-control" name="empresavis" id="empresavis">
@@ -27,8 +27,8 @@
 	  			<label for="tipovisita">Seleccione el tipo de visita</label>
 	  			<select class="form-control" name="tipovis" id="tipovis">
 				  <option value="Presentación">Presentación</option>
+				  <option value="Consultoría">Consultoría</option>
 				  <option value="Capacitación">Capacitación</option>
-				  <option value="Soporte">Soporte</option>
 				</select>
 	  		</div>
 	  		
@@ -37,19 +37,61 @@
 		      <label for="fechayhoravis">Fecha y hora</label>
 		      <input type="datetime-local" class="form-control" id="fechayhoravis" name="fechayhoravis">
 		    </div>
+
 		    <div class="form-group">
 		    	<p id="errorlugarvis" class="text-danger" style="font-size: 14px;"></p>
 			    <label for="lugarvis">Lugar</label>
 			    <input type="text" class="form-control" id="lugarvis" name="lugarvis" placeholder="Ej: Montería - Córdoba">
 		    </div>
-			
-		  <label for="exampleInputPassword1">Participantes: </label>
-          <div class="btn-group btn-group-xs" role="group" aria-label="...">
-            <button type="button" class="btn btn-default" id="add" style="width: 50%"><i class="fa fa-plus" aria-hidden="true"></i></button>
-            <button type="button" class="btn btn-default" id="del" style="width: 50%"><i class="fa fa-minus" aria-hidden="true"></i></button>
-          </div><br>
-    		
-    	   <table id="tabla" class="table table-striped table-hover table-bordered table-condensed">
+
+		    <div id="motivovis" style="display: block">
+          <br>
+          <p id="errormotivovis" class="text-danger" style="font-size: 14px;"></p>
+          <label for="">Motivo de visita</label>
+          <textarea class="form-control" rows="3" name="motivovistext" id="motivovistext" maxlength="1000" style="resize: none;"></textarea>
+        </div>
+
+        <div id="recoleccionvis" style="display: block">
+          <br>
+          <p id="errorrecoleccionvis" class="text-danger" style="font-size: 14px;"></p>
+          <label for="">Recolección de la visita</label>
+          <textarea class="form-control" rows="3" name="recoleccionvistext" id="recoleccionvistext" maxlength="1000" style="resize: none;"></textarea>
+        </div>
+
+        <div id="clientefut" style="display: block">
+          <br>
+          <p id="errorclientenvis" class="text-danger" style="font-size: 14px;"></p>
+          <label for="">Cliente visitado</label>
+          <input type="text" class="form-control" id="futurocliente" name="futurocliente">
+        </div>
+
+        <div id="clientefuttel" style="display: block">
+          <br>
+          <p id="errortelclientenvis" class="text-danger" style="font-size: 14px;"></p>
+          <label for="">Telefono cliente visitado</label>
+          <input type="text" class="form-control" id="telfuturocliente" name="telfuturocliente">
+        </div>
+
+        <div id="satisdiv" style="display: block">
+          <br>
+          <label for="">Interes del cliente</label>
+          <select class="form-control" name="satisfaccion" id="satisfaccion">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+		  <div id="participantes" style="display: none">
+			  <label for="exampleInputPassword1">Participantes: </label>
+	          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+	            <button type="button" class="btn btn-default" id="add" style="width: 50%"><i class="fa fa-plus" aria-hidden="true"></i></button>
+	            <button type="button" class="btn btn-default" id="del" style="width: 50%"><i class="fa fa-minus" aria-hidden="true"></i></button>
+	           </div><br>
+    	   </div>	
+    	   <table id="tabla" class="table table-striped table-hover table-bordered table-condensed" style="display: none">
               <thead>
                 <tr>
                   <th>Nombre</th>
