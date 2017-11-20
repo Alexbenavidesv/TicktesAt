@@ -48,24 +48,34 @@
         </tr>
 
             <?php
-                $consultores=array();
-                $id_consultores=array();
+            $consultores1=array();
+            $consultores=array();
+            $id_consultores1=array();
+            $id_consultores=array();
             foreach ($ticketsMesActual as $t){
-                $consultores[]=$t->nombre;
-                $id_consultores[]=$t->id_consultor;
+                $consultores1[]=$t->nombre;
+                $id_consultores1[]=$t->id_consultor;
             }
 
-            $consultores=array_unique($consultores);
-            $id_consultores=array_unique($id_consultores);
+            $consultores1=array_unique($consultores1);
+             foreach ($consultores1 as $aux){
+                 $consultores[]=$aux;
+             }
+            $id_consultores1=array_unique($id_consultores1);
+            foreach ($id_consultores1 as $aux){
+                $id_consultores[]=$aux;
+            }
             $i=0;
             ?>
 
-            @foreach($consultores as $c)
 
-              <?php
-                    $asignados=0;
-                    $resueltos=0;
-                    $pendientes=0;
+            @foreach($consultores as $c)
+                @if($id_consultores[$i]!=1)
+
+                <?php
+                $asignados=0;
+                $resueltos=0;
+                $pendientes=0;
                 foreach ($ticketsMesActual as $t){
                     if($t->id_consultor==$id_consultores[$i]){
                         $asignados++;
@@ -89,7 +99,7 @@
 
                 ?>
 
-                    <tr>
+                <tr>
 
                     <td>
                         {{$c}}
@@ -106,13 +116,18 @@
                     <td>
                         {{$pendientes}}
                     </td>
-                        <td>
-                            {{$resolucion}} %
-                        </td>
+                    <td>
+                        {{$resolucion}} %
+                    </td>
 
                 </tr>
+                @endif
+            
                 <?php $i++; ?>
-                @endforeach
+
+            @endforeach
+
+
         </table>
 
     </div>
