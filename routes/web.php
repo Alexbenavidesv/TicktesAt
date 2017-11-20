@@ -59,10 +59,15 @@ Route::post('editarRespuesta', 'RespuestasController@editar')->middleware('auth'
 
 Route::get('misTickets', 'TicketController@misTickets')->middleware('auth','sesion', 'root');
 
-Route::get('formatoVisita', 'VisitasController@index');
+Route::get('formatoVisita', 'VisitasController@index')->middleware('auth','sesion', 'rootconsultor');
 
-Route::post('guardarVisita', 'VisitasController@guardarVisita');
+Route::post('guardarVisita', 'VisitasController@guardarVisita')->middleware('auth','sesion', 'rootconsultor');
 
-Route::get('listarvisitas', 'VisitasController@listado');
+Route::get('listarvisitas', 'VisitasController@listado')->middleware('auth','sesion', 'rootconsultor');
 
-Route::get('visitaPdf/{id}', 'VisitasController@verPdf');
+Route::get('visitaPdf/{id}', 'VisitasController@verPdf')->middleware('auth','sesion', 'rootconsultor');
+Route::get('evidenciaVisita/{id}', 'VisitasController@evidencia')->middleware('auth','sesion', 'rootconsultor');
+
+Route::post('guardarEvidenciaVisita', 'VisitasController@guardarEvidencia')->middleware('auth','sesion', 'rootconsultor');
+
+Route::get('descargar/{parametro}', 'VisitasController@descargar')->middleware('auth','sesion', 'rootconsultor');
