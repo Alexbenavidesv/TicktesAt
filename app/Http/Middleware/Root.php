@@ -21,7 +21,7 @@ class Root
                 return new RedirectResponse(url('/crear_ticket'));
             }
             if(Auth::user()->id_rol==3) {
-                return new RedirectResponse(url('/consultar_ticket'));
+                return new RedirectResponse(url('/consultartickets'));
             }
         }
         return $next($request);
