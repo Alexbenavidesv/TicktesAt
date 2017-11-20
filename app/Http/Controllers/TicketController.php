@@ -19,6 +19,9 @@ class TicketController extends Controller
     public function resumen(){
 
         $mesActual=date('m');
+        $anioActual=date('Y');
+
+        $informacionMeses=array();
 
         $ticketsMesActual=Ticket::join('respuesta','ticket.id','respuesta.id_ticket')
             ->where('respuesta.tipo','APERTURA')
@@ -26,18 +29,68 @@ class TicketController extends Controller
             ->join('consultores','ticket.id_consultor','consultores.id')
             ->get();
 
+        $sinAsignar=Ticket::join('respuesta','ticket.id','respuesta.id_ticket')
+            ->where('respuesta.tipo','APERTURA')
+           ->whereMonth('respuesta.fecha',$mesActual)
+            ->join('consultores','ticket.id_consultor','consultores.id')
+            ->where('consultores.id',1)
+            ->get();
+
 
         $ticketsResueltos=Ticket::where('estado',1)
             ->join('respuesta','ticket.id','respuesta.id_ticket')
             ->where('respuesta.tipo','APERTURA')
-            ->whereMonth('respuesta.fecha',$mesActual)
+           ->whereMonth('respuesta.fecha',$mesActual)
             ->get();
 
         $ticketsPendientes=Ticket::where('estado','!=',1)
+            ->where('ticket.id_consultor','!=',1)
             ->join('respuesta','ticket.id','respuesta.id_ticket')
             ->where('respuesta.tipo','APERTURA')
-            ->whereMonth('respuesta.fecha',$mesActual)
+           ->whereMonth('respuesta.fecha',$mesActual)
             ->get();
+
+
+        ///Sacar informacion de los meses
+        for($i=1;$i<13;$i++) {
+            $informacion=array();
+
+            $info1 = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $i)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->get();
+
+            $info2 = Ticket::where('ticket.estado', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $i)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->get();
+
+            $info3 = Ticket::where('ticket.estado', '!=', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $i)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->get();
+
+            $info4 = Ticket::where('ticket.estado', '!=', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $i)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->where('consultores.id',1)
+                ->get();
+
+            $informacion[]=$info1;
+            $informacion[]=$info2;
+            $informacion[]=$info3;
+            $informacion[]=$info4;
+            $informacionMeses[]=$informacion;
+        }
+
+
 
         switch ($mesActual){
             case 1:
@@ -73,7 +126,7 @@ class TicketController extends Controller
             case 11:
                 $mesActual='NOVIEMBRE';
                 break;
-            case 11:
+            case 12:
                 $mesActual='DICIEMBRE';
                 break;
         }
@@ -81,7 +134,145 @@ class TicketController extends Controller
         $porcentaje=((count($ticketsResueltos)*100)/count($ticketsMesActual));
         $porcentaje=number_format($porcentaje,0);
 
-        return view('resumen',compact('ticketsMesActual','ticketsResueltos','ticketsPendientes','mesActual','porcentaje'));
+        return view('resumen',compact('ticketsMesActual','sinAsignar','ticketsResueltos','ticketsPendientes','mesActual','anioActual','porcentaje','informacionMeses'));
+
+    }
+
+    public function filtro_resumen($fecha)
+    {
+        $fechas = explode('-', $fecha);
+        $mes = $fechas[0];
+        $anio = $fechas[1];
+
+        $mesActual = $mes;
+        $anioActual = $anio;
+
+        $informacionMeses = array();
+
+        $ticketsMesActual = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->whereMonth('respuesta.fecha', $mesActual)
+            ->whereYear('respuesta.fecha', $anio)
+            ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+            ->get();
+
+        $sinAsignar = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->whereMonth('respuesta.fecha', $mesActual)
+            ->whereYear('respuesta.fecha', $anio)
+            ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+            ->where('consultores.id', 1)
+            ->get();
+
+
+        $ticketsResueltos = Ticket::where('estado', 1)
+            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->whereMonth('respuesta.fecha', $mesActual)
+            ->whereYear('respuesta.fecha', $anio)
+            ->get();
+
+        $ticketsPendientes = Ticket::where('estado', '!=', 1)
+            ->where('ticket.id_consultor', '!=', 1)
+            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->whereMonth('respuesta.fecha', $mesActual)
+            ->whereYear('respuesta.fecha', $anio)
+            ->get();
+
+
+        ///Sacar informacion de los meses
+        for ($i = 1; $i < 13; $i++) {
+            $informacion = array();
+
+            $info1 = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $i)
+                ->whereYear('respuesta.fecha', $anio)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->get();
+
+            $info2 = Ticket::where('ticket.estado', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $i)
+                ->whereYear('respuesta.fecha', $anio)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->get();
+
+            $info3 = Ticket::where('ticket.estado', '!=', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $i)
+                ->whereYear('respuesta.fecha', $anio)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->get();
+
+            $info4 = Ticket::where('ticket.estado', '!=', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $i)
+                ->whereYear('respuesta.fecha', $anio)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->where('consultores.id', 1)
+                ->get();
+
+            $informacion[] = $info1;
+            $informacion[] = $info2;
+            $informacion[] = $info3;
+            $informacion[] = $info4;
+            $informacionMeses[] = $informacion;
+        }
+
+
+        switch ($mesActual) {
+            case 1:
+                $mesActual = 'ENERO';
+                break;
+            case 2:
+                $mesActual = 'FEBRERO';
+                break;
+            case 3:
+                $mesActual = 'MARZO';
+                break;
+            case 4:
+                $mesActual = 'ABRIL';
+                break;
+            case 5:
+                $mesActual = 'MAYO';
+                break;
+            case 6:
+                $mesActual = 'JUNIO';
+                break;
+            case 7:
+                $mesActual = 'JULIO';
+                break;
+            case 8:
+                $mesActual = 'AGOSTO';
+                break;
+            case 9:
+                $mesActual = 'SEPTIEMBRE';
+                break;
+            case 10:
+                $mesActual = 'OCTUBRE';
+                break;
+            case 11:
+                $mesActual = 'NOVIEMBRE';
+                break;
+            case 12:
+                $mesActual = 'DICIEMBRE';
+                break;
+        }
+        $porcentaje = 0;
+        if (count($ticketsMesActual) > 0) {
+
+        $porcentaje = ((count($ticketsResueltos) * 100) / count($ticketsMesActual));
+        $porcentaje = number_format($porcentaje, 0);
+    }
+
+        return view('resumen',compact('ticketsMesActual','sinAsignar','ticketsResueltos','ticketsPendientes','mesActual','anioActual','porcentaje','informacionMeses'));
+
+
     }
 
 

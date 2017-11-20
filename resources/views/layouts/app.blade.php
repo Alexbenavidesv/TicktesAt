@@ -17,6 +17,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/style3.css') }}" rel="stylesheet">
      <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
@@ -188,6 +189,8 @@
     <script src="{{ asset('js/reabrir.js') }}"></script>
     <script src="{{ asset('js/visitas.js') }}"></script>
     <script src="{{ asset('js/guardarvisita.js') }}"></script>
+    <script src="{{ asset('js/filtrarResumen.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script >
     $(document).ready(function() {
@@ -196,6 +199,15 @@
         $('.prioridadSelect').select2();
         $('.estadoSelect').select2();
         $('.empresaSelect').select2();
+
+        $('.buscarFecha').datepicker( {
+            format: "mm-yyyy",
+            viewMode: "months",
+            minViewMode: "months",
+            language: "es",
+            
+        });
+
     });
 </script>
     <script src="{{ asset('js/solicitar.js') }}"></script>
