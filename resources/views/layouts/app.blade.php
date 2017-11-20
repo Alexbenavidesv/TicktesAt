@@ -137,12 +137,12 @@
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
                   @if(Auth::user()->id_rol ==1)
-                <li id=""><a href="/" ><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+                <li id=""><a href="/resumen" ><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
                 <li id="btnusuarios"><a href="/usuarios" ><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
                 <li id="btnempresas"><a href="/empresas"><i class="fa fa-industry" aria-hidden="true"></i> Empresas</a></li>
                   @endif
                 @if(Auth::user()->id_rol !=3)
-                <li id="btntickets"><a href="/crear_ticket"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
+                <li id="btntickets"><a href="/"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
                 @endif
                 @if(Auth::user()->id_rol ==1)
                 <li id="btnconsultarticketsroot"><a href="/misTickets"><i class="fa fa-address-card-o" aria-hidden="true"></i> Mis Tickets</a></li>
