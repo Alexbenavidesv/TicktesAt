@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -26,6 +27,15 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+
+   /* public function redirectPath(){
+        if (Auth::user()->sesion == 0) {
+            return '/cambiar_password';
+        }else {
+            return '/resumen';
+        }
+    }*/
+
 
     /**
      * Create a new controller instance.

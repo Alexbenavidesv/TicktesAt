@@ -15,8 +15,77 @@ use DB;
 
 class TicketController extends Controller
 {
-    public function index()
-    {
+
+    public function resumen(){
+
+        $mesActual=date('m');
+
+        $ticketsMesActual=Ticket::join('respuesta','ticket.id','respuesta.id_ticket')
+            ->where('respuesta.tipo','APERTURA')
+            ->whereMonth('respuesta.fecha',$mesActual)
+            ->join('consultores','ticket.id_consultor','consultores.id')
+            ->get();
+
+
+        $ticketsResueltos=Ticket::where('estado',1)
+            ->join('respuesta','ticket.id','respuesta.id_ticket')
+            ->where('respuesta.tipo','APERTURA')
+            ->whereMonth('respuesta.fecha',$mesActual)
+            ->get();
+
+        $ticketsPendientes=Ticket::where('estado','!=',1)
+            ->join('respuesta','ticket.id','respuesta.id_ticket')
+            ->where('respuesta.tipo','APERTURA')
+            ->whereMonth('respuesta.fecha',$mesActual)
+            ->get();
+
+        switch ($mesActual){
+            case 1:
+                $mesActual='ENERO';
+                break;
+            case 2:
+                $mesActual='FEBRERO';
+                break;
+            case 3:
+                $mesActual='MARZO';
+                break;
+            case 4:
+                $mesActual='ABRIL';
+                break;
+            case 5:
+                $mesActual='MAYO';
+                break;
+            case 6:
+                $mesActual='JUNIO';
+                break;
+            case 7:
+                $mesActual='JULIO';
+                break;
+            case 8:
+                $mesActual='AGOSTO';
+                break;
+            case 9:
+                $mesActual='SEPTIEMBRE';
+                break;
+            case 10:
+                $mesActual='OCTUBRE';
+                break;
+            case 11:
+                $mesActual='NOVIEMBRE';
+                break;
+            case 11:
+                $mesActual='DICIEMBRE';
+                break;
+        }
+
+        $porcentaje=((count($ticketsResueltos)*100)/count($ticketsMesActual));
+        $porcentaje=number_format($porcentaje,0);
+
+        return view('resumen',compact('ticketsMesActual','ticketsResueltos','ticketsPendientes','mesActual','porcentaje'));
+    }
+
+
+    public function index(){
         return view("inicio");
     }
 
