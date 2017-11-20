@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'TicketController@index')->middleware('auth','sesion', 'adminroot');
+Route::get('crear_ticket', 'TicketController@index')->middleware('auth','sesion', 'adminroot');
+Route::get('/','TicketController@resumen')->middleware('auth','sesion','root');
 
 //Rutas para el inicio de sesion
 Route::get('login', 'Auth\LoginController@showLoginForm');
