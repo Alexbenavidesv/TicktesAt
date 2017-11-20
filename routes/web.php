@@ -56,3 +56,11 @@ Route::get('descarga/{parametro}', 'RespuestasController@descargar');
 Route::post('editarRespuesta', 'RespuestasController@editar')->middleware('auth','sesion', 'consultor');
 
 Route::get('misTickets', 'TicketController@misTickets')->middleware('auth','sesion', 'root');
+
+Route::get('formatoVisita', 'VisitasController@index');
+
+Route::post('guardarVisita', 'VisitasController@guardarVisita');
+
+Route::get('listarvisitas', 'VisitasController@listado');
+
+Route::get('visitaPdf/{id}', 'VisitasController@verPdf');

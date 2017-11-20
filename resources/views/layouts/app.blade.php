@@ -150,9 +150,16 @@
                 @if(Auth::user()->id_rol !=2)
                 <li id="btnconsultartickets"><a href="/consultarticketsna"><i class="fa fa-minus-square-o" aria-hidden="true"></i> Tickets no asignados</a></li>
                 @endif
-                      @if(Auth::user()->id_rol ==1)
-                          <li><a href="/tickets_reasignar"><i class="fa fa-hourglass-end" aria-hidden="true"></i> Tickets por reasignar</a></li>
-                      @endif
+                  @if(Auth::user()->id_rol ==1)
+                      <li><a href="/tickets_reasignar"><i class="fa fa-hourglass-end" aria-hidden="true"></i> Tickets por reasignar</a></li>
+                  @endif
+                @if(Auth::user()->id_rol !=2)
+                <li><a href="/formatoVisita"><i class="fa fa-file-text-o" aria-hidden="true"></i> Formato de visita</a></li>
+                @endif
+                
+                @if(Auth::user()->id_rol !=2)
+                <li><a href="/listarvisitas"><i class="fa fa-file-text" aria-hidden="true"></i> Mis visitas</a></li>
+                @endif
               </ul>
             </div>
 
@@ -178,6 +185,8 @@
     <script src="{{ asset('js/editarUsuario.js') }}"></script>
     <script src="{{ asset('js/editarespuesta.js') }}"></script>
     <script src="{{ asset('js/reabrir.js') }}"></script>
+    <script src="{{ asset('js/visitas.js') }}"></script>
+    <script src="{{ asset('js/guardarvisita.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script >
     $(document).ready(function() {
