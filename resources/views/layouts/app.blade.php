@@ -164,7 +164,7 @@
                 @endif
 
                 @if(Auth::user()->id_rol ==1)
-                <li><a href="/listarvisitasgrl"><i class="fa fa-bars" aria-hidden="true"></i> Todas las visitas visitas</a></li>
+                <li><a href="/listarvisitasgrl"><i class="fa fa-bars" aria-hidden="true"></i> Todas las visitas</a></li>
                 @endif
               </ul>
             </div>
