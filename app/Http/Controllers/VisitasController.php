@@ -176,9 +176,9 @@ class VisitasController extends Controller
             $visitados = Visitado::where('visitados.id_visita', $id)->get();
         }
 
-
+		
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadView('pdfVisita', compact('visitapdf', 'visitados'))->setPaper('a4', 'landscape');;
+        $pdf->loadView('pdfVisita', compact('visitapdf', 'visitados'))->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 

@@ -447,7 +447,7 @@ class TicketController extends Controller
 
     public function filtros(Request $request)
     {
-        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='') {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='' || $request->numero!='') {
 
             $iduser = Auth::user()->id;
 
@@ -468,7 +468,8 @@ class TicketController extends Controller
             //dd($rol);
 
             if ($rol == 'Root') {
-                $tickets = Ticket::prioridad($request->prioridad_)
+                $tickets = Ticket::numero($request->numero)
+                ->prioridad($request->prioridad_)
                     ->estado($request->estado)
                     ->tipo($request->tipo_)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -483,7 +484,8 @@ class TicketController extends Controller
                     ->orderBy('id', 'desc')
                     ->paginate(15);
             } elseif ($rol == 'Consultor') {
-                $tickets = Ticket::prioridad($request->prioridad_)
+                $tickets = Ticket::numero($request->numero)
+                    ->prioridad($request->prioridad_)
                     ->estado($request->estado)
                     ->tipo($request->tipo_)
                 ->join('users', 'ticket.id_user', 'users.id')
@@ -505,7 +507,8 @@ class TicketController extends Controller
 
                 $empresa = $consulta2[0]->empresa;
                 //dd($empresa);
-                $tickets = Ticket::prioridad($request->prioridad_)
+                $tickets = Ticket::numero($request->numero)
+                    ->prioridad($request->prioridad_)
                     ->estado($request->estado)
                     ->tipo($request->tipo_)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -636,7 +639,8 @@ class TicketController extends Controller
             $rol = $consulta[0]->nombre;
 
             //dd($rol);
-            $tickets = Ticket::prioridad($request->prioridad_)
+            $tickets = Ticket::numero($request->numero)
+                ->prioridad($request->prioridad_)
                 ->estado($request->estado)
                 ->tipo($request->tipo_)
             ->join('users', 'ticket.id_user', 'users.id')
