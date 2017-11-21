@@ -17,6 +17,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/style3.css') }}" rel="stylesheet">
      <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
@@ -137,11 +138,12 @@
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
                   @if(Auth::user()->id_rol ==1)
+                <li id=""><a href="/" ><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
                 <li id="btnusuarios"><a href="/usuarios" ><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
                 <li id="btnempresas"><a href="/empresas"><i class="fa fa-industry" aria-hidden="true"></i> Empresas</a></li>
                   @endif
                 @if(Auth::user()->id_rol !=3)
-                <li id="btntickets"><a href="/"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
+                <li id="btntickets"><a href="/crear_ticket"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
                 @endif
                 @if(Auth::user()->id_rol ==1)
                 <li id="btnconsultarticketsroot"><a href="/misTickets"><i class="fa fa-address-card-o" aria-hidden="true"></i> Mis Tickets</a></li>
@@ -187,6 +189,8 @@
     <script src="{{ asset('js/reabrir.js') }}"></script>
     <script src="{{ asset('js/visitas.js') }}"></script>
     <script src="{{ asset('js/guardarvisita.js') }}"></script>
+    <script src="{{ asset('js/filtrarResumen.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script >
     $(document).ready(function() {
@@ -195,6 +199,15 @@
         $('.prioridadSelect').select2();
         $('.estadoSelect').select2();
         $('.empresaSelect').select2();
+
+        $('.buscarFecha').datepicker( {
+            format: "mm-yyyy",
+            viewMode: "months",
+            minViewMode: "months",
+            language: "es",
+            
+        });
+
     });
 </script>
     <script src="{{ asset('js/solicitar.js') }}"></script>

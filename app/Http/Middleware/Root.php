@@ -17,7 +17,12 @@ class Root
     public function handle($request, Closure $next)
     {
         if (!(Auth::user()->id_rol == 1)) {
-            return new RedirectResponse(url('/consultartickets'));
+            if(Auth::user()->id_rol==2) {
+                return new RedirectResponse(url('/crear_ticket'));
+            }
+            if(Auth::user()->id_rol==3) {
+                return new RedirectResponse(url('/consultartickets'));
+            }
         }
         return $next($request);
     }
