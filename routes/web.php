@@ -71,3 +71,6 @@ Route::get('evidenciaVisita/{id}', 'VisitasController@evidencia')->middleware('a
 Route::post('guardarEvidenciaVisita', 'VisitasController@guardarEvidencia')->middleware('auth','sesion', 'rootconsultor');
 
 Route::get('descargar/{parametro}', 'VisitasController@descargar')->middleware('auth','sesion', 'rootconsultor');
+
+Route::get('listarvisitasgrl', 'VisitasController@listGeneral')->middleware('auth','sesion', 'root');
+
