@@ -104,6 +104,7 @@
 	<table class="table table-striped table-condensed" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 		<thead>
+			<th>Vista Previa</th>
 			<th>Numero</th>
 			<th>Estado</th>
 			@if(isset($tickets[0]->empresa))
@@ -121,6 +122,7 @@
 			@else
 				<tr class="success">
 		@endif
+			<td><a type="button" href="#" class="btn btn-warning btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
 						<td><span class="label label-danger">Pendiente</span></td>

@@ -14,9 +14,6 @@
 			<th>Tipo</th>
 			<th>Empresa</th>
 			<th>Fecha</th>
-			<th>Motivo</th>
-			<th>Recolección</th>
-			<th>Prospecto visitado</th>
 			<th>Consultor</th>
 			<th>Controles</th>
 		</thead>
@@ -34,24 +31,9 @@
 			<td>{{$v2->empresa}}</td>
 			@endforeach
 			@else
-			<td>No registra</td>
-			@endif
-			<td>{{$v->fecha}}</td>
-			@if($v->tipo=='Capacitación')
-			<td>Capacitación</td>
-			@else
-			<td>{{$v->motivo}}</td>
-			@endif
-			@if($v->tipo=='Capacitación')
-			<td>No registra</td>
-			@else
-			<td>{{$v->recoleccion}}</td>
-			@endif
-			@if($v->tipo=='Capacitación')
-			<td>No es un prospecto</td>
-			@else
 			<td>{{$v->cliente}}</td>
 			@endif
+			<td>{{$v->fecha}}</td>
 			<td>{{$v->consultor}}</td>
 			<td>
 				<a type="button" href="/visitaPdf/{{$v->id}}" class="btn btn-danger btn-sm" style="width: 30px" id="respuesta" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
