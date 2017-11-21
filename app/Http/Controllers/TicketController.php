@@ -440,7 +440,7 @@ class TicketController extends Controller
         )->validate();
 
         Ticket::where('id', $request->id_ticket)
-            ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo]);
+            ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo,'estado'=>0]);
 
         return "OK";
     }
@@ -568,7 +568,8 @@ class TicketController extends Controller
         $ticket->prioridad = $request->prioridad;
         $ticket->id_consultor = $request->consultor;
         $ticket->tipo = $request->tipo;
-        $ticket->save();  
+        $ticket->area = NULL;
+        $ticket->save();
 
         /*Ticket::where('id', $request->id_ticket)
             ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo]);*/
