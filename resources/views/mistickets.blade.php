@@ -24,6 +24,7 @@
 					<option value="0">Pendiente</option>
 					<option value="2">En proceso</option>
 					<option value="3">Por confirmar</option>
+					<option value="4">Reasignado</option>
 					<option value="1">Cerrado</option>
 				</select> <br><br>
 
@@ -100,6 +101,9 @@
 					@endif
 					@if($t->estado==3)
 						<td><span class="label label-primary">Por confirmar</span></td>
+					@endif
+					@if($t->estado==4)
+						<td><span class="label label-primary" style="background-color: grey;">Reasignado</span></td>
 					@endif
 					@if($t->estado==1)
 						<td><span class="label label-success">Cerrado</span></td>
