@@ -185,14 +185,14 @@
         $(document).ready(function() {
 
             $(".estadoSelect").val("-");
-              $('.estadoSelect').attr('multiple','multiple');
+              $('.estadoSelect1').attr('multiple','multiple');
             $('.estadoSelect').select2({
                 placeholder: "Seleccione...",
             });
 
 
             $('.consultorSelect').val('-');
-            $('.consultorSelect').attr('multiple','multiple');
+            $('.consultorSelect1').attr('multiple','multiple');
             $('.consultorSelect').select2(
                 {
                     placeholder: "Seleccione...",
@@ -200,20 +200,20 @@
             );
 
             $('.tipoSelect').val('-');
-            $('.tipoSelect').attr('multiple','multiple');
+            $('.tipoSelect1').attr('multiple','multiple');
             $('.tipoSelect').select2({
                 placeholder: "Seleccione...",
             });
 
             $('.prioridadSelect').val('-');
-            $('.prioridadSelect').attr('multiple','multiple');
+            $('.prioridadSelect1').attr('multiple','multiple');
             $('.prioridadSelect').select2({
                 placeholder: "Seleccione...",
             });
 
 
             $('.empresaSelect').val('-');
-            $('.empresaSelect').attr('multiple','multiple');
+            $('.empresaSelect1').attr('multiple','multiple');
             $('.empresaSelect').select2({
                 placeholder: "Seleccione...",
             });
