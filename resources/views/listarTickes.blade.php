@@ -95,7 +95,7 @@
 				<tr class="success">
 		@endif
 			<td><a type="button" class="btn btn-warning btn-sm" style="width: 30px" onclick="vistaPrevia({{$t->id}})" ><i class="fa fa-comments-o" aria-hidden="true"></i></a>
-			<a type="button" class="btn btn-warning btn-sm" style="width: 30px; display: none;" onclick="vistaPrevia2({{$t->id}})" ><i class="fa fa-window-close" aria-hidden="true"></i></a>
+			<a type="button" class="btn btn-warning btn-sm" style="width: 30px; display: none;" onclick="vistaPrevia2({{$t->id}})" ><i class="fa fa-window-close" aria-hidden="true" id="btn2"></i></a>
 			</td>
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
