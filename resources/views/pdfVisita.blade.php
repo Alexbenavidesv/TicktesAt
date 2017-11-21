@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Formato de visita</title>
-</head>
+
 <body>
 @if($visitapdf[0]->tipo=='Consultoría' || $visitapdf[0]->tipo=='Presentación')
 <table border="" style="text-align: center; font-family: Helvetica;">
@@ -11,11 +9,12 @@
 			<img src="./img/zues.PNG" width="150px" height="65px">
 		</td>
 		<td>
-			<table style="font-size: 10px; text-align: center; font-family: Helvetica; border: 1px solid #000">
+			<table style="font-size: 10px; text-align: center; font-family: Helvetica;">
 			<tr>
-			<h1 style="text-align: center; margin-left: 250px">Registro de visita</h1>
-			</table>
+			<td><h1 style="text-align: center; margin-left: 250px">Registro de visita</h1></td>
 			</tr>
+			</table>
+			
 		</td>
 	</tr>
 	<tr>

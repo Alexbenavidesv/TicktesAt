@@ -9,70 +9,98 @@
 
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
-	<h1 class="text-center">Listado de Tickets</h1>
+	<h1 class="text-center" style="margin-top: -1.2%">Listado de Tickets</h1>
 
-	<div class="row">
+	<form action="/filtrar_tickets" method="POST">
+		{{csrf_field() }}
 
-		<div class="col-md-2 text-center">
-			<h4 ><span class="label label-primary">FILTRAR TICKETS</span></h4><br>
-			<form action="/filtrar_tickets" method="POST">
-				{{csrf_field() }}
+	<div class="row text-center">
 
-				<label for="">Estado</label>
-				<select name="estado" id="" class="estadoSelect" style="width: 100%">
-					<option value="">Seleccione ...</option>
-					<option value="0">Pendiente</option>
-					<option value="2">En proceso</option>
-					<option value="3">Por confirmar</option>
-					<option value="4">Reasignado</option>
-                    <option value="1">Cerrado</option>
-				</select> <br><br>
 
+
+			<div class="col-md-2">
+				<label for="">Número</label>
+				<input type="number" min="1" class="form-control" name="numero" placeholder="# del ticket">
+			</div>
+
+		<div class="col-md-2">
+			<label for="">Estado</label>
+			<select name="estado[]"  multiple="multiple" id="" class="estadoSelect" style="width: 100%">
+				<option value="">Seleccione ...</option>
+				<option value="0">Pendiente</option>
+				<option value="2">En proceso</option>
+				<option value="3">Por confirmar</option>
+				<option value="4">Reasignado</option>
+				<option value="1">Cerrado</option>
+			</select>
+		</div>
+		<div class="col-md-2">
 			<label for="">Prioridad</label>
-			<select name="prioridad_" id="" class="prioridadSelect" style="width: 100%">
+			<select name="prioridad_[]" multiple="multiple" id="" class="prioridadSelect" style="width: 100%">
 				<option value="">Seleccione ...</option>
 				<option value="Alta">Alta</option>
 				<option value="Media">Media</option>
 				<option value="Baja">Baja</option>
-			</select> <br><br>
-				@if(Auth::user()->id_rol ==1)
-			<label for="">Consultor</label>
-			<select name="consultor_" id="consultor_" class="consultorSelect" style="width: 100%">
-				<option value="">Seleccione ...</option>
-				@foreach($consultores as $consultor)
-					<option value="{{$consultor->id}}">{{$consultor->name}}</option>
-				@endforeach
-			</select><br><br>
-				@endif
+			</select>
+		</div>
 
-				@if(Auth::user()->id_rol !=2)
-					<label for="">Empresa</label>
-					<select name="empresa" id="empresa" class="empresaSelect" style="width: 100%">
-						<option value="">Seleccione ...</option>
-						@foreach($empresas as $empresa)
-							<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
-						@endforeach
-					</select><br><br>
-				@endif
+			@if(Auth::user()->id_rol ==1)
+		<div class="col-md-2">
 
-
-				<label for="">Tipo</label>
-				<select name="tipo_" id="tipo_" class="tipoSelect" style="width: 100%">
+				<label for="">Consultor</label>
+				<select name="consultor_[]" multiple="multiple" id="consultor_" class="consultorSelect" style="width: 100%">
 					<option value="">Seleccione ...</option>
-					<option value="Sin asignar">Sin asignar</option>
-					<option value="Soporte">Soporte</option>
-					<option value="Desarrollo">Desarrollo</option>
-					<option value="Presentación">Presentación</option>
-					<option value="Reporte">Reporte</option>
-					<option value="Capacitación">Capacitación</option>
-					<option value="Instalación">Instalación</option>
-				</select> <br><br>
+					@foreach($consultores as $consultor)
+						<option value="{{$consultor->id}}">{{$consultor->name}}</option>
+					@endforeach
+				</select>
+				</div>
+			@endif
+
+			@if(Auth::user()->id_rol !=2)
+		<div class="col-md-2">
+
+				<label for="">Empresa</label>
+				<select name="empresa[]" multiple="multiple" id="empresa" class="empresaSelect" style="width: 100%">
+					<option value="">Seleccione ...</option>
+					@foreach($empresas as $empresa)
+						<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+					@endforeach
+				</select>
+					</div>
+			@endif
+
+		<div class="col-md-2">
+			<label for="">Tipo</label>
+			<select name="tipo_[]" multiple="multiple" id="tipo_" class="tipoSelect" style="width: 100%">
+				<option value="">Seleccione ...</option>
+				<option value="Sin asignar">Sin asignar</option>
+				<option value="Soporte">Soporte</option>
+				<option value="Desarrollo">Desarrollo</option>
+				<option value="Presentación">Presentación</option>
+				<option value="Reporte">Reporte</option>
+				<option value="Capacitación">Capacitación</option>
+				<option value="Instalación">Instalación</option>
+			</select>
+		</div>
+
+		<br><br>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-2">
 			<button class="btn btn-success " style="width: 100%">
 				<span class="fa fa-search"></span> Filtrar
 			</button>
-			</form>
 		</div>
-		<div class="col-md-10">
+	</div>
+
+	</form>
+
+	<div class="row">
+
+
+		<div class="col-md-12">
 	<table class="table table-striped table-condensed" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 		<thead>

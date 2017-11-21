@@ -22,7 +22,7 @@
     <link href="{{ asset('css/style3.css') }}" rel="stylesheet">
      <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <link href="/css/select2.min.css" rel="stylesheet" />
 
     <style>
         .navbar-login
@@ -178,6 +178,28 @@
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="{{ asset('js/jquery2.0.3.min.js')}}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="/js/select2.min.js"></script>
+
+    <script >
+        $(document).ready(function() {
+            $('.consultorSelect').select2();
+            $('.tipoSelect').select2();
+            $('.prioridadSelect').select2();
+            $('.estadoSelect').select2();
+            $('.empresaSelect').select2();
+
+            $('.buscarFecha').datepicker( {
+                format: "mm-yyyy",
+                viewMode: "months",
+                minViewMode: "months",
+                language: "es",
+
+            });
+
+        });
+    </script>
+
     <script>window.jQuery || document.write('<script src="{{ asset("js/jquery2.0.3.min.js")}}"><\/script>')</script>
    <!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.js"></script>
@@ -194,26 +216,6 @@
     <script src="{{ asset('js/visitas.js') }}"></script>
     <script src="{{ asset('js/guardarvisita.js') }}"></script>
     <script src="{{ asset('js/filtrarResumen.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
-<script >
-    $(document).ready(function() {
-        $('.consultorSelect').select2();
-        $('.tipoSelect').select2();
-        $('.prioridadSelect').select2();
-        $('.estadoSelect').select2();
-        $('.empresaSelect').select2();
-
-        $('.buscarFecha').datepicker( {
-            format: "mm-yyyy",
-            viewMode: "months",
-            minViewMode: "months",
-            language: "es",
-            
-        });
-
-    });
-</script>
-    <script src="{{ asset('js/solicitar.js') }}"></script>
+     <script src="{{ asset('js/solicitar.js') }}"></script>
 </body>
 </html>

@@ -13,32 +13,39 @@ class Ticket extends Model
     ];
 
     public function scopePrioridad($query,$prioridad){
-        if (trim($prioridad) != "") {
-            return $query->where('ticket.prioridad', $prioridad);
+
+        if ($prioridad != null) {
+            return $query->whereIn('ticket.prioridad', $prioridad);
         }
     }
 
     public function scopeConsultor($query,$consultor){
-        if (trim($consultor) != "") {
-            return $query->where('ticket.id_consultor', $consultor);
+        if ($consultor != null) {
+            return $query->whereIn('ticket.id_consultor', $consultor);
         }
     }
 
     public function scopeEstado($query,$estado){
-        if (trim($estado) != "") {
-            return $query->where('ticket.estado', $estado);
+        if ($estado != null) {
+            return $query->whereIn('ticket.estado', $estado);
         }
     }
 
     public function scopeEmpresa($query,$empresa){
-        if (trim($empresa) != "") {
-            return $query->where('empresa.id',$empresa);
+        if ($empresa != null) {
+            return $query->whereIn('empresa.id', $empresa);
         }
     }
 
     public function scopeTipo($query,$tipo){
-        if (trim($tipo) != "") {
-            return $query->where('ticket.tipo',$tipo);
+        if ($tipo != null) {
+            return $query->whereIn('ticket.tipo', $tipo);
+        }
+    }
+
+    public function scopeNumero($query,$numero){
+        if (trim($numero) != "") {
+            return $query->where('ticket.id',$numero);
         }
     }
 }
