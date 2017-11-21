@@ -25,8 +25,7 @@
 
 		<div class="col-md-2">
 			<label for="">Estado</label>
-			<select name="estado[]"  multiple="multiple" id="" class="estadoSelect" style="width: 100%">
-				<option value="">Seleccione ...</option>
+			<select name="estado[]"   id="" class="form-control estadoSelect" style="width: 100%">
 				<option value="0">Pendiente</option>
 				<option value="2">En proceso</option>
 				<option value="3">Por confirmar</option>
@@ -36,8 +35,7 @@
 		</div>
 		<div class="col-md-2">
 			<label for="">Prioridad</label>
-			<select name="prioridad_[]" multiple="multiple" id="" class="prioridadSelect" style="width: 100%">
-				<option value="">Seleccione ...</option>
+			<select name="prioridad_[]"  id="" class="form-control prioridadSelect" style="width: 100%">
 				<option value="Alta">Alta</option>
 				<option value="Media">Media</option>
 				<option value="Baja">Baja</option>
@@ -48,8 +46,7 @@
 		<div class="col-md-2">
 
 				<label for="">Consultor</label>
-				<select name="consultor_[]" multiple="multiple" id="consultor_" class="consultorSelect" style="width: 100%">
-					<option value="">Seleccione ...</option>
+				<select name="consultor_[]" id="consultor_" class="form-control consultorSelect" style="width: 100%">
 					@foreach($consultores as $consultor)
 						<option value="{{$consultor->id}}">{{$consultor->name}}</option>
 					@endforeach
@@ -61,8 +58,7 @@
 		<div class="col-md-2">
 
 				<label for="">Empresa</label>
-				<select name="empresa[]" multiple="multiple" id="empresa" class="empresaSelect" style="width: 100%">
-					<option value="">Seleccione ...</option>
+				<select name="empresa[]"  id="empresa" class="form-control empresaSelect" style="width: 100%">
 					@foreach($empresas as $empresa)
 						<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
 					@endforeach
@@ -72,8 +68,7 @@
 
 		<div class="col-md-2">
 			<label for="">Tipo</label>
-			<select name="tipo_[]" multiple="multiple" id="tipo_" class="tipoSelect" style="width: 100%">
-				<option value="">Seleccione ...</option>
+			<select name="tipo_[]" id="tipo_" class="form-control tipoSelect" style="width: 100%">
 				<option value="Sin asignar">Sin asignar</option>
 				<option value="Soporte">Soporte</option>
 				<option value="Desarrollo">Desarrollo</option>
@@ -96,7 +91,7 @@
 	</div>
 
 	</form>
-
+	<br>
 	<div class="row">
 
 
