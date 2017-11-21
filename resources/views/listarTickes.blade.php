@@ -25,7 +25,8 @@
 
 		<div class="col-md-2">
 			<label for="">Estado</label>
-			<select name="estado[]"  multiple="multiple" id="" class="estadoSelect" style="width: 100%">
+			<input type="text" class="form-control" id="estadoAux">
+			<select name="estado[]"  multiple="multiple" id="" class="estadoSelect" style="width: 100%; display: none;">
 				<option value="">Seleccione ...</option>
 				<option value="0">Pendiente</option>
 				<option value="2">En proceso</option>
@@ -36,7 +37,7 @@
 		</div>
 		<div class="col-md-2">
 			<label for="">Prioridad</label>
-			<select name="prioridad_[]" multiple="multiple" id="" class="prioridadSelect" style="width: 100%">
+			<select name="prioridad_[]" multiple="multiple" id="" class="prioridadSelect" style="width: 100%; display: none;">
 				<option value="">Seleccione ...</option>
 				<option value="Alta">Alta</option>
 				<option value="Media">Media</option>
@@ -48,7 +49,7 @@
 		<div class="col-md-2">
 
 				<label for="">Consultor</label>
-				<select name="consultor_[]" multiple="multiple" id="consultor_" class="consultorSelect" style="width: 100%">
+				<select name="consultor_[]" multiple="multiple" id="consultor_" class="consultorSelect" style="width: 100%; display: none;">
 					<option value="">Seleccione ...</option>
 					@foreach($consultores as $consultor)
 						<option value="{{$consultor->id}}">{{$consultor->name}}</option>
@@ -61,7 +62,7 @@
 		<div class="col-md-2">
 
 				<label for="">Empresa</label>
-				<select name="empresa[]" multiple="multiple" id="empresa" class="empresaSelect" style="width: 100%">
+				<select name="empresa[]" multiple="multiple" id="empresa" class="empresaSelect" style="width: 100%; display: none;">
 					<option value="">Seleccione ...</option>
 					@foreach($empresas as $empresa)
 						<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
@@ -72,7 +73,7 @@
 
 		<div class="col-md-2">
 			<label for="">Tipo</label>
-			<select name="tipo_[]" multiple="multiple" id="tipo_" class="tipoSelect" style="width: 100%">
+			<select name="tipo_[]" multiple="multiple" id="tipo_" class="tipoSelect" style="width: 100%; display: none;">
 				<option value="">Seleccione ...</option>
 				<option value="Sin asignar">Sin asignar</option>
 				<option value="Soporte">Soporte</option>
