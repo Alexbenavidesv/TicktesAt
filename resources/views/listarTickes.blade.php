@@ -116,7 +116,9 @@
 			@else
 				<tr class="success">
 		@endif
-			<td><a type="button" href="#" class="btn btn-warning btn-sm" style="width: 30px" id="respuesta"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+			<td><a type="button" href="#" class="btn btn-warning btn-sm" style="width: 30px" id="respuesta" onclick="vistaPrevia({{$t->id}})"><i class="fa fa-eye" aria-hidden="true"></i></a>
+				<a type="button" href="#" class="btn btn-warning btn-sm" style="width: 30px" id="respuesta" onclick="vistaPrevia({{$t->id}})"><i class="fa fa-eye" aria-hidden="true"></i></a>
+			</td>
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
 						<td><span class="label label-danger">Pendiente</span></td>
@@ -158,6 +160,15 @@
 				@endif
 			</td>
 		</tr>
+		<div>
+			<tr>
+				<td colspan="9" style="display:none;" id="contenidoticket{{$t->id}}">
+					<div class="alert alert-info">
+					  <strong>{{$t->descripcion}}</strong>
+					</div>
+				</td>
+			</tr>
+		</div>
 
 				<div id="asignar{{$t->id}}" class="modal fade" role="dialog">
 					<div class="modal-dialog">
