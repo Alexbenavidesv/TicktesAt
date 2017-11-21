@@ -183,11 +183,42 @@
 
     <script >
         $(document).ready(function() {
-            $('.consultorSelect').select2();
-            $('.tipoSelect').select2();
-            $('.prioridadSelect').select2();
-            $('.estadoSelect').select2();
-            $('.empresaSelect').select2();
+
+            $(".estadoSelect").val("-");
+              $('.estadoSelect').attr('multiple','multiple');
+            $('.estadoSelect').select2({
+                placeholder: "Seleccione...",
+            });
+
+
+            $('.consultorSelect').val('-');
+            $('.consultorSelect').attr('multiple','multiple');
+            $('.consultorSelect').select2(
+                {
+                    placeholder: "Seleccione...",
+                }
+            );
+
+            $('.tipoSelect').val('-');
+            $('.tipoSelect').attr('multiple','multiple');
+            $('.tipoSelect').select2({
+                placeholder: "Seleccione...",
+            });
+
+            $('.prioridadSelect').val('-');
+            $('.prioridadSelect').attr('multiple','multiple');
+            $('.prioridadSelect').select2({
+                placeholder: "Seleccione...",
+            });
+
+
+            $('.empresaSelect').val('-');
+            $('.empresaSelect').attr('multiple','multiple');
+            $('.empresaSelect').select2({
+                placeholder: "Seleccione...",
+            });
+
+
 
             $('.buscarFecha').datepicker( {
                 format: "mm-yyyy",
