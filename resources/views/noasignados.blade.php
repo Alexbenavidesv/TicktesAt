@@ -84,8 +84,8 @@
 								{{csrf_field()}}
 							<div class="col-md-6">
 								<label for="">Prioridad</label>
-								<p id="errorPrioridad1{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
-								<select name="prioridad1{{$t->id}}" id="prioridad1{{$t->id}}" class="form-control">
+								<p id="errorPrioridad{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
+								<select name="prioridad{{$t->id}}" id="prioridad{{$t->id}}" class="form-control">
 									<option value="">Selecciona una prioridad...</option>
 									<option value="Baja">Baja</option>
 									<option value="Media">Media</option>
@@ -98,8 +98,8 @@
 
 							<div class="col-md-6">
 								<label for="">Tipo</label>
-								<p id="errorTipo1{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
-								<select name="tipo1{{$t->id}}" id="tipo1{{$t->id}}" class="form-control">
+								<p id="errorTipo{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
+								<select name="tipo{{$t->id}}" id="tipo{{$t->id}}" class="form-control">
 									<option value="">Selecciona el tipo...</option>
 									<option value="Soporte">Soporte</option>
 									<option value="Desarrollo">Desarrollo</option>
@@ -109,14 +109,31 @@
 									<option value="Instalación">Instalación</option>
 								</select>
 							</div>
+
+
+								@if(Auth::user()->id_rol==1)
+									<div class="col-md-6">
+										<label for="">Consultor</label>
+										<p id="errorConsultor{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
+										<select name="consultor{{$t->id}}" id="consultor{{$t->id}}" class="consultorSelect" style="width: 90%">
+											<option value="">Selecciona un consultor...</option>
+											@foreach($consultores as $consultor)
+												<option value="{{$consultor->id}}">{{$consultor->name}}</option>
+											@endforeach
+										</select>
+									</div>
+								@else
+									<input type="hidden" value="{{Auth::user()->id}}" id="consultor{{$t->id}}" name="consultor{{$t->id}}" name="user">
+								@endif
+
 							<input type="hidden" value="{{$t->id}}"  id="id_ticket{{$t->id}}" name="id_ticket{{$t->id}}">
 							</form>
 						</div>
-						<button class="btn btn-success" onclick="noasignado({{$t->id}})">Asignar</button>
-						<button  class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
 					</div>
 					<div class="modal-footer">
-						
+						<button class="btn btn-success" onclick="asignar({{$t->id}})">Asignar</button>
+						<button  class="btn btn-danger" data-dismiss="modal">Cerrar</button>
 					</div>
 				</div>
 
@@ -128,78 +145,5 @@
 		@endif
 	</table>
 </div>
-<script>
-function noasignado(id_ticket) {
-    var id=id_ticket;
-    var prio="#prioridad1"+id;
-    var errprio="#errorPrioridad1"+id;
-    var user="#user";
-    var tip="#tipo1"+id;
-    var errtip="#errorTipo1"+id;
-    var tick="#id_ticket"+id;
 
-    var tokken = $('input[name="_token"]').val();
-    var prioridad=$(prio).val();
-    var consultor=$(user).val();
-    var tipo=$(tip).val();
-    var id_ticket_=$(tick).val();
-
-    $.ajax({
-        url : "guardarasignacion",
-        data : {prioridad: prioridad, consultor: consultor,tipo:tipo,id_ticket: id_ticket_, _token: tokken},
-        type : 'POST',
-        success:function (respuesta) {
-            swal({
-                    title: "Asignación realizada con exito!",
-                    //text: "",
-                    type: "success",
-                    confirmButtonText: "Ok",
-                    closeOnConfirm: false
-                },
-                function(isConfirm){
-                    if (isConfirm) {
-                        location.reload();
-                    }
-                });
-            $(errprio).html('');
-            //$(errcons).html('');
-            $(errtip).html('');
-            $(prio).val('');
-            //$(cons).val('');
-            $(tip).val('');
-            $('#asignar1'+id_ticket).hide();
-            location.href = '/consultartickets';
-        },
-        error:function (error) {
-            var errores = JSON.parse(error.responseText);
-            // console.log(errores);
-            if (errores.lenght == 0) {
-                swal({
-                    title: "Se ha producido un error",
-                    // text: "You will not be able to recover this imaginary file!",
-                    type: "error",
-                    confirmButtonText: "Ok",
-                    closeOnConfirm: true
-                });
-            }
-            else{
-                if(errores.prioridad){
-                    $(errprio).html(errores.prioridad);
-                }
-                else{
-                    $(errprio).html('');
-                }
-                if(errores.tipo){
-                    $(errtip).html(errores.tipo);
-                }
-                else{
-                    $(errtip).html('');
-                }
-
-
-            }
-        }
-    });
-}
-</script>
 @endsection

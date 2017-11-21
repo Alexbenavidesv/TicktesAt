@@ -28,9 +28,25 @@
                     <option value="1">Cerrado</option>
 				</select> <br><br>
 
+<<<<<<< HEAD
+		<div class="col-md-2">
+			<label for="">Estado</label>
+			<select name="estado[]"   id="" class="form-control estadoSelect" style="width: 100%">
+				<option value="0">Pendiente</option>
+				<option value="2">En proceso</option>
+				<option value="3">Por confirmar</option>
+				<option value="4">Reasignado</option>
+				<option value="1">Cerrado</option>
+			</select>
+		</div>
+		<div class="col-md-2">
+			<label for="">Prioridad</label>
+			<select name="prioridad_[]"  id="" class="form-control prioridadSelect" style="width: 100%">
+=======
 			<label for="">Prioridad</label>
 			<select name="prioridad_" id="" class="prioridadSelect" style="width: 100%">
 				<option value="">Seleccione ...</option>
+>>>>>>> carlos
 				<option value="Alta">Alta</option>
 				<option value="Media">Media</option>
 				<option value="Baja">Baja</option>
@@ -45,6 +61,16 @@
 			</select><br><br>
 				@endif
 
+<<<<<<< HEAD
+				<label for="">Consultor</label>
+				<select name="consultor_[]" id="consultor_" class="form-control consultorSelect" style="width: 100%">
+					@foreach($consultores as $consultor)
+						<option value="{{$consultor->id}}">{{$consultor->name}}</option>
+					@endforeach
+				</select>
+				</div>
+			@endif
+=======
 				@if(Auth::user()->id_rol !=2)
 					<label for="">Empresa</label>
 					<select name="empresa" id="empresa" class="empresaSelect" style="width: 100%">
@@ -54,8 +80,38 @@
 						@endforeach
 					</select><br><br>
 				@endif
+>>>>>>> carlos
 
 
+<<<<<<< HEAD
+				<label for="">Empresa</label>
+				<select name="empresa[]"  id="empresa" class="form-control empresaSelect" style="width: 100%">
+					@foreach($empresas as $empresa)
+						<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+					@endforeach
+				</select>
+					</div>
+			@endif
+
+		<div class="col-md-2">
+			<label for="">Tipo</label>
+			<select name="tipo_[]" id="tipo_" class="form-control tipoSelect" style="width: 100%">
+				<option value="Sin asignar">Sin asignar</option>
+				<option value="Soporte">Soporte</option>
+				<option value="Desarrollo">Desarrollo</option>
+				<option value="Presentación">Presentación</option>
+				<option value="Reporte">Reporte</option>
+				<option value="Capacitación">Capacitación</option>
+				<option value="Instalación">Instalación</option>
+			</select>
+		</div>
+
+		<br><br>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-2">
+=======
 				<label for="">Tipo</label>
 				<select name="tipo_" id="tipo_" class="tipoSelect" style="width: 100%">
 					<option value="">Seleccione ...</option>
@@ -67,12 +123,24 @@
 					<option value="Capacitación">Capacitación</option>
 					<option value="Instalación">Instalación</option>
 				</select> <br><br>
+>>>>>>> carlos
 			<button class="btn btn-success " style="width: 100%">
 				<span class="fa fa-search"></span> Filtrar
 			</button>
 			</form>
 		</div>
+<<<<<<< HEAD
+	</div>
+
+	</form>
+	<br>
+	<div class="row">
+
+
+		<div class="col-md-12">
+=======
 		<div class="col-md-10">
+>>>>>>> carlos
 	<table class="table table-striped table-condensed" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 		<thead>

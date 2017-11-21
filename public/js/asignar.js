@@ -9,19 +9,23 @@ function asignar(id_ticket) {
     var errtip="#errorTipo"+id;
     var tick="#id_ticket"+id;
 
+
     var tokken = $('input[name="_token"]').val();
     var prioridad=$(prio).val();
     var consultor=$(cons).val();
     var tipo=$(tip).val();
     var id_ticket_=$(tick).val();
 
+
     $.ajax({
         url : "asignarTicket",
         data : {prioridad: prioridad, consultor: consultor,tipo:tipo,id_ticket: id_ticket_, _token: tokken},
         type : 'POST',
         success:function (respuesta) {
+
+
             swal({
-                    title: "Asignación realizada con exito!",
+                    title: "Asignación realizada con exito! ",
                     //text: "",
                     type: "success",
                     confirmButtonText: "Ok",

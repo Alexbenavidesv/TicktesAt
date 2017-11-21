@@ -152,7 +152,7 @@
                 @if(Auth::user()->id_rol !=2)
                 <li id="btnconsultartickets"><a href="/consultarticketsna"><i class="fa fa-minus-square-o" aria-hidden="true"></i> Tickets no asignados</a></li>
                 @endif
-                  @if(Auth::user()->id_rol ==1)
+                  @if(Auth::user()->id_rol !=2)
                       <li><a href="/tickets_reasignar"><i class="fa fa-hourglass-end" aria-hidden="true"></i> Tickets por reasignar</a></li>
                   @endif
                 @if(Auth::user()->id_rol !=2)
@@ -183,11 +183,42 @@
 
     <script >
         $(document).ready(function() {
-            $('.consultorSelect').select2();
-            $('.tipoSelect').select2();
-            $('.prioridadSelect').select2();
-            $('.estadoSelect').select2();
-            $('.empresaSelect').select2();
+
+            $(".estadoSelect").val("-");
+              $('.estadoSelect').attr('multiple','multiple');
+            $('.estadoSelect').select2({
+                placeholder: "Seleccione...",
+            });
+
+
+            $('.consultorSelect').val('-');
+            $('.consultorSelect').attr('multiple','multiple');
+            $('.consultorSelect').select2(
+                {
+                    placeholder: "Seleccione...",
+                }
+            );
+
+            $('.tipoSelect').val('-');
+            $('.tipoSelect').attr('multiple','multiple');
+            $('.tipoSelect').select2({
+                placeholder: "Seleccione...",
+            });
+
+            $('.prioridadSelect').val('-');
+            $('.prioridadSelect').attr('multiple','multiple');
+            $('.prioridadSelect').select2({
+                placeholder: "Seleccione...",
+            });
+
+
+            $('.empresaSelect').val('-');
+            $('.empresaSelect').attr('multiple','multiple');
+            $('.empresaSelect').select2({
+                placeholder: "Seleccione...",
+            });
+
+
 
             $('.buscarFecha').datepicker( {
                 format: "mm-yyyy",
