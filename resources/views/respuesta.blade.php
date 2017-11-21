@@ -97,7 +97,9 @@
                   <option value="0">PENDIENTE</option>
                   <option value="2">EN PROCESO</option>
                   <option value="3">POR CONFIRMAR</option>
+                  @if(Auth::user()->id_rol==1)
                   <option value="1">CERRADO</option>
+                      @endif
               </select>
           </div>
           @endif
@@ -137,11 +139,11 @@
         <button type="button" class="btn btn-primary" style="width: 150px; margin-left: 0px;" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square" aria-hidden="true"></i> Generar respuesta</button><br><br>
         @endif
         @endif
-        <?php 
+        <?php
         $i=0;
          ?>
         @foreach($respuesta as $r)
-           
+
         @if($r->tipo=='APERTURA')
         <article class="panel panel-danger panel-outline">
             <div class="panel-heading icon">
@@ -151,7 +153,7 @@
                 <strong>{{$r->descripcion}}</strong>
             </div>
         </article>
-     
+
         <article class="panel panel-default panel-outline">
             <div class="panel-body d-inline-block">
                 <div class="row">
@@ -337,7 +339,7 @@
                 </div>
               </div>
             </div>
-          
+
         @endif
           <?php $i++; ?>
         @endforeach
