@@ -116,6 +116,7 @@ class RespuestasController extends Controller
             $ticket->id_consultor = 1;
             $ticket->tipo = 'Sin asignar';
             $ticket->area = $request->area_;
+            $ticket->estado = 4;
         }
 
         $ticket->save();
