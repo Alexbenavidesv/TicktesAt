@@ -363,6 +363,7 @@ class TicketController extends Controller
         $iduser = Auth::user()->id;
 
         $consultores = User::where('users.id_rol', '!=', 2)
+            ->where('users.id','!=',1)
             ->select('users.id', 'users.name')
             ->get();
 
@@ -426,7 +427,7 @@ class TicketController extends Controller
 
     public function asignar(Request $request)
     {
-        Validator::make($request->all(),
+       Validator::make($request->all(),
             [
                 'prioridad' => 'required',
                 'consultor' => 'required',
@@ -452,8 +453,9 @@ class TicketController extends Controller
             $iduser = Auth::user()->id;
 
             $consultores = User::where('users.id_rol', '!=', 2)
-            ->select('users.id', 'users.name')
-            ->get();
+                ->where('users.id','!=',1)
+                ->select('users.id', 'users.name')
+                ->get();
 
 
             $empresas=Empresa::all();
@@ -531,7 +533,14 @@ class TicketController extends Controller
     }
 
     public function ticketsNoAsignados(){
+
+        $consultores = User::where('users.id_rol', '!=', 2)
+            ->where('users.id','!=',1)
+            ->select('users.id', 'users.name')
+            ->get();
+
         $tickets = Ticket::where('ticket.id_consultor', 1)
+            ->where('ticket.area',null)
             ->join('users', 'ticket.id_user', 'users.id')
             ->join('empresa', 'users.id_empresa', 'empresa.id')
             ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -545,7 +554,7 @@ class TicketController extends Controller
 
             //dd($tickets);
 
-            return view('noasignados', compact('tickets'));
+            return view('noasignados', compact('tickets','consultores'));
     }
 
     public function guardarAsignacion(Request $request){

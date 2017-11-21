@@ -20,7 +20,6 @@
 						<table class="table table-striped" align="center" style="width: 100%">
 							<thead>
 							<th>Numero</th>
-							<th>Estado</th>
 							@if(isset($tickets[0]->empresa))
 								<th>Empresa</th>
 							@endif
@@ -38,18 +37,7 @@
 									<tr class="success">
 										@endif
 										<td>{{$t->id}}</td>
-										@if($t->estado==0)
-											<td><span class="label label-danger">Pendiente</span></td>
-										@endif
-										@if($t->estado==2)
-											<td><span class="label label-warning">En proceso</span></td>
-										@endif
-										@if($t->estado==3)
-											<td><span class="label label-primary">Por confirmar</span></td>
-										@endif
-										@if($t->estado==1)
-											<td><span class="label label-success">Cerrado</span></td>
-										@endif
+
 										@if(isset($t->empresa))
 											<td>{{$t->empresa}}</td>
 										@endif
@@ -99,16 +87,7 @@
 																		<option value="Alta">Alta</option>
 																	</select>
 																</div>
-																<div class="col-md-6">
-																	<label for="">Consultor</label>
-																	<p id="errorConsultor{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
-																	<select name="consultor{{$t->id}}" id="consultor{{$t->id}}" class="consultorSelect" style="width: 90%">
-																		<option value="">Selecciona un consultor...</option>
-																		@foreach($consultores as $consultor)
-																			<option value="{{$consultor->id}}">{{$consultor->name}}</option>
-																		@endforeach
-																	</select>
-																</div>
+
 
 																<div class="col-md-6">
 																	<label for="">Tipo</label>
@@ -123,6 +102,23 @@
 																		<option value="Instalación">Instalación</option>
 																	</select>
 																</div>
+
+
+																@if(Auth::user()->id_rol==1)
+																	<div class="col-md-6">
+																		<label for="">Consultor</label>
+																		<p id="errorConsultor{{$t->id}}" class="text-danger" style="font-size: 14px;"></p>
+																		<select name="consultor{{$t->id}}" id="consultor{{$t->id}}" class="consultorSelect" style="width: 90%">
+																			<option value="">Selecciona un consultor...</option>
+																			@foreach($consultores as $consultor)
+																				<option value="{{$consultor->id}}">{{$consultor->name}}</option>
+																			@endforeach
+																		</select>
+																	</div>
+																@else
+																	<input type="hidden" value="{{Auth::user()->id}}" id="consultor{{$t->id}}" name="consultor{{$t->id}}" name="user">
+																@endif
+
 
 																<input type="hidden" value="{{$t->id}}"  id="id_ticket{{$t->id}}" name="id_ticket{{$t->id}}">
 															</form>
@@ -151,78 +147,5 @@
 		<div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
 	@endif
 </div>
-<script>
-function noasignado(id_ticket) {
-    var id=id_ticket;
-    var prio="#prioridad1"+id;
-    var errprio="#errorPrioridad1"+id;
-    var user="#user";
-    var tip="#tipo1"+id;
-    var errtip="#errorTipo1"+id;
-    var tick="#id_ticket"+id;
 
-    var tokken = $('input[name="_token"]').val();
-    var prioridad=$(prio).val();
-    var consultor=$(user).val();
-    var tipo=$(tip).val();
-    var id_ticket_=$(tick).val();
-
-    $.ajax({
-        url : "guardarasignacion",
-        data : {prioridad: prioridad, consultor: consultor,tipo:tipo,id_ticket: id_ticket_, _token: tokken},
-        type : 'POST',
-        success:function (respuesta) {
-            swal({
-                    title: "Asignación realizada con exito!",
-                    //text: "",
-                    type: "success",
-                    confirmButtonText: "Ok",
-                    closeOnConfirm: false
-                },
-                function(isConfirm){
-                    if (isConfirm) {
-                        location.reload();
-                    }
-                });
-            $(errprio).html('');
-            //$(errcons).html('');
-            $(errtip).html('');
-            $(prio).val('');
-            //$(cons).val('');
-            $(tip).val('');
-            $('#asignar1'+id_ticket).hide();
-            location.href = '/consultartickets';
-        },
-        error:function (error) {
-            var errores = JSON.parse(error.responseText);
-            // console.log(errores);
-            if (errores.lenght == 0) {
-                swal({
-                    title: "Se ha producido un error",
-                    // text: "You will not be able to recover this imaginary file!",
-                    type: "error",
-                    confirmButtonText: "Ok",
-                    closeOnConfirm: true
-                });
-            }
-            else{
-                if(errores.prioridad){
-                    $(errprio).html(errores.prioridad);
-                }
-                else{
-                    $(errprio).html('');
-                }
-                if(errores.tipo){
-                    $(errtip).html(errores.tipo);
-                }
-                else{
-                    $(errtip).html('');
-                }
-
-
-            }
-        }
-    });
-}
-</script>
 @endsection
