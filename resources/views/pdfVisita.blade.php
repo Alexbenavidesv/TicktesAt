@@ -58,6 +58,9 @@
 		</td>
 
 		<td width="190px" colspan="3"><b>{{$visitapdf[0]->lugar}}</b></td>
+
+		<td width="5%">Estado Interes</td>
+		<td><b>{{$visitapdf[0]->satisfaccion}}</b></td>
 	</tr>
 	<tr>
 		<td width="5%">
@@ -141,7 +144,7 @@
 
 			<td width="150px" colspan="3"><b>{{$visitapdf[0]->fecha}}</b></td>
 			
-			<td  width="5%">Quien visita</td>
+			<td  width="5%">Quien visita:</td>
 			<td><b>{{$visitapdf[0]->consultor}}</b></td>
 		</tr>
 		<tr>

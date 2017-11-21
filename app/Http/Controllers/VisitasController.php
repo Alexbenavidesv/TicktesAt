@@ -162,7 +162,7 @@ class VisitasController extends Controller
         if ($tipo=='Consultoría'||$tipo=='Presentación') {
             $visitapdf = Visita::where('visitas.id', $id)
             ->join('consultores', 'visitas.id_consultor', 'consultores.id')
-            ->select('visitas.id', 'visitas.tipo', 'visitas.fecha', 'visitas.motivovisita AS motivo', 'visitas.recoleccion', 'visitas.cliente', 'visitas.telefono', 'consultores.nombre AS consultor', 'visitas.lugar')
+            ->select('visitas.id', 'visitas.tipo', 'visitas.fecha', 'visitas.motivovisita AS motivo', 'visitas.recoleccion', 'visitas.cliente', 'visitas.telefono', 'consultores.nombre AS consultor', 'visitas.lugar', 'visitas.satisfaccion')
             ->get();
 
             $visitados = '';
@@ -235,5 +235,20 @@ class VisitasController extends Controller
             return response()->download($url);
         }
         abort(404);
+    }
+
+    public function listGeneral(){
+        $visitas = Visita::join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->select('consultores.nombre AS consultor', 'visitas.id', 'visitas.tipo', 'visitas.fecha', 'visitas.motivovisita AS motivo', 'visitas.recoleccion', 'visitas.cliente', 'visitas.estado')
+        ->orderBy('id', 'desc')
+        ->get();
+
+        $visitas2 = Visita::join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->join('empresa', 'visitas.id_empresa', 'empresa.id')
+        ->where('visitas.id_empresa', '!=', null)
+        ->select('empresa.nombre AS empresa')
+        ->get();
+
+        return view('visitasGral', compact('visitas', 'visitas2'));
     }
 }
