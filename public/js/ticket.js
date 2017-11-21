@@ -79,4 +79,10 @@ $('#guardar').click(function(e){
 
 
 
+function vistaPrevia(id){
+	var panel = '#contenidoticket'+id;
+	var button = '#'
+	$(panel).css('display', '');
+}
+
 
