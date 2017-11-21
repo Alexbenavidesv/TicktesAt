@@ -65,7 +65,7 @@
 				    <input type="hidden" value="{{$visita[0]->id}}" name="idvisitaevi">
 				  </div>
 				  <div class="modal-footer">
-					 <button type="submit" class="btn btn-success" id="enviarevidenciavis">Asignar</button>
+					 <button type="submit" class="btn btn-success" id="enviarevidenciavis">Añadir</button>
 					 <button  class="btn btn-danger" onclick="cerrar()">Cerrar</button>
 				  </div>
 				</form>
