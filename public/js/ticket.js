@@ -81,8 +81,20 @@ $('#guardar').click(function(e){
 
 function vistaPrevia(id){
 	var panel = '#contenidoticket'+id;
-	var button = '#'
+	var button1 = '#infoticket2'+id;
+	var button2 = '#infoticket'+id;
 	$(panel).css('display', '');
+	$(button1).css('display', '');
+	$(button2).css('display', 'none');
+}
+
+function vistaPrevia2(id){
+	var panel2 = '#contenidoticket'+id;
+	var botona = '#infoticket'+id;
+	var botonb = '#infoticket2'+id;
+	$(panel2).css('display', 'none');
+	$(botonb).css('display', 'none');
+	$(botona).css('display', '');
 }
 
 
