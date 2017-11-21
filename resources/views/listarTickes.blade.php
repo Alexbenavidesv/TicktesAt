@@ -116,8 +116,9 @@
 			@else
 				<tr class="success">
 		@endif
-			<td><a type="button" href="#" class="btn btn-warning btn-sm" style="width: 30px" id="respuesta" onclick="vistaPrevia({{$t->id}})"><i class="fa fa-eye" aria-hidden="true"></i></a>
-				<a type="button" href="#" class="btn btn-warning btn-sm" style="width: 30px" id="respuesta" onclick="vistaPrevia({{$t->id}})"><i class="fa fa-eye" aria-hidden="true"></i></a>
+			<td>
+				<a type="button" class="btn btn-warning btn-sm" style="width: 30px" id="infoticket{{$t->id}}" onclick="vistaPrevia({{$t->id}})"><i class="fa fa-eye" aria-hidden="true"></i></a>
+				<a type="button"  class="btn btn-warning btn-sm" style="width: 30px; display:none" id="infoticket2{{$t->id}}" onclick="vistaPrevia2({{$t->id}})"><i class="fa fa-close" aria-hidden="true"></i></a>
 			</td>
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
