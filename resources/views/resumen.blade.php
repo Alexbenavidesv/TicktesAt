@@ -16,8 +16,9 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
+                    <?php $var=date('m-Y');?>
                     <label for="" id="errorFecha"></label>
-                <input type="text" class="form-control buscarFecha" id="buscarFecha" placeholder="Mes y año"> <br>
+                <input type="text" class="form-control buscarFecha" id="buscarFecha" placeholder="Mes y año" value="{{$var}}"> <br>
                 <button class="btn btn-success" onclick="buscarFecha()" style="width: 60%"><i class="fa fa-search"></i> Buscar</button>
 
                 </div>
