@@ -32,11 +32,11 @@ Route::post('cambiar_password', 'CambiarPasswordController@password')->middlewar
 Route::get('cambiar_pass', 'CambiarPasswordController@cancelarPassword')->middleware('auth','sesionok');
 
 Route::get('consultartickets', 'TicketController@listarTickes')->middleware('auth','sesion');
-Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesion', 'root');
+Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesion', 'rootconsultor');
 Route::post('filtrar_tickets','TicketController@filtros')->middleware('auth','sesion');
 Route::post('filtrar_tickets2','TicketController@filtros2')->middleware('auth','sesion', 'root');
 Route::get('reabrir_ticket/{id}','TicketController@reabrir')->middleware('auth','sesion','root');
-Route::get('tickets_reasignar','TicketController@lista_reasignar')->middleware('auth','sesion','root');
+Route::get('tickets_reasignar','TicketController@lista_reasignar')->middleware('auth','sesion','rootconsultor');
 
 Route::get('respuesta/{id}', 'RespuestasController@verRespuestas')->middleware('auth','sesion');
 
