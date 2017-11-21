@@ -183,11 +183,11 @@
 
     <script >
         $(document).ready(function() {
-           // $('.consultorSelect').select2();
-           // $('.tipoSelect').select2();
-           // $('.prioridadSelect').select2();
-           // $('.estadoSelect').select2();
-           // $('.empresaSelect').select2();
+            $('.consultorSelect').select2();
+            $('.tipoSelect').select2();
+            $('.prioridadSelect').select2();
+            $('.estadoSelect').select2();
+            $('.empresaSelect').select2();
 
             $('.buscarFecha').datepicker( {
                 format: "mm-yyyy",
