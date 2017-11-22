@@ -40,9 +40,18 @@ class TicketController extends Controller
                 ->get();
         }
 
-        $sinAsignar=Ticket::join('respuesta','ticket.id','respuesta.id_ticket')
+        $sinAsignar=Ticket::where('ticket.area',NULL)
+            ->join('respuesta','ticket.id','respuesta.id_ticket')
             ->where('respuesta.tipo','APERTURA')
            ->whereMonth('respuesta.fecha',$mesActual)
+            ->join('consultores','ticket.id_consultor','consultores.id')
+            ->where('consultores.id',1)
+            ->get();
+
+        $porReasignar=Ticket::where('ticket.area','!=',NULL)
+             ->join('respuesta','ticket.id','respuesta.id_ticket')
+            ->where('respuesta.tipo','APERTURA')
+            ->whereMonth('respuesta.fecha',$mesActual)
             ->join('consultores','ticket.id_consultor','consultores.id')
             ->where('consultores.id',1)
             ->get();
@@ -204,7 +213,7 @@ class TicketController extends Controller
             $porcentaje = number_format($porcentaje, 0);
         }
 
-        return view('resumen',compact('ticketsMesActual','sinAsignar','ticketsResueltos','ticketsPendientes','mesActual','anioActual','porcentaje','informacionMeses'));
+        return view('resumen',compact('ticketsMesActual','sinAsignar','porReasignar','ticketsResueltos','ticketsPendientes','mesActual','anioActual','porcentaje','informacionMeses'));
 
     }
 
