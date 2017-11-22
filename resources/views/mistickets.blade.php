@@ -12,7 +12,7 @@
 	<h1 class="text-center">Listado de Tickets</h1>
 
 
-	<form action="/filtrar_tickets" method="POST">
+
 		{{csrf_field() }}
 
 		<div class="row text-center">
@@ -21,12 +21,12 @@
 
 			<div class="col-md-2">
 				<label for="">Número</label>
-				<input type="number" min="1" class="form-control" name="numero" placeholder="# del ticket">
+				<input type="number" min="1" class="form-control" id="filtroNumero" name="numero" placeholder="# del ticket">
 			</div>
 
 			<div class="col-md-2">
 				<label for="">Estado</label>
-				<select name="estado[]"  multiple="multiple" id="" class="estadoSelect" style="width: 100%">
+				<select name="estado[]"   id="filtroEstado" class="form-control estadoSelect estadoSelect1" style="width: 100%">
 					<option value="">Seleccione ...</option>
 					<option value="0">Pendiente</option>
 					<option value="2">En proceso</option>
@@ -37,7 +37,7 @@
 			</div>
 			<div class="col-md-2">
 				<label for="">Prioridad</label>
-				<select name="prioridad_[]" multiple="multiple" id="" class="prioridadSelect" style="width: 100%">
+				<select name="prioridad_[]"  id="filtroPrioridad" class="form-control prioridadSelect prioridadSelect1" style="width: 100%">
 					<option value="">Seleccione ...</option>
 					<option value="Alta">Alta</option>
 					<option value="Media">Media</option>
@@ -49,7 +49,7 @@
 				<div class="col-md-2">
 
 					<label for="">Consultor</label>
-					<select name="consultor_[]" multiple="multiple" id="consultor_" class="consultorSelect" style="width: 100%">
+					<select name="consultor_[]" id="filtroConsultor" class="form-control consultorSelect consultorSelect1" style="width: 100%">
 						<option value="">Seleccione ...</option>
 						@foreach($consultores as $consultor)
 							<option value="{{$consultor->id}}">{{$consultor->name}}</option>
@@ -62,7 +62,7 @@
 				<div class="col-md-2">
 
 					<label for="">Empresa</label>
-					<select name="empresa[]" multiple="multiple" id="empresa" class="empresaSelect" style="width: 100%">
+					<select name="empresa[]"  id="filtroEmpresa" class="form-control empresaSelect empresaSelect1" style="width: 100%">
 						<option value="">Seleccione ...</option>
 						@foreach($empresas as $empresa)
 							<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
@@ -73,7 +73,7 @@
 
 			<div class="col-md-2">
 				<label for="">Tipo</label>
-				<select name="tipo_[]" multiple="multiple" id="tipo_" class="tipoSelect" style="width: 100%">
+				<select name="tipo_[]" id="filtroTipo" class="form-control  tipoSelect tipoSelect1" style="width: 100%">
 					<option value="">Seleccione ...</option>
 					<option value="Sin asignar">Sin asignar</option>
 					<option value="Soporte">Soporte</option>
@@ -89,17 +89,28 @@
 		</div>
 		<br>
 		<div class="row">
-			<div class="col-md-2">
-				<button class="btn btn-success " style="width: 100%">
-					<span class="fa fa-search"></span> Filtrar
-				</button>
+
+			<div class="btn-toolbar" role="toolbar">
+
+				<div class="btn-group" role="group">
+					<button class="btn btn-success" onclick="filtrarTicket()" style="width: 100%">
+						<span class="fa fa-search"></span> Filtrar
+					</button>
+				</div>
+
+				<div class="btn-group" role="group">
+					<button class="btn btn-primary" onclick="location.href='/misTickets';" style="width: 100%">
+						<span class="fa fa-refresh"></span> Limpiar
+					</button>
+				</div>
+
 			</div>
+
 		</div>
+				<br><br>
 
-	</form>
 
-
-	<div class="row">
+	<div class="row" id="contenidoTickets">
 
 		<div class="col-md-12">
 	<table class="table table-striped table-condensed" align="center" style="width: 100%">
@@ -251,9 +262,10 @@
 		<div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
 		@endif
 	</table>
+			{{ $tickets->links() }}
 		</div>
 	</div>
-	{{ $tickets->links() }}
+
 </div>
 
 <script>
