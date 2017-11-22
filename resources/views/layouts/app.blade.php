@@ -137,7 +137,7 @@
           <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
-                  @if(Auth::user()->id_rol ==1)
+                  @if(Auth::user()->id_rol !=2)
                 <li id=""><a href="/" ><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
                 <li id="btnusuarios"><a href="/usuarios" ><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
                 <li id="btnempresas"><a href="/empresas"><i class="fa fa-industry" aria-hidden="true"></i> Empresas</a></li>

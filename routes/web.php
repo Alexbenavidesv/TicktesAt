@@ -36,8 +36,8 @@ Route::get('cambiar_pass', 'CambiarPasswordController@cancelarPassword')->middle
 
 
 //Rutas de tickets
-Route::get('/','TicketController@resumen')->middleware('auth','sesion','root');
-Route::get('filtro_resumen/{fecha}','TicketController@filtro_resumen')->middleware('auth','sesion','root');
+Route::get('/','TicketController@resumen')->middleware('auth','sesion','rootconsultor');
+Route::get('filtro_resumen/{fecha}','TicketController@filtro_resumen')->middleware('auth','sesion','rootconsultor');
 Route::get('/crear_ticket', 'TicketController@index')->middleware('auth','sesion', 'adminroot');
 Route::post('guardar_ticket', 'TicketController@nuevoTicket')->middleware('auth','sesion', 'adminroot');
 Route::get('consultartickets', 'TicketController@listarTickes')->middleware('auth','sesion');
