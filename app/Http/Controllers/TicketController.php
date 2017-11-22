@@ -23,7 +23,7 @@ class TicketController extends Controller
 
         $informacionMeses=array();
 
-        if(Auth::user()->id==1){
+        if(Auth::user()->id_rol==1){
 
         $ticketsMesActual=Ticket::join('respuesta','ticket.id','respuesta.id_ticket')
             ->where('respuesta.tipo','APERTURA')
@@ -47,7 +47,7 @@ class TicketController extends Controller
             ->where('consultores.id',1)
             ->get();
 
-        if(Auth::user()->id==1) {
+        if(Auth::user()->id_rol==1) {
             $ticketsResueltos = Ticket::where('estado', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
@@ -65,7 +65,7 @@ class TicketController extends Controller
         }
 
 
-        if(Auth::user()->id==1) {
+        if(Auth::user()->id_rol==1) {
             $ticketsPendientes = Ticket::where('estado', '!=', 1)
                 ->where('ticket.id_consultor', '!=', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -89,7 +89,7 @@ class TicketController extends Controller
         for($i=1;$i<13;$i++) {
             $informacion=array();
 
-            if(Auth::user()->id==1) {
+            if(Auth::user()->id_rol==1) {
                 $info1 = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
@@ -105,7 +105,7 @@ class TicketController extends Controller
                     ->get();
             }
 
-            if(Auth::user()->id==1) {
+            if(Auth::user()->id_rol==1) {
                 $info2 = Ticket::where('ticket.estado', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
@@ -123,7 +123,7 @@ class TicketController extends Controller
                     ->get();
             }
 
-            if(Auth::user()->id==1) {
+            if(Auth::user()->id_rol==1) {
                 $info3 = Ticket::where('ticket.estado', '!=', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
@@ -219,7 +219,7 @@ class TicketController extends Controller
 
         $informacionMeses = array();
 
-        if(Auth::user()->id==1) {
+        if(Auth::user()->id_rol==1) {
             $ticketsMesActual = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $mesActual)
@@ -248,7 +248,7 @@ class TicketController extends Controller
 
 
 
-if(Auth::user()->id==1) {
+if(Auth::user()->id_rol==1) {
     $ticketsResueltos = Ticket::where('estado', 1)
         ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
         ->where('respuesta.tipo', 'APERTURA')
@@ -267,7 +267,7 @@ else{
         ->get();
 }
 
-        if(Auth::user()->id==1) {
+        if(Auth::user()->id_rol==1) {
             $ticketsPendientes = Ticket::where('estado', '!=', 1)
                 ->where('ticket.id_consultor', '!=', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -293,7 +293,7 @@ else{
         for ($i = 1; $i < 13; $i++) {
             $informacion = array();
 
-            if(Auth::user()->id==1) {
+            if(Auth::user()->id_rol==1) {
                 $info1 = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
@@ -311,7 +311,7 @@ else{
                     ->get();
             }
 
-            if(Auth::user()->id==1) {
+            if(Auth::user()->id_rol==1) {
                 $info2 = Ticket::where('ticket.estado', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
