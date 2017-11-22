@@ -98,7 +98,7 @@ function vistaPrevia2(id){
 }
 
 
-function filtrarTicket() {
+function filtrarTicket(id) {
 	var numero=$('#filtroNumero').val();
 	var prioridad_=$('#filtroPrioridad').val();
 	var consultor_=$('#filtroConsultor').val();
@@ -106,9 +106,14 @@ function filtrarTicket() {
 	var empresa=$('#filtroEmpresa').val();
 	var tipo_=$('#filtroTipo').val();
     var tokken = $('input[name="_token"]').val();
-	
+	if(id==0){
+		var url='filtrar_tickets';
+	}
+    if(id==1){
+        var url='filtrar_tickets2';
+    }
 	$.ajax({
-		url: 'filtrar_tickets',
+		url: url,
 		type: 'POST',
         headers: {'X-CSRF-TOKEN':tokken},
         data: {numero:numero,prioridad_:prioridad_,consultor_:consultor_,estado:estado,empresa:empresa,tipo_:tipo_},
