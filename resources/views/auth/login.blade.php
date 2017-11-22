@@ -41,7 +41,7 @@
                         <label class="login-field-icon fui-user" for="login-name"></label>
 
                         @if ($errors->has('email'))
-                            <span class="help-block">
+                            <span class="help-block" style="color: black;">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                         @endif
