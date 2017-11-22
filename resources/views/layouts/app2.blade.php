@@ -40,7 +40,7 @@
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}" >
                     <li class="fa fa-ticket" style="font-size: 1.5em;"></li>
-                    <span style="font-weight: bold; font-size: 1.5em;">Tickets</span> <span style="font-weight: bold; font-size: 1.5em; color: deepskyblue;">AT</span>
+                    <span style="font-weight: bold; font-size: 1.5em; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">Tickets</span> <span style="font-weight: bold; font-size: 1.5em; color: deepskyblue; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">AT</span>
                 </a>
             </div>
 
