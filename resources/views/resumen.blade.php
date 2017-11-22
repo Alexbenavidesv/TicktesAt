@@ -33,7 +33,7 @@
 
         <div class="row text-center">
             <div class="col-md-2 alert alert-info">
-               <h4> <i class="fa fa-ticket"></i>  @if(Auth::user()->id==1)  Solicitados @else Asignados @endif </h4>
+               <h4> <i class="fa fa-ticket"></i>  @if(Auth::user()->id_rol==1)  Solicitados @else Asignados @endif </h4>
                 <h1>{{count($ticketsMesActual)}}</h1>
             </div>
             <div class="col-md-2 alert alert-success" style="margin-left: 1%;">
@@ -45,7 +45,7 @@
                 <h1>{{count($ticketsPendientes)}}</h1>
             </div>
 
-            @if(Auth::user()->id==1)
+            @if(Auth::user()->id_rol==1)
             <div class="col-md-2 alert alert-warning" style="margin-left: 1%;">
                 <h4> <i class="fa fa-user-times"></i> Sin asignar</h4>
                 <h1>{{count($sinAsignar)}}</h1>
@@ -58,7 +58,7 @@
             </div>
         </div>
 
-@if(Auth::user()->id==1)
+@if(Auth::user()->id_rol==1)
         <div for="" class="">
             <h4><b>RESUMEN GENERAL POR CONSULTORES DEL MES DE {{$mesActual}}</b></h4><br>
         </div>
@@ -166,7 +166,7 @@
                     <td><i class="fa fa-ticket"></i> Solicitados</td>
                     <td><i class="fa fa-check"></i> Resueltos</td>
                     <td><i class="fa fa-hourglass-half"></i> Por resolver</td>
-                @if(Auth::user()->id==1)   <td><i class="fa fa-user-times"></i> Sin asignar</td> @endif
+                @if(Auth::user()->id_rol==1)   <td><i class="fa fa-user-times"></i> Sin asignar</td> @endif
                     <td><i class="fa fa-check-circle"></i> Solucionado</td>
                 </tr>
 <?php $i=1;?>
@@ -236,7 +236,7 @@
                             {{count($informes[2])}}
                         </td>
 
-                        @if(Auth::user()->id==1)
+                        @if(Auth::user()->id_rol==1)
                         <td>
                             {{count($informes[3])}}
                         </td>
