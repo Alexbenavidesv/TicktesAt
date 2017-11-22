@@ -197,8 +197,12 @@ class TicketController extends Controller
                 break;
         }
 
-        $porcentaje=((count($ticketsResueltos)*100)/count($ticketsMesActual));
-        $porcentaje=number_format($porcentaje,0);
+        $porcentaje=0;
+
+        if(count($ticketsMesActual)>0) {
+            $porcentaje = ((count($ticketsResueltos) * 100) / count($ticketsMesActual));
+            $porcentaje = number_format($porcentaje, 0);
+        }
 
         return view('resumen',compact('ticketsMesActual','sinAsignar','ticketsResueltos','ticketsPendientes','mesActual','anioActual','porcentaje','informacionMeses'));
 
