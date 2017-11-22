@@ -450,7 +450,7 @@ class TicketController extends Controller
     {
         if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='' || $request->numero!='') {
 
-            $iduser = Auth::user()->id;
+           $iduser = Auth::user()->id;
 
             $consultores = User::where('users.id_rol', '!=', 2)
                 ->where('users.id','!=',1)
@@ -523,12 +523,13 @@ class TicketController extends Controller
                     ->orderBy('id', 'desc')
                     ->paginate(15);
             }
-            return view('listarTickes', compact('tickets', 'consultores','empresas'));
+            return view('filtro', compact('tickets', 'consultores','empresas'));
         }
 
 
        else{
-           return redirect('consultartickets');
+           //return redirect('consultartickets');
+           return "OK";
        }
     }
 
@@ -664,9 +665,10 @@ class TicketController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(15);
            
-            return view('mistickets', compact('tickets', 'consultores','empresas'));
+            return view('filtro', compact('tickets', 'consultores','empresas'));
         }else{
-           return redirect('misTickets');
+           //return redirect('misTickets');
+            return "OK";
        }
     }
 
