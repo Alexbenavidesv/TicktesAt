@@ -105,6 +105,7 @@
 	<table class="table table-striped table-condensed" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 		<thead>
+			<th>Vista previa</th>
 			<th>Numero</th>
 			<th>Estado</th>
 			@if(isset($tickets[0]->empresa))
@@ -122,6 +123,10 @@
 			@else
 				<tr class="success">
 		@endif
+			<td>
+				<a type="button" class="btn btn-warning btn-sm" style="width: 30px" id="infoticket{{$t->id}}" onclick="vistaPrevia({{$t->id}})"><i class="fa fa-eye" aria-hidden="true"></i></a>
+				<a type="button"  class="btn btn-warning btn-sm" style="width: 30px; display:none" id="infoticket2{{$t->id}}" onclick="vistaPrevia2({{$t->id}})"><i class="fa fa-close" aria-hidden="true"></i></a>
+			</td>
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
 						<td><span class="label label-danger">Pendiente</span></td>
@@ -163,6 +168,15 @@
 				@endif
 			</td>
 		</tr>
+		<div>
+			<tr>
+				<td colspan="9" style="display:none;" id="contenidoticket{{$t->id}}">
+					<div class="alert alert-info">
+					  <strong>{{$t->descripcion}}</strong>
+					</div>
+				</td>
+			</tr>
+		</div>
 
 				<div id="asignar{{$t->id}}" class="modal fade" role="dialog">
 					<div class="modal-dialog">
