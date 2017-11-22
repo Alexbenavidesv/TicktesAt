@@ -88,7 +88,7 @@
 		<div class="btn-toolbar" role="toolbar">
 
 			<div class="btn-group" role="group">
-				<button class="btn btn-success" onclick="filtrarTicket()" style="width: 100%">
+				<button class="btn btn-success" onclick="filtrarTicket(0)" style="width: 100%">
 					<span class="fa fa-search"></span> Filtrar
 				</button>
 			</div>
