@@ -68,3 +68,9 @@ Route::post('guardarEvidenciaVisita', 'VisitasController@guardarEvidencia')->mid
 Route::get('descargar/{parametro}', 'VisitasController@descargar')->middleware('auth','sesion', 'rootconsultor');
 Route::get('listarvisitasgrl', 'VisitasController@listGeneral')->middleware('auth','sesion', 'root');
 
+
+
+//Rutas para contratos
+Route::get('/contratos','ContratosController@lista')->middleware('auth','sesion','root');
+Route::get('/crear_contrato','ContratosController@crear')->middleware('auth','sesion','root');
+Route::get('/modulos','ContratosController@modulos')->middleware('auth','sesion','rootconsultor');
