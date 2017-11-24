@@ -157,10 +157,11 @@
                     @endif
                     @if(Auth::user()->id_rol !=2)
                         <li><a href="/tickets_reasignar"><i class="fa fa-hourglass-end" aria-hidden="true"></i> Tickets por reasignar</a></li>
+                      <!--      <li><a href="/modulos"><i class="fa fa-list-alt" aria-hidden="true"></i> Modulos</a></li> -->
                     @endif
 
                     @if(Auth::user()->id_rol ==1)
-                        <li><a href="/modulos"><i class="fa fa-list-alt" aria-hidden="true"></i> Modulos</a></li>
+
                             <li><a href="/crear_contrato"><i class="fa fa-plus-circle" aria-hidden="true"></i> Crear contratos</a></li>
                         <li><a href="/contratos"><i class="fa fa-list" aria-hidden="true"></i> Consultar contratos</a></li>
 
