@@ -84,9 +84,16 @@
 										<h4 class="modal-title">Asignar prioridad y consultor <b>Ticket #</b> {{$t->id}} </h4>
 									</div>
 									<div class="modal-body">
+
+										@if(Auth::user()->id_rol==1)
 										<div class="alert alert-info text-center">
 											<small><b>Aqui asignará el ticket a un consultor</b></small>
 										</div>
+										@else
+											<div class="alert alert-info text-center">
+												<small><b>Aqui asignará se asiganrá el ticket a usted</b></small>
+											</div>
+											@endif
 
 										<div class="row text-center">
 											<form action="">
