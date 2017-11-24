@@ -91,7 +91,7 @@
 										</div>
 										@else
 											<div class="alert alert-info text-center">
-												<small><b>Aqui asignará se asiganrá el ticket a usted</b></small>
+												<small><b>Aqui asignará se asignará el ticket a usted</b></small>
 											</div>
 											@endif
 
