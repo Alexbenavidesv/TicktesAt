@@ -6,7 +6,6 @@
 
 @section('content')
 
-
     <div id="moduloNuevo" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -14,22 +13,29 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Agregar nuevo modulo </h4>
+                    <h4 class="modal-title">Agregar nuevo módulo </h4>
                 </div>
 
                 <div class="modal-body">
 
                     <div class="row" >
+
+                        <form id="newModulo">
+
                         <div class="center-block" style="width: 80%">
-                        <label for="">Nombre del modulo</label>
+
+                            {{ csrf_field() }}
+                        <label for="">Nombre del módulo</label>
                             <div style="color: red" id="errorModulo"></div>
-                        <input type="text" id="nombreModulo" class="form-control" placeholder="Nombre">
+                        <input type="text" id="nombreModulo" name="modulo" class="form-control" placeholder="Nombre">
                         </div>
                         <br>
 
                         <div class="center-block" style="width: 80%">
-                            <label for="">Temas del modulo</label> <button onclick="agregarTema()"><i class="fa fa-plus"></i></button> <button onclick="eliminarTema()"><i class="fa fa-minus"></i></button>
+                            <label for="">Temas del módulo</label> <button type="button" onclick="agregarTema()"><i class="fa fa-plus"></i></button> <button type="button" onclick="eliminarTema()"><i class="fa fa-minus"></i></button>
 
+                            <div style="font-weight: bold; color: red;" id="errorTemas"> </div>
+                            <div style="font-weight: bold; color: red;" id="errorManuales"> </div>
                             <table id="temas" class="table" width="100%">
 
                                 <tr>
@@ -45,15 +51,17 @@
 
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control">
+
+                                        <input type="text" name="temas[]" id="tema0" class='form-control'>
                                     </td>
                                     <td>
-                                        <input type="file">
+                                        <input id="manual0" name="manuales[]" type="file"  >
                                     </td>
                                 </tr>
                             </table>
-                        </div>
 
+                        </div>
+                        </form>
                     </div>
 
                 </div>
@@ -73,7 +81,7 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 
 
-        <h1 class="text-center" style="margin-top: -1.2%">Listado de modulos</h1>
+        <h1 class="text-center" style="margin-top: -1.2%">Listado de módulos</h1>
 
         <div class="row">
             <div class="col-md-2">
@@ -87,7 +95,7 @@
         @if(count($modulos)>0)
 
             <div class="col-md-2">
-                FILTROS
+
             </div>
 
         <div class="col-md-10">
@@ -109,8 +117,8 @@
                     </td>
                     <td>
                         <a type="button" href="" class="btn btn-primary btn-sm"  data-toggle="modal" data-id="{{$modulo->id}}" data-target="#temas{{$modulo->id}}" style="width: 30px" id="respuesta"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                        <a type="button" href="" class="btn btn-success btn-sm"  style="width: 30px" id="respuesta"><i class="fa fa-edit" aria-hidden="true"></i></a>
-
+                    <!--    <a type="button" href="" class="btn btn-success btn-sm"  style="width: 30px" id="respuesta"><i class="fa fa-edit" aria-hidden="true"></i></a>
+-->
                     </td>
                 </tr>
 
@@ -149,7 +157,14 @@
 
                                                                 <td>
                                                                     @if($tema->manual!='')
+                                                                        <div class="label label-success">
+                                                                            <a href="descargar_manual/{{$tema->manual}}" style="text-decoration: none; font-size: 1.3em; color: black;">
+
+                                                                                <i class="fa fa-download"></i>
                                                                     {{$tema->manual}}
+
+                                                                            </a>
+                                                                        </div>
                                                                         @else
                                                                         <div class="label label-danger">
                                                                             SIN MANUAL
@@ -190,6 +205,7 @@
 
                     @endforeach
             </table>
+            {{$modulos->links()}}
         </div>
             @else
 

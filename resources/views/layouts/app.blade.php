@@ -161,8 +161,9 @@
 
                     @if(Auth::user()->id_rol ==1)
                         <li><a href="/modulos"><i class="fa fa-list-alt" aria-hidden="true"></i> Modulos</a></li>
+                            <li><a href="/crear_contrato"><i class="fa fa-plus-circle" aria-hidden="true"></i> Crear contratos</a></li>
                         <li><a href="/contratos"><i class="fa fa-list" aria-hidden="true"></i> Consultar contratos</a></li>
-                        <li><a href="/crear_contrato"><i class="fa fa-plus-circle" aria-hidden="true"></i> Crear contratos</a></li>
+
 
                 @endif
                 <!--
