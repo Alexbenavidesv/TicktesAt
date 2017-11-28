@@ -1,11 +1,11 @@
 <div class="col-md-12">
     <table class="table table-striped table-condensed" align="center" style="width: 100%">
-        @if(count($tickets)>0)
+        @if(count($tickets1)>0)
             <thead>
             <th>Vista Previa</th>
             <th>Numero</th>
             <th>Estado</th>
-            @if(isset($tickets[0]->empresa))
+            @if(isset($tickets1[0]->empresa))
                 <th>Empresa</th>
             @endif
             <th>Fecha</th>
@@ -14,7 +14,7 @@
             <th>Tipo</th>
             <th>Controles</th>
             </thead>
-            @foreach($tickets as $t)
+            @foreach($tickets1 as $t)
                 @if($t->prioridad=='')
                     <tr class="danger">
                 @else
@@ -177,12 +177,10 @@
                     </div>
 
 
-
-
                     @endforeach
                     @else
                         <div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
                     @endif
     </table>
-    {{ $tickets->links() }}
+    {{ $tickets1->appends(Request::only(['estado']))->render() }}
 </div>

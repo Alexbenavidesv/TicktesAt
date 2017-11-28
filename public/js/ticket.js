@@ -124,7 +124,7 @@ function filtrarTicket(id) {
     }
 	$.ajax({
 		url: url,
-		type: 'POST',
+		type: 'GET',
         headers: {'X-CSRF-TOKEN':tokken},
         data: {numero:numero,prioridad_:prioridad_,consultor_:consultor_,estado:estado,empresa:empresa,tipo_:tipo_,modulo:modulo_},
 		success: function (respuesta) {

@@ -616,7 +616,7 @@ else{
                 ->select('users.id', 'users.name')
                 ->get();
 
-
+$modulos=Modulos::all();
             $empresas=Empresa::all();
 
             $consulta = User::join('roles', 'users.id_rol', 'roles.id')
@@ -685,7 +685,7 @@ else{
                     ->orderBy('id', 'desc')
                     ->paginate(15);
             }
-            return view('filtro', compact('tickets', 'consultores','empresas'));
+            return view('listarTickes', compact('tickets', 'consultores','empresas','modulos'));
 
         }
 
@@ -800,7 +800,7 @@ else{
             $consultores = User::where('users.id_rol', '!=', 2)
                 ->select('users.id', 'users.name')
                 ->get();
-
+$modulos=Modulos::all();
 
             $empresas=Empresa::all();
 
@@ -828,8 +828,10 @@ else{
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
+
+            $flag=0;
            
-            return view('filtro', compact('tickets', 'consultores','empresas'));
+            return view('listarTickes', compact('tickets', 'consultores','empresas','modulos','flag'));
         }else{
            //return redirect('misTickets');
             return "OK";

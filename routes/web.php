@@ -41,8 +41,8 @@ Route::get('filtro_resumen/{fecha}','TicketController@filtro_resumen')->middlewa
 Route::get('/crear_ticket', 'TicketController@index')->middleware('auth','sesion', 'adminroot');
 Route::post('guardar_ticket', 'TicketController@nuevoTicket')->middleware('auth','sesion', 'adminroot');
 Route::get('consultartickets', 'TicketController@listarTickes')->middleware('auth','sesion');
-Route::post('filtrar_tickets','TicketController@filtros')->middleware('auth','sesion');
-Route::post('filtrar_tickets2','TicketController@filtros2')->middleware('auth','sesion', 'root');
+Route::get('filtrar_tickets','TicketController@filtros')->middleware('auth','sesion');
+Route::get('filtrar_tickets2','TicketController@filtros2')->middleware('auth','sesion', 'root');
 Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesion', 'rootconsultor');
 Route::get('reabrir_ticket/{id}','TicketController@reabrir')->middleware('auth','sesion','root');
 Route::get('tickets_reasignar','TicketController@lista_reasignar')->middleware('auth','sesion','rootconsultor');

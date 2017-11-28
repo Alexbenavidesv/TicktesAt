@@ -11,9 +11,8 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 	<h1 class="text-center" style="margin-top: -1.2%">Listado de Tickets</h1>
 	<br>
-<!--	<form action="/filtrar_tickets" method="POST">-->
 
-		{{csrf_field() }}
+        {!! Form::model(Request::all(),['url'=>'/filtrar_tickets','method'=>'GET']) !!}
 
 	<div class="row text-center">
 
@@ -106,22 +105,30 @@
 		<div class="btn-toolbar" role="toolbar">
 
 			<div class="btn-group" role="group">
-				<button class="btn btn-success" onclick="filtrarTicket(0)" style="width: 100%">
+				<button class="btn btn-success" type="submit" style="width: 100%">
 					<span class="fa fa-search"></span> Filtrar
 				</button>
 			</div>
 
 			<div class="btn-group" role="group">
-				<button class="btn btn-primary" onclick="location.href='/consultartickets';" style="width: 100%">
+
+				@if(isset($flag))
+					<button class="btn btn-primary"  type="button" onclick="location.href='/misTickets';" style="width: 100%">
+						<span class="fa fa-refresh"></span> Limpiar
+					</button>
+				@else
+
+				<button class="btn btn-primary" type="button" onclick="location.href='/consultartickets';" style="width: 100%">
 					<span class="fa fa-refresh"></span> Limpiar
 				</button>
+					@endif
 			</div>
 
 		</div>
 
 	</div>
 
-	<!--</form>-->
+	{!! Form::close() !!}
 	<br>
 	<div class="row" id="contenidoTickets">
 
@@ -313,7 +320,7 @@
 		<div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
 		@endif
 	</table>
-			{{ $tickets->links() }}
+            {{ $tickets->appends(Request::all())->render() }}
 		</div>
 	</div>
 
