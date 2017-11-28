@@ -85,9 +85,20 @@
 				</select>
 			</div>
 
-			<br><br>
 		</div>
-		<br>
+
+	<br>
+	<div class="row text-center" >
+		<div class="col-md-2">
+			<label for="">Módulo</label>
+			<select name="modulo_[]" id="filtroModulo" class="form-control moduloSelect moduloSelect1">
+				@foreach($modulos as $modulo)
+					<option value="{{$modulo->nombre}}">{{$modulo->nombre}}</option>
+				@endforeach
+			</select>
+		</div>
+	</div>
+
 		<div class="row">
 
 			<div class="btn-toolbar" role="toolbar">
