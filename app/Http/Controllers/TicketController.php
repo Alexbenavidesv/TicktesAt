@@ -773,7 +773,7 @@ else{
         $consultores = User::where('users.id_rol', '!=', 2)
             ->select('users.id', 'users.name')
             ->get();
-
+        $modulos=Modulos::all();
         $empresas=Empresa::all();
 
         $tickets = Ticket::join('users', 'ticket.id_user', 'users.id')
@@ -787,7 +787,7 @@ else{
                 ->orderBy('id', 'desc')
                 ->paginate(15);
 
-        return view('mistickets', compact('tickets', 'consultores','empresas'));
+        return view('mistickets', compact('tickets', 'consultores','empresas','modulos'));
     }
 
 
