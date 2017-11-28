@@ -11,7 +11,7 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 	<h1 class="text-center" style="margin-top: -1.2%">Listado de Tickets</h1>
 	<br>
-	{!! Form::model(Request::all(),['url'=>'/filtrar_tickets2','method'=>'GET']) !!}
+	{!! Form::model(Request::all(),['url'=>'/filtrar_tickets2','method'=>'GET','id'=>'formFiltros']) !!}
 
 	<div class="row text-center">
 
@@ -33,6 +33,16 @@
 				<option value="1">Cerrado</option>
 			</select>
 		</div>
+
+		<div class="col-md-3">
+			<label for=""><i class="fa fa-calendar"></i> Fechas</label>
+			<div class="input-daterange input-group" id="rangoFecha">
+				<input type="text" class="input-sm form-control"  name="filtroFechaInicio" id="filtroFechaInicio" />
+				<span class="input-group-addon">A</span>
+				<input type="text" class="input-sm form-control" name="filtroFechaFin" id="filtroFechaFin" />
+			</div>
+		</div>
+
 		<div class="col-md-2">
 			<label for=""><i class="fa fa-bookmark"></i> Prioridad</label>
 			<select name="prioridad_[]"  id="filtroPrioridad" class="form-control prioridadSelect prioridadSelect1" style="width: 100%">
@@ -55,6 +65,22 @@
 				</select>
 			</div>
 		@endif
+
+
+
+	</div>
+
+	<br>
+	<div class="row text-center" >
+		<div class="col-md-2">
+			<label for=""><i class="fa fa-list"></i> Módulo</label>
+			<select name="modulo_[]" id="filtroModulo" class="form-control moduloSelect moduloSelect1">
+				@foreach($modulos as $modulo)
+					<option value="{{$modulo->nombre}}">{{$modulo->nombre}}</option>
+				@endforeach
+			</select>
+		</div>
+
 
 		@if(Auth::user()->id_rol !=2)
 			<div class="col-md-2">
@@ -86,25 +112,13 @@
 	</div>
 
 	<br>
-	<div class="row text-center" >
-		<div class="col-md-2">
-			<label for=""><i class="fa fa-list"></i> Módulo</label>
-			<select name="modulo_[]" id="filtroModulo" class="form-control moduloSelect moduloSelect1">
-				@foreach($modulos as $modulo)
-					<option value="{{$modulo->nombre}}">{{$modulo->nombre}}</option>
-				@endforeach
-			</select>
-		</div>
-	</div>
-
-	<br>
 	<div class="row">
 
 
 		<div class="btn-toolbar" role="toolbar">
 
 			<div class="btn-group" role="group">
-				<button class="btn btn-success" type="submit" style="width: 100%">
+				<button class="btn btn-success" type="button" id="filtrar" style="width: 100%">
 					<span class="fa fa-search"></span> Filtrar
 				</button>
 			</div>

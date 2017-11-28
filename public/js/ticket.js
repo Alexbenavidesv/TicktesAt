@@ -104,7 +104,7 @@ function vistaPrevia2(id){
 	$(botona).css('display', '');
 }
 
-
+/*
 function filtrarTicket(id) {
 	var numero=$('#filtroNumero').val();
 	var prioridad_=$('#filtroPrioridad').val();
@@ -135,5 +135,25 @@ function filtrarTicket(id) {
         }
 	});
 
-}
+}*/
+
+$('#filtrar').click(function (event) {
+    var numero=$('#filtroNumero').val();
+    var prioridad_=$('#filtroPrioridad').val();
+    var consultor_=$('#filtroConsultor').val();
+    var estado=$('#filtroEstado').val();
+    var empresa=$('#filtroEmpresa').val();
+    var tipo_=$('#filtroTipo').val();
+    var modulo_=$('#filtroModulo').val();
+    var inicio=$('#filtroFechaInicio').val();
+    var fin_=$('#filtroFechaFin').val();
+
+//alert("numero="+numero+"Prioridad="+prioridad_+"COnsultor="+consultor_+"Estado="+estado+"empresa="+empresa+"Tipo="+tipo_+"Modulo="+modulo_+"Inicio="+inicio+"Fin="+fin_);
+
+    if(numero!='' || prioridad_!=null || consultor_!=null || estado!=null || empresa!=null || tipo_!=null || modulo_!=null || inicio!='' || fin_!=''){
+        $('#formFiltros').submit();
+	}else{
+        event.preventDefault();
+	}
+});
 
