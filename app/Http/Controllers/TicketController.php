@@ -17,137 +17,132 @@ use DB;
 class TicketController extends Controller
 {
 
-    public function resumen(){
+    public function resumen()
+    {
 
-        $mesActual=date('m');
-        $anioActual=date('Y');
+        $mesActual = date('m');
+        $anioActual = date('Y');
 
-        $informacionMeses=array();
+        $informacionMeses = array();
 
-        if(Auth::user()->id_rol==1){
+        if (Auth::user()->id_rol == 1) {
 
-        $ticketsMesActual=Ticket::join('respuesta','ticket.id','respuesta.id_ticket')
-            ->where('respuesta.tipo','APERTURA')
-            ->whereMonth('respuesta.fecha',$mesActual)
-            ->join('consultores','ticket.id_consultor','consultores.id')
-            ->get();
-        }
-        else{
-            $ticketsMesActual=Ticket::join('respuesta','ticket.id','respuesta.id_ticket')
-                ->where('respuesta.tipo','APERTURA')
-                ->whereMonth('respuesta.fecha',$mesActual)
-                ->join('consultores','ticket.id_consultor','consultores.id')
-                ->where('consultores.id',Auth::user()->id)
+            $ticketsMesActual = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $mesActual)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->get();
+        } else {
+            $ticketsMesActual = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $mesActual)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->where('consultores.id', Auth::user()->id)
                 ->get();
         }
 
-        $sinAsignar=Ticket::where('ticket.area',NULL)
-            ->join('respuesta','ticket.id','respuesta.id_ticket')
-            ->where('respuesta.tipo','APERTURA')
-           ->whereMonth('respuesta.fecha',$mesActual)
-            ->join('consultores','ticket.id_consultor','consultores.id')
-            ->where('consultores.id',1)
+        $sinAsignar = Ticket::where('ticket.area', NULL)
+            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->whereMonth('respuesta.fecha', $mesActual)
+            ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+            ->where('consultores.id', 1)
             ->get();
 
-        $porReasignar=Ticket::where('ticket.area','!=',NULL)
-             ->join('respuesta','ticket.id','respuesta.id_ticket')
-            ->where('respuesta.tipo','APERTURA')
-            ->whereMonth('respuesta.fecha',$mesActual)
-            ->join('consultores','ticket.id_consultor','consultores.id')
-            ->where('consultores.id',1)
+        $porReasignar = Ticket::where('ticket.area', '!=', NULL)
+            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->whereMonth('respuesta.fecha', $mesActual)
+            ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+            ->where('consultores.id', 1)
             ->get();
 
-        if(Auth::user()->id_rol==1) {
+        if (Auth::user()->id_rol == 1) {
             $ticketsResueltos = Ticket::where('estado', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $mesActual)
                 ->get();
-        }
-        else{
+        } else {
             $ticketsResueltos = Ticket::where('estado', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $mesActual)
-                ->join('consultores','ticket.id_consultor','consultores.id')
-                ->where('consultores.id',Auth::user()->id)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->where('consultores.id', Auth::user()->id)
                 ->get();
         }
 
 
-        if(Auth::user()->id_rol==1) {
+        if (Auth::user()->id_rol == 1) {
             $ticketsPendientes = Ticket::where('estado', '!=', 1)
                 ->where('ticket.id_consultor', '!=', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $mesActual)
                 ->get();
-        }
-        else{
+        } else {
             $ticketsPendientes = Ticket::where('estado', '!=', 1)
                 ->where('ticket.id_consultor', '!=', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $mesActual)
-                ->join('consultores','ticket.id_consultor','consultores.id')
-                ->where('consultores.id',Auth::user()->id)
+                ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+                ->where('consultores.id', Auth::user()->id)
                 ->get();
         }
 
 
         ///Sacar informacion de los meses
-        for($i=1;$i<13;$i++) {
-            $informacion=array();
+        for ($i = 1; $i < 13; $i++) {
+            $informacion = array();
 
-            if(Auth::user()->id_rol==1) {
+            if (Auth::user()->id_rol == 1) {
                 $info1 = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->get();
-            }
-            else{
+            } else {
                 $info1 = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                    ->where('consultores.id',Auth::user()->id)
+                    ->where('consultores.id', Auth::user()->id)
                     ->get();
             }
 
-            if(Auth::user()->id_rol==1) {
+            if (Auth::user()->id_rol == 1) {
                 $info2 = Ticket::where('ticket.estado', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->get();
-            }
-            else{
+            } else {
                 $info2 = Ticket::where('ticket.estado', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                    ->where('consultores.id',Auth::user()->id)
+                    ->where('consultores.id', Auth::user()->id)
                     ->get();
             }
 
-            if(Auth::user()->id_rol==1) {
+            if (Auth::user()->id_rol == 1) {
                 $info3 = Ticket::where('ticket.estado', '!=', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->get();
-            }
-            else{
+            } else {
                 $info3 = Ticket::where('ticket.estado', '!=', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                    ->where('consultores.id',Auth::user()->id)
+                    ->where('consultores.id', Auth::user()->id)
                     ->get();
             }
 
@@ -156,65 +151,64 @@ class TicketController extends Controller
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $i)
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->where('consultores.id',1)
+                ->where('consultores.id', 1)
                 ->get();
 
-            $informacion[]=$info1;
-            $informacion[]=$info2;
-            $informacion[]=$info3;
-            $informacion[]=$info4;
-            $informacionMeses[]=$informacion;
+            $informacion[] = $info1;
+            $informacion[] = $info2;
+            $informacion[] = $info3;
+            $informacion[] = $info4;
+            $informacionMeses[] = $informacion;
         }
 
 
-
-        switch ($mesActual){
+        switch ($mesActual) {
             case 1:
-                $mesActual='ENERO';
+                $mesActual = 'ENERO';
                 break;
             case 2:
-                $mesActual='FEBRERO';
+                $mesActual = 'FEBRERO';
                 break;
             case 3:
-                $mesActual='MARZO';
+                $mesActual = 'MARZO';
                 break;
             case 4:
-                $mesActual='ABRIL';
+                $mesActual = 'ABRIL';
                 break;
             case 5:
-                $mesActual='MAYO';
+                $mesActual = 'MAYO';
                 break;
             case 6:
-                $mesActual='JUNIO';
+                $mesActual = 'JUNIO';
                 break;
             case 7:
-                $mesActual='JULIO';
+                $mesActual = 'JULIO';
                 break;
             case 8:
-                $mesActual='AGOSTO';
+                $mesActual = 'AGOSTO';
                 break;
             case 9:
-                $mesActual='SEPTIEMBRE';
+                $mesActual = 'SEPTIEMBRE';
                 break;
             case 10:
-                $mesActual='OCTUBRE';
+                $mesActual = 'OCTUBRE';
                 break;
             case 11:
-                $mesActual='NOVIEMBRE';
+                $mesActual = 'NOVIEMBRE';
                 break;
             case 12:
-                $mesActual='DICIEMBRE';
+                $mesActual = 'DICIEMBRE';
                 break;
         }
 
-        $porcentaje=0;
+        $porcentaje = 0;
 
-        if(count($ticketsMesActual)>0) {
+        if (count($ticketsMesActual) > 0) {
             $porcentaje = ((count($ticketsResueltos) * 100) / count($ticketsMesActual));
             $porcentaje = number_format($porcentaje, 0);
         }
 
-        return view('resumen',compact('ticketsMesActual','sinAsignar','porReasignar','ticketsResueltos','ticketsPendientes','mesActual','anioActual','porcentaje','informacionMeses'));
+        return view('resumen', compact('ticketsMesActual', 'sinAsignar', 'porReasignar', 'ticketsResueltos', 'ticketsPendientes', 'mesActual', 'anioActual', 'porcentaje', 'informacionMeses'));
 
     }
 
@@ -229,55 +223,52 @@ class TicketController extends Controller
 
         $informacionMeses = array();
 
-        if(Auth::user()->id_rol==1) {
+        if (Auth::user()->id_rol == 1) {
             $ticketsMesActual = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $mesActual)
                 ->whereYear('respuesta.fecha', $anio)
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                 ->get();
-        }
-        else{
+        } else {
             $ticketsMesActual = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $mesActual)
                 ->whereYear('respuesta.fecha', $anio)
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->where('consultores.id',Auth::user()->id)
+                ->where('consultores.id', Auth::user()->id)
                 ->get();
         }
 
 
-            $sinAsignar = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+        $sinAsignar = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->whereMonth('respuesta.fecha', $mesActual)
+            ->whereYear('respuesta.fecha', $anio)
+            ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+            ->where('consultores.id', 1)
+            ->get();
+
+
+        if (Auth::user()->id_rol == 1) {
+            $ticketsResueltos = Ticket::where('estado', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+                ->where('respuesta.tipo', 'APERTURA')
+                ->whereMonth('respuesta.fecha', $mesActual)
+                ->whereYear('respuesta.fecha', $anio)
+                ->get();
+        } else {
+            $ticketsResueltos = Ticket::where('estado', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->whereMonth('respuesta.fecha', $mesActual)
                 ->whereYear('respuesta.fecha', $anio)
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->where('consultores.id', 1)
+                ->where('consultores.id', Auth::user()->id)
                 ->get();
+        }
 
-
-
-if(Auth::user()->id_rol==1) {
-    $ticketsResueltos = Ticket::where('estado', 1)
-        ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
-        ->where('respuesta.tipo', 'APERTURA')
-        ->whereMonth('respuesta.fecha', $mesActual)
-        ->whereYear('respuesta.fecha', $anio)
-        ->get();
-}
-else{
-    $ticketsResueltos = Ticket::where('estado', 1)
-        ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
-        ->where('respuesta.tipo', 'APERTURA')
-        ->whereMonth('respuesta.fecha', $mesActual)
-        ->whereYear('respuesta.fecha', $anio)
-        ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-        ->where('consultores.id',Auth::user()->id)
-        ->get();
-}
-
-        if(Auth::user()->id_rol==1) {
+        if (Auth::user()->id_rol == 1) {
             $ticketsPendientes = Ticket::where('estado', '!=', 1)
                 ->where('ticket.id_consultor', '!=', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -285,8 +276,7 @@ else{
                 ->whereMonth('respuesta.fecha', $mesActual)
                 ->whereYear('respuesta.fecha', $anio)
                 ->get();
-        }
-        else{
+        } else {
             $ticketsPendientes = Ticket::where('estado', '!=', 1)
                 ->where('ticket.id_consultor', '!=', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -294,7 +284,7 @@ else{
                 ->whereMonth('respuesta.fecha', $mesActual)
                 ->whereYear('respuesta.fecha', $anio)
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->where('consultores.id',Auth::user()->id)
+                ->where('consultores.id', Auth::user()->id)
                 ->get();
         }
 
@@ -303,25 +293,24 @@ else{
         for ($i = 1; $i < 13; $i++) {
             $informacion = array();
 
-            if(Auth::user()->id_rol==1) {
+            if (Auth::user()->id_rol == 1) {
                 $info1 = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->whereYear('respuesta.fecha', $anio)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->get();
-            }
-            else{
+            } else {
                 $info1 = Ticket::join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->whereYear('respuesta.fecha', $anio)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                    ->where('consultores.id',Auth::user()->id)
+                    ->where('consultores.id', Auth::user()->id)
                     ->get();
             }
 
-            if(Auth::user()->id_rol==1) {
+            if (Auth::user()->id_rol == 1) {
                 $info2 = Ticket::where('ticket.estado', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
@@ -329,19 +318,18 @@ else{
                     ->whereYear('respuesta.fecha', $anio)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->get();
-            }
-            else{
+            } else {
                 $info2 = Ticket::where('ticket.estado', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->whereYear('respuesta.fecha', $anio)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                    ->where('consultores.id',Auth::user()->id)
+                    ->where('consultores.id', Auth::user()->id)
                     ->get();
             }
 
-            if(Auth::user()->id==1) {
+            if (Auth::user()->id == 1) {
                 $info3 = Ticket::where('ticket.estado', '!=', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
@@ -349,15 +337,14 @@ else{
                     ->whereYear('respuesta.fecha', $anio)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->get();
-            }
-            else{
+            } else {
                 $info3 = Ticket::where('ticket.estado', '!=', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
                     ->whereMonth('respuesta.fecha', $i)
                     ->whereYear('respuesta.fecha', $anio)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                    ->where('consultores.id',Auth::user()->id)
+                    ->where('consultores.id', Auth::user()->id)
                     ->get();
             }
 
@@ -419,19 +406,20 @@ else{
         $porcentaje = 0;
         if (count($ticketsMesActual) > 0) {
 
-        $porcentaje = ((count($ticketsResueltos) * 100) / count($ticketsMesActual));
-        $porcentaje = number_format($porcentaje, 0);
+            $porcentaje = ((count($ticketsResueltos) * 100) / count($ticketsMesActual));
+            $porcentaje = number_format($porcentaje, 0);
+        }
+
+        return view('resumen', compact('ticketsMesActual', 'sinAsignar', 'ticketsResueltos', 'ticketsPendientes', 'mesActual', 'anioActual', 'porcentaje', 'informacionMeses'));
+
+
     }
 
-        return view('resumen',compact('ticketsMesActual','sinAsignar','ticketsResueltos','ticketsPendientes','mesActual','anioActual','porcentaje','informacionMeses'));
 
-
-    }
-
-
-    public function index(){
-        $modulos=Modulos::all();
-        return view("inicio",compact('modulos'));
+    public function index()
+    {
+        $modulos = Modulos::all();
+        return view("inicio", compact('modulos'));
     }
 
     public function nuevoTicket(Request $req)
@@ -508,7 +496,6 @@ else{
         } catch (Exception $e) {
             DB::rollback();
         }
-            
 
 
         return $id_ticket;
@@ -520,13 +507,13 @@ else{
         $iduser = Auth::user()->id;
 
         $consultores = User::where('users.id_rol', '!=', 2)
-            ->where('users.id','!=',1)
+            ->where('users.id', '!=', 1)
             ->select('users.id', 'users.name')
             ->get();
 
-        $modulos=Modulos::all();
+        $modulos = Modulos::all();
 
-        $empresas=Empresa::all();
+        $empresas = Empresa::all();
 
         $consulta = User::join('roles', 'users.id_rol', 'roles.id')
             ->where('users.id', $iduser)
@@ -538,27 +525,27 @@ else{
         //dd($rol);
 
         if ($rol == 'Root') {
-            $tickets = Ticket::where('ticket.estado','!=',1)
+            $tickets = Ticket::where('ticket.estado', '!=', 1)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->select('ticket.id', 'ticket.tipo','ticket.modulo','ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                ->select('ticket.id', 'ticket.tipo', 'ticket.modulo', 'ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
 
             //echo $tickets;
         } elseif ($rol == 'Consultor') {
-            $tickets = Ticket::where('ticket.estado','!=',1)
-            ->join('users', 'ticket.id_user', 'users.id')
+            $tickets = Ticket::where('ticket.estado', '!=', 1)
+                ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                 ->where('consultores.id', $iduser)
-                ->select('ticket.id', 'ticket.tipo','ticket.modulo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                ->select('ticket.id', 'ticket.tipo', 'ticket.modulo', 'ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
@@ -570,23 +557,23 @@ else{
 
             $empresa = $consulta2[0]->empresa;
             //dd($empresa);
-            $tickets = Ticket::where('ticket.estado','!=',1)
-            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            $tickets = Ticket::where('ticket.estado', '!=', 1)
+                ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('users', 'ticket.id_user', 'users.id')
                 ->where('id_empresa', $empresa)
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->select('ticket.id', 'ticket.tipo','ticket.modulo','ticket.estado' ,'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
+                ->select('ticket.id', 'ticket.tipo', 'ticket.modulo', 'ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
         }
         //dd($tickets);
-        return view('listarTickes', compact('tickets', 'consultores','empresas','modulos'));
+        return view('listarTickes', compact('tickets', 'consultores', 'empresas', 'modulos'));
     }
 
     public function asignar(Request $request)
     {
-       Validator::make($request->all(),
+        Validator::make($request->all(),
             [
                 'prioridad' => 'required',
                 'consultor' => 'required',
@@ -600,15 +587,13 @@ else{
         )->validate();
 
         Ticket::where('id', $request->id_ticket)
-            ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo,'estado'=>0]);
+            ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo, 'estado' => 0]);
 
         return "OK";
     }
 
     public function filtros(Request $request)
-    {
-
-        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
+    {    if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
             $request->tipo_!='' || $request->numero!='' || $request->modulo!='' || $request->filtroFechaInicio!='' ||
             $request->filtroFechaFin!='') {
 

@@ -40,7 +40,7 @@
 			<div class="input-daterange input-group" id="rangoFecha">
 				<input type="text" class="input-sm form-control"  name="filtroFechaInicio" id="filtroFechaInicio" />
 				<span class="input-group-addon">A</span>
-				<input type="text" class="input-sm form-control" name="filtroFechaFin" id="filtroFechaFin" />
+				<input type="text" class="input-sm form-control"  name="filtroFechaFin" id="filtroFechaFin" />
 			</div>
 		</div>
 
