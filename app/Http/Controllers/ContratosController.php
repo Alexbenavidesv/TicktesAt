@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Modulos;
 use App\Temas;
+use App\Empresa;
 use DB;
 
 class ContratosController extends Controller
@@ -14,12 +15,14 @@ class ContratosController extends Controller
     }
 
     public function crear(){
-        return view('crear_contrato');
+        $empresas=Empresa::all();
+        $modulos=Modulos::all();
+        return view('crear_contrato',compact('empresas','modulos'));
     }
 
     public function modulos(){
 
-        $modulos=Modulos::where('id','>',0)->paginate(15);
+        $modulos=Modulos::where('id','>',0)->orderBy('id','DESC')->paginate(15);
         $temas=Temas::all();
 
         return view('modulos',compact('modulos','temas'));

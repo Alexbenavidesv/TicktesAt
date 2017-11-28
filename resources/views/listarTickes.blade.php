@@ -79,8 +79,20 @@
 				<option value="Instalación">Instalación</option>
 			</select>
 		</div>
-		<br><br>
+
+
 	</div>
+	<br>
+	<div class="row text-center" >
+		<div class="col-md-2">
+			<select name="modulo_[]" id="filtroModulo" class="form-control moduloSelect moduloSelect1">
+				@foreach($modulos as $modulo)
+					<option value="{{$modulo->nombre}}">{{$modulo->nombre}}</option>
+				@endforeach
+			</select>
+		</div>
+	</div>
+
 	<br>
 	<div class="row">
 
@@ -112,12 +124,13 @@
 	<table class="table table-striped table-condensed" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 		<thead>
-			<th>Vista Previa</th>
-			<th>Numero</th>
+			<th>Ver</th>
+			<th>N°</th>
 			<th>Estado</th>
 			@if(isset($tickets[0]->empresa))
 			<th>Empresa</th>
 			@endif
+			<th>Módulo</th>
 			<th>Fecha</th>
 			<th>Prioridad</th>
 			<th>Consultor</th>
@@ -150,7 +163,7 @@
 							<div class="progress">
 								<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
 									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-									<b>EN PROCESO</b>
+									<b>PROCESO</b>
 								</div>
 							</div>
 						</td>
@@ -160,7 +173,7 @@
 							<div class="progress">
 								<div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar"
 									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-									<b>POR CONFIRMAR</b>
+									<b>CONFIRMAR</b>
 								</div>
 							</div>
 						</td>
@@ -189,6 +202,7 @@
 			<td>{{$t->empresa}}</td>
 			@endif
 
+			<td>{{$t->modulo}}</td>
 			<td>{{$t->fecha}}</td>
 			@if($t->prioridad==NULL)
 			<td>No asignada</td>

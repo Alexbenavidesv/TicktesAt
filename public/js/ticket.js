@@ -50,11 +50,18 @@ $('#guardar').click(function(e){
 		error: function(res){
 			var errores = JSON.parse(res.responseText);
 
-			if(errores.descripcion){
-				$('#error1').html(errores.descripcion);
-			}else{
-				$('#error1').html('');
-			}
+
+            if(errores.descripcion){
+                $('#error1').html(errores.descripcion);
+            }else{
+                $('#error1').html('');
+            }
+
+            if(errores.moduloTicket){
+                $('#errorModuloTicket').html(errores.moduloTicket);
+            }else{
+                $('#errorModuloTicket').html('');
+            }
 
 			if(errores.evidencia1){
 				$('#error2').html(errores.evidencia1);
@@ -105,7 +112,10 @@ function filtrarTicket(id) {
 	var estado=$('#filtroEstado').val();
 	var empresa=$('#filtroEmpresa').val();
 	var tipo_=$('#filtroTipo').val();
+	var modulo_=$('#filtroModulo').val();
     var tokken = $('input[name="_token"]').val();
+
+
 	if(id==0){
 		var url='filtrar_tickets';
 	}
@@ -116,7 +126,7 @@ function filtrarTicket(id) {
 		url: url,
 		type: 'POST',
         headers: {'X-CSRF-TOKEN':tokken},
-        data: {numero:numero,prioridad_:prioridad_,consultor_:consultor_,estado:estado,empresa:empresa,tipo_:tipo_},
+        data: {numero:numero,prioridad_:prioridad_,consultor_:consultor_,estado:estado,empresa:empresa,tipo_:tipo_,modulo:modulo_},
 		success: function (respuesta) {
 			if(respuesta!="OK") {
                 $('#contenidoTickets').html(respuesta);
@@ -124,6 +134,6 @@ function filtrarTicket(id) {
 
         }
 	});
-	
+
 }
 
