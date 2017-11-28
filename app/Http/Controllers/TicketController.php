@@ -10,6 +10,7 @@ use App\Respuesta;
 use App\User;
 use App\Empresa;
 use App\Consultor;
+use App\Modulos;
 use DB;
 
 
@@ -429,7 +430,8 @@ else{
 
 
     public function index(){
-        return view("inicio");
+        $modulos=Modulos::all();
+        return view("inicio",compact('modulos'));
     }
 
     public function nuevoTicket(Request $req)
@@ -439,6 +441,7 @@ else{
         Validator::make($req->all(),
             [
                 'descripcion' => 'required|string',
+                'moduloTicket' => 'required',
                 'evidencia1' => 'mimes:jpeg,bmp,png,zip,rar|max:5120',
                 'evidencia2' => 'mimes:jpeg,bmp,png,zip,rar|max:5120',
                 'evidencia3' => 'mimes:jpeg,bmp,png,zip,rar|max:5120'
@@ -446,6 +449,7 @@ else{
             [
                 'descripcion.required' => 'Usted debe ingresar una descripción',
                 'descripcion.string' => 'La descripcion solo puede ser alfanumerica',
+                'moduloTicket.required' => 'Debe escoger el modulo del ticket',
                 'evidencia1.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip',
                 'evidencia2.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip',
                 'evidencia3.mimes' => 'El archivo debe ser un archivo de tipo jpg, jpeg, bmp, png, rar, zip'
@@ -461,6 +465,7 @@ else{
             $ticket = new Ticket;
 
             $ticket->id_user = $usuario;
+            $ticket->modulo = $req->moduloTicket;
             $ticket->save();
 
 
@@ -519,6 +524,8 @@ else{
             ->select('users.id', 'users.name')
             ->get();
 
+        $modulos=Modulos::all();
+
         $empresas=Empresa::all();
 
         $consulta = User::join('roles', 'users.id_rol', 'roles.id')
@@ -537,7 +544,7 @@ else{
                 ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->select('ticket.id', 'ticket.tipo','ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                ->select('ticket.id', 'ticket.tipo','ticket.modulo','ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
@@ -551,7 +558,7 @@ else{
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                 ->where('consultores.id', $iduser)
-                ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                ->select('ticket.id', 'ticket.tipo','ticket.modulo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
@@ -569,12 +576,12 @@ else{
                 ->join('users', 'ticket.id_user', 'users.id')
                 ->where('id_empresa', $empresa)
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-                ->select('ticket.id', 'ticket.tipo','ticket.estado' ,'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
+                ->select('ticket.id', 'ticket.tipo','ticket.modulo','ticket.estado' ,'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad', 'consultores.nombre AS consultor')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
         }
         //dd($tickets);
-        return view('listarTickes', compact('tickets', 'consultores','empresas'));
+        return view('listarTickes', compact('tickets', 'consultores','empresas','modulos'));
     }
 
     public function asignar(Request $request)
@@ -600,9 +607,9 @@ else{
 
     public function filtros(Request $request)
     {
-        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='' || $request->numero!='') {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='' || $request->numero!='' || $request->modulo!='') {
 
-           $iduser = Auth::user()->id;
+          $iduser = Auth::user()->id;
 
             $consultores = User::where('users.id_rol', '!=', 2)
                 ->where('users.id','!=',1)
@@ -623,6 +630,7 @@ else{
 
             if ($rol == 'Root') {
                 $tickets = Ticket::numero($request->numero)
+                ->modulo($request->modulo)
                 ->prioridad($request->prioridad_)
                     ->estado($request->estado)
                     ->tipo($request->tipo_)
@@ -639,6 +647,7 @@ else{
                     ->paginate(15);
             } elseif ($rol == 'Consultor') {
                 $tickets = Ticket::numero($request->numero)
+                    ->modulo($request->modulo)
                     ->prioridad($request->prioridad_)
                     ->estado($request->estado)
                     ->tipo($request->tipo_)
@@ -662,6 +671,7 @@ else{
                 $empresa = $consulta2[0]->empresa;
                 //dd($empresa);
                 $tickets = Ticket::numero($request->numero)
+                    ->modulo($request->modulo)
                     ->prioridad($request->prioridad_)
                     ->estado($request->estado)
                     ->tipo($request->tipo_)
@@ -676,6 +686,7 @@ else{
                     ->paginate(15);
             }
             return view('filtro', compact('tickets', 'consultores','empresas'));
+
         }
 
 
@@ -782,7 +793,7 @@ else{
 
     public function filtros2(Request $request)
     {
-        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='') {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='' || $request->modulo!='') {
 
             $iduser = Auth::user()->id;
 
@@ -802,6 +813,7 @@ else{
 
             //dd($rol);
             $tickets = Ticket::numero($request->numero)
+                ->modulo($request->modulo)
                 ->prioridad($request->prioridad_)
                 ->estado($request->estado)
                 ->tipo($request->tipo_)
@@ -812,7 +824,7 @@ else{
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('consultores','ticket.id_consultor', 'consultores.id')
                 ->where('consultores.id', $iduser)
-                ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                ->select('ticket.id', 'ticket.tipo', 'ticket.modulo','ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);

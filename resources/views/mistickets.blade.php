@@ -122,6 +122,7 @@
 			@if(isset($tickets[0]->empresa))
 			<th>Empresa</th>
 			@endif
+			<th>Módulo</th>
 			<th>Fecha</th>
 			<th>Prioridad</th>
 			<th>Consultor</th>
@@ -154,7 +155,7 @@
 							<div class="progress">
 								<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
 									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-									<b>EN PROCESO</b>
+									<b>PROCESO</b>
 								</div>
 							</div>
 						</td>
@@ -164,7 +165,7 @@
 							<div class="progress">
 								<div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar"
 									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-									<b>POR CONFIRMAR</b>
+									<b>CONFIRMAR</b>
 								</div>
 							</div>
 						</td>
@@ -193,6 +194,7 @@
 			<td>{{$t->empresa}}</td>
 			@endif
 
+			<td>{{$t->modulo}}</td>
 			<td>{{$t->fecha}}</td>
 			@if($t->prioridad=='')
 			<td>No asignada</td>

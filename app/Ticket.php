@@ -9,7 +9,7 @@ class Ticket extends Model
     protected $table='ticket';
 
     protected $fillable=[
-        'id_user', 'prioridad','tipo' ,'id_consultor', 'area','estado'
+        'id_user', 'prioridad','tipo' ,'id_consultor', 'area','modulo','estado'
     ];
 
     public function scopePrioridad($query,$prioridad){
@@ -46,6 +46,12 @@ class Ticket extends Model
     public function scopeNumero($query,$numero){
         if (trim($numero) != "") {
             return $query->where('ticket.id',$numero);
+        }
+    }
+
+    public function scopeModulo($query,$modulos){
+        if ($modulos != null) {
+            return $query->whereIn('ticket.modulo', $modulos);
         }
     }
 }

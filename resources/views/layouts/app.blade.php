@@ -157,7 +157,7 @@
                     @endif
                     @if(Auth::user()->id_rol !=2)
                         <li><a href="/tickets_reasignar"><i class="fa fa-hourglass-end" aria-hidden="true"></i> Tickets por reasignar</a></li>
-                      <!--      <li><a href="/modulos"><i class="fa fa-list-alt" aria-hidden="true"></i> Modulos</a></li> -->
+                         <li><a href="/modulos"><i class="fa fa-list-alt" aria-hidden="true"></i> Modulos</a></li>
                     @endif
 
                     @if(Auth::user()->id_rol ==1)
@@ -234,6 +234,21 @@
         });
 
 
+        $('.moduloSelect').val('-');
+        $('.moduloSelect1').attr('multiple','multiple');
+        $('.moduloSelect').select2({
+            placeholder: "Seleccione...",
+        });
+
+
+        $('.moduloSelect').val('-');
+        $('.moduloSelect').attr('multiple','multiple');
+        $('.moduloSelect').select2({
+            placeholder: "Seleccione...",
+        });
+
+
+
 
         $('.buscarFecha').datepicker( {
             format: "mm-yyyy",
@@ -264,6 +279,7 @@
 <script src="{{ asset('js/filtrarResumen.js') }}"></script>
 <script src="{{ asset('js/solicitar.js') }}"></script>
 <script src="{{ asset('js/modulos.js') }}"></script>
+<script src="{{ asset('js/contratos.js') }}"></script>
 </body>
 </html>
 
