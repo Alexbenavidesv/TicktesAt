@@ -57,17 +57,17 @@ class Ticket extends Model
 
     public function scopeRango($query, $fechas){
         if ($fechas != null) {
+if($fechas[0]!='' && $fechas[1]!=''){
+    $f1 = explode('/', $fechas[0]);
+    $f2 = explode('/', $fechas[1]);
 
 
+    $fecha1 = $f1[2] . '-' . $f1[0] . '-' . $f1[1] . ' 00:00:00';
+    $fecha2 = $f2[2] . '-' . $f2[0] . '-' . $f2[1] . ' 23:59:59';
 
-            $f1 = explode('/', $fechas[0]);
-            $f2 = explode('/', $fechas[1]);
+    return $query->whereBetween('respuesta.fecha', [$fecha1,$fecha2]);
+}
 
-
-            $fecha1 = $f1[2] . '-' . $f1[0] . '-' . $f1[1] . ' 00:00:00';
-            $fecha2 = $f2[2] . '-' . $f2[0] . '-' . $f2[1] . ' 23:59:59';
-
-            return $query->whereBetween('respuesta.fecha', [$fecha1,$fecha2]);
 
         }
     }
