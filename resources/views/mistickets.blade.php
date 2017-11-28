@@ -11,81 +11,79 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 	<h1 class="text-center" style="margin-top: -1.2%">Listado de Tickets</h1>
 	<br>
+	{!! Form::model(Request::all(),['url'=>'/filtrar_tickets2','method'=>'GET']) !!}
 
-
-		{{csrf_field() }}
-
-		<div class="row text-center">
+	<div class="row text-center">
 
 
 
-			<div class="col-md-2">
-				<label for=""><i class="fa fa-hashtag"></i> Número</label>
-				<input type="number" min="1" class="form-control" id="filtroNumero" name="numero" placeholder="# del ticket">
-			</div>
-
-			<div class="col-md-2">
-				<label for=""><i class="fa fa-bars"></i> Estado</label>
-				<select name="estado[]"   id="filtroEstado" class="form-control estadoSelect estadoSelect1" style="width: 100%">
-					<option value="">Seleccione ...</option>
-					<option value="0">Pendiente</option>
-					<option value="2">En proceso</option>
-					<option value="3">Por confirmar</option>
-					<option value="4">Reasignado</option>
-					<option value="1">Cerrado</option>
-				</select>
-			</div>
-			<div class="col-md-2">
-				<label for=""><i class="fa fa-bookmark"></i> Prioridad</label>
-				<select name="prioridad_[]"  id="filtroPrioridad" class="form-control prioridadSelect prioridadSelect1" style="width: 100%">
-					<option value="">Seleccione ...</option>
-					<option value="Alta">Alta</option>
-					<option value="Media">Media</option>
-					<option value="Baja">Baja</option>
-				</select>
-			</div>
-
-			@if(Auth::user()->id_rol ==1)
-				<div class="col-md-2">
-
-					<label for=""><i class="fa fa-user"></i> Consultor</label>
-					<select name="consultor_[]" id="filtroConsultor" class="form-control consultorSelect consultorSelect1" style="width: 100%">
-						<option value="">Seleccione ...</option>
-						@foreach($consultores as $consultor)
-							<option value="{{$consultor->id}}">{{$consultor->name}}</option>
-						@endforeach
-					</select>
-				</div>
-			@endif
-
-			@if(Auth::user()->id_rol !=2)
-				<div class="col-md-2">
-
-					<label for=""><i class="fa fa-hospital-o"></i> Empresa</label>
-					<select name="empresa[]"  id="filtroEmpresa" class="form-control empresaSelect empresaSelect1" style="width: 100%">
-						<option value="">Seleccione ...</option>
-						@foreach($empresas as $empresa)
-							<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
-						@endforeach
-					</select>
-				</div>
-			@endif
-
-			<div class="col-md-2">
-				<label for=""><i class="fa fa-dot-circle-o"></i> Tipo</label>
-				<select name="tipo_[]" id="filtroTipo" class="form-control  tipoSelect tipoSelect1" style="width: 100%">
-					<option value="">Seleccione ...</option>
-					<option value="Sin asignar">Sin asignar</option>
-					<option value="Soporte">Soporte</option>
-					<option value="Desarrollo">Desarrollo</option>
-					<option value="Presentación">Presentación</option>
-					<option value="Reporte">Reporte</option>
-					<option value="Capacitación">Capacitación</option>
-					<option value="Instalación">Instalación</option>
-				</select>
-			</div>
-
+		<div class="col-md-2">
+			<label for=""><i class="fa fa-hashtag"></i> Número</label>
+			<input type="number" min="1" class="form-control" id="filtroNumero" name="numero" placeholder="# del ticket">
 		</div>
+
+		<div class="col-md-2">
+			<label for=""><i class="fa fa-bars"></i> Estado</label>
+			<select name="estado[]"   id="filtroEstado" class="form-control estadoSelect estadoSelect1" style="width: 100%">
+				<option value="">Seleccione ...</option>
+				<option value="0">Pendiente</option>
+				<option value="2">En proceso</option>
+				<option value="3">Por confirmar</option>
+				<option value="4">Reasignado</option>
+				<option value="1">Cerrado</option>
+			</select>
+		</div>
+		<div class="col-md-2">
+			<label for=""><i class="fa fa-bookmark"></i> Prioridad</label>
+			<select name="prioridad_[]"  id="filtroPrioridad" class="form-control prioridadSelect prioridadSelect1" style="width: 100%">
+				<option value="">Seleccione ...</option>
+				<option value="Alta">Alta</option>
+				<option value="Media">Media</option>
+				<option value="Baja">Baja</option>
+			</select>
+		</div>
+
+		@if(Auth::user()->id_rol ==1)
+			<div class="col-md-2">
+
+				<label for=""><i class="fa fa-user"></i> Consultor</label>
+				<select name="consultor_[]" id="filtroConsultor" class="form-control consultorSelect consultorSelect1" style="width: 100%">
+					<option value="">Seleccione ...</option>
+					@foreach($consultores as $consultor)
+						<option value="{{$consultor->id}}">{{$consultor->name}}</option>
+					@endforeach
+				</select>
+			</div>
+		@endif
+
+		@if(Auth::user()->id_rol !=2)
+			<div class="col-md-2">
+
+				<label for=""><i class="fa fa-hospital-o"></i> Empresa</label>
+				<select name="empresa[]"  id="filtroEmpresa" class="form-control empresaSelect empresaSelect1" style="width: 100%">
+					<option value="">Seleccione ...</option>
+					@foreach($empresas as $empresa)
+						<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+					@endforeach
+				</select>
+			</div>
+		@endif
+
+		<div class="col-md-2">
+			<label for=""><i class="fa fa-dot-circle-o"></i> Tipo</label>
+			<select name="tipo_[]" id="filtroTipo" class="form-control  tipoSelect tipoSelect1" style="width: 100%">
+				<option value="">Seleccione ...</option>
+				<option value="Sin asignar">Sin asignar</option>
+				<option value="Soporte">Soporte</option>
+				<option value="Desarrollo">Desarrollo</option>
+				<option value="Presentación">Presentación</option>
+				<option value="Reporte">Reporte</option>
+				<option value="Capacitación">Capacitación</option>
+				<option value="Instalación">Instalación</option>
+			</select>
+		</div>
+
+	</div>
 
 	<br>
 	<div class="row text-center" >
@@ -98,27 +96,31 @@
 			</select>
 		</div>
 	</div>
+
 	<br>
-		<div class="row">
+	<div class="row">
 
-			<div class="btn-toolbar" role="toolbar">
 
-				<div class="btn-group" role="group">
-					<button class="btn btn-success" onclick="filtrarTicket(1)" style="width: 100%">
-						<span class="fa fa-search"></span> Filtrar
-					</button>
-				</div>
+		<div class="btn-toolbar" role="toolbar">
 
-				<div class="btn-group" role="group">
-					<button class="btn btn-primary" onclick="location.href='/misTickets';" style="width: 100%">
-						<span class="fa fa-refresh"></span> Limpiar
-					</button>
-				</div>
+			<div class="btn-group" role="group">
+				<button class="btn btn-success" type="submit" style="width: 100%">
+					<span class="fa fa-search"></span> Filtrar
+				</button>
+			</div>
 
+			<div class="btn-group" role="group">
+				<button class="btn btn-primary"  type="button" onclick="location.href='/misTickets';" style="width: 100%">
+					<span class="fa fa-refresh"></span> Limpiar
+				</button>
 			</div>
 
 		</div>
-				<br>
+
+	</div>
+
+	{!! Form::close() !!}
+	<br>
 
 
 	<div class="row" id="contenidoTickets">
