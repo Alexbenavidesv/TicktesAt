@@ -258,6 +258,10 @@
 
         });
 
+        $('.input-daterange').datepicker({
+            language: "es"
+        });
+
     });
 </script>
 

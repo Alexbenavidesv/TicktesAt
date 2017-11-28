@@ -54,4 +54,22 @@ class Ticket extends Model
             return $query->whereIn('ticket.modulo', $modulos);
         }
     }
+
+    public function scopeRango($query, $fechas){
+        if ($fechas != null) {
+
+
+
+            $f1 = explode('/', $fechas[0]);
+            $f2 = explode('/', $fechas[1]);
+
+
+            $fecha1 = $f1[2] . '-' . $f1[0] . '-' . $f1[1] . ' 00:00:00';
+            $fecha2 = $f2[2] . '-' . $f2[0] . '-' . $f2[1] . ' 23:59:59';
+
+            return $query->whereBetween('respuesta.fecha', [$fecha1,$fecha2]);
+
+        }
+    }
+
 }

@@ -607,9 +607,18 @@ else{
 
     public function filtros(Request $request)
     {
-        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='' || $request->numero!='' || $request->modulo!='') {
+
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
+            $request->tipo_!='' || $request->numero!='' || $request->modulo!='' || $request->filtroFechaInicio!='' ||
+            $request->filtroFechaFin!='') {
 
           $iduser = Auth::user()->id;
+
+          $fechas=array();
+
+          $fechas[]=$request->filtroFechaInicio;
+            $fechas[]=$request->filtroFechaFin;
+
 
             $consultores = User::where('users.id_rol', '!=', 2)
                 ->where('users.id','!=',1)
@@ -636,6 +645,7 @@ $modulos=Modulos::all();
                     ->tipo($request->tipo_)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
+                   ->rango($fechas)
                     ->join('users', 'ticket.id_user', 'users.id')
                     ->join('empresa', 'users.id_empresa', 'empresa.id')
                     ->empresa($request->empresa)
@@ -656,6 +666,7 @@ $modulos=Modulos::all();
                     ->empresa($request->empresa)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
+                    ->rango($fechas)
                     ->join('consultores','ticket.id_consultor', 'consultores.id')
                     ->where('consultores.id', $iduser)
                     ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
@@ -677,6 +688,7 @@ $modulos=Modulos::all();
                     ->tipo($request->tipo_)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
+                    ->rango($fechas)
                     ->join('users', 'ticket.id_user', 'users.id')
                     ->where('id_empresa', $empresa)
                     ->join('consultores','ticket.id_consultor', 'consultores.id')
@@ -793,14 +805,20 @@ $modulos=Modulos::all();
 
     public function filtros2(Request $request)
     {
-        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' || $request->tipo_!='' || $request->modulo!='') {
-
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
+            $request->tipo_!='' || $request->numero!='' || $request->modulo!='' || $request->filtroFechaInicio!='' ||
+            $request->filtroFechaFin!='') {
             $iduser = Auth::user()->id;
 
             $consultores = User::where('users.id_rol', '!=', 2)
                 ->select('users.id', 'users.name')
                 ->get();
 $modulos=Modulos::all();
+
+            $fechas=array();
+
+            $fechas[]=$request->filtroFechaInicio;
+            $fechas[]=$request->filtroFechaFin;
 
             $empresas=Empresa::all();
 
@@ -822,6 +840,7 @@ $modulos=Modulos::all();
                 ->empresa($request->empresa)
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')
+                ->rango($fechas)
                 ->join('consultores','ticket.id_consultor', 'consultores.id')
                 ->where('consultores.id', $iduser)
                 ->select('ticket.id', 'ticket.tipo', 'ticket.modulo','ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
