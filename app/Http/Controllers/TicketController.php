@@ -592,8 +592,9 @@ class TicketController extends Controller
     }
 
     public function filtros(Request $request)
-    {    if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
-            $request->tipo_!='' || $request->numero!='' || $request->modulo!='' || $request->filtroFechaInicio!='' ||
+    {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
+            $request->tipo_!='' || $request->numero!='' || $request->modulo_!='' || $request->filtroFechaInicio!='' ||
             $request->filtroFechaFin!='') {
 
           $iduser = Auth::user()->id;
@@ -687,8 +688,8 @@ $modulos=Modulos::all();
 
 
        else{
-           //return redirect('consultartickets');
-           return "OK";
+           return redirect('consultartickets');
+           //return "OK";
        }
     }
 
@@ -855,7 +856,7 @@ $modulos=Modulos::all();
             ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
             ->where('respuesta.tipo', 'APERTURA')
             ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-            ->select('ticket.id', 'ticket.tipo','ticket.area','ticket.modulo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+            ->select('ticket.id', 'ticket.tipo','ticket.area','ticket.modulo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha','ticket.prioridad',
                 'consultores.nombre AS consultor', 'empresa.nombre AS empresa', 'users.id AS iduser', 'users.name AS nomusuario')
             ->orderBy('id', 'desc')
             ->get();
