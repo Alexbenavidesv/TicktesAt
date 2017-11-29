@@ -16,6 +16,7 @@
 			@if(isset($tickets[0]->empresa))
 			<th>Empresa</th>
 			@endif
+			<th>Módulo</th>
 			<th>Fecha</th>
 			<th>Prioridad</th>
 			<th>Consultor</th>
@@ -34,24 +35,60 @@
 			</td>
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
-						<td><span class="label label-danger">Pendiente</span></td>
-                        @endif
-					@if($t->estado==2)
-						<td><span class="label label-warning">En proceso</span></td>
-                        @endif
-					@if($t->estado==3)
-						<td><span class="label label-primary">Por confirmar</span></td>
-                        @endif
-					@if($t->estado==4)
-						<td><span class="label label-primary" style="background-color: grey;">Reasignado</span></td>
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+									<b>PENDIENTE</b>
+								</div>
+							</div>
+						</td>
 					@endif
-                    @if($t->estado==1)
-						<td><span class="label label-success">Cerrado</span></td>
+					@if($t->estado==2)
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+									<b>PROCESO</b>
+								</div>
+							</div>
+						</td>
+					@endif
+					@if($t->estado==3)
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+									<b>CONFIRMAR</b>
+								</div>
+							</div>
+						</td>
+					@endif
+					@if($t->estado==4)
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-primary progress-bar-striped"  role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color: grey;">
+									<b>REASIGNADO</b>
+								</div>
+							</div>
+						</td>
+					@endif
+					@if($t->estado==1)
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-success progress-bar-striped"  role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%; ">
+									<b>CERRADO</b>
+								</div>
+							</div>
+						</td>
 					@endif
 			@if(isset($t->empresa))
 			<td>{{$t->empresa}}</td>
 			@endif
 
+			<td>{{$t->modulo}}</td>
 			<td>{{$t->fecha}}</td>
 			@if($t->prioridad=='')
 			<td>No asignada</td>

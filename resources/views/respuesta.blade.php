@@ -61,13 +61,13 @@
           <div class="form-group">
             <div id="err1" style="color: red"></div>
             <label for="respuesta">Respuesta</label>
-            <textarea class="form-control" rows="3" name="respu" id="respu" maxlength="1000" style="resize: none;"></textarea>
+            <textarea class="form-control" rows="3" name="respu" id="respu" maxlength="2000" style="resize: none;"></textarea>
           </div>
           @if(Auth::user()->id_rol !=2)
           <div class="form-group">
             <div id="err1" style="color: red"></div>
             <label for="respuesta">Respuesta no visible al cliente</label>
-            <textarea class="form-control" rows="3" name="respunv" id="respunv" maxlength="1000" style="resize: none;"></textarea>
+            <textarea class="form-control" rows="3" name="respunv" id="respunv" maxlength="2000" style="resize: none;"></textarea>
           </div>
           @endif
           <div class="form-group">

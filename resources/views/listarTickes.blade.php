@@ -10,22 +10,23 @@
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 	<h1 class="text-center" style="margin-top: -1.2%">Listado de Tickets</h1>
+	<br>
 
-	<form action="/filtrar_tickets" method="POST">
-		{{csrf_field() }}
+        {!! Form::model(Request::all(),['url'=>'/filtrar_tickets','method'=>'GET','id'=>'formFiltros']) !!}
 
 	<div class="row text-center">
 
 
 
-			<div class="col-md-2">
-				<label for="">Número</label>
-				<input type="number" min="1" class="form-control" name="numero" placeholder="# del ticket">
-			</div>
+		<div class="col-md-2">
+			<label for=""><i class="fa fa-hashtag"></i> Número</label>
+			<input type="number" min="1" class="form-control" id="filtroNumero" name="numero" placeholder="# del ticket">
+		</div>
 
 		<div class="col-md-2">
-			<label for="">Estado</label>
-			<select name="estado[]"   id="" class="form-control estadoSelect estadoSelect1" style="width: 100%">
+			<label for=""><i class="fa fa-bars"></i> Estado</label>
+			<select name="estado[]"   id="filtroEstado" class="form-control estadoSelect estadoSelect1" style="width: 100%">
+				<option value="">Seleccione ...</option>
 				<option value="0">Pendiente</option>
 				<option value="2">En proceso</option>
 				<option value="3">Por confirmar</option>
@@ -33,42 +34,62 @@
 				<option value="1">Cerrado</option>
 			</select>
 		</div>
+
+		<div class="col-md-3">
+			<label for=""><i class="fa fa-calendar"></i> Fechas</label>
+			<div class="input-daterange input-group" id="rangoFecha">
+				<input type="text" class="input-sm form-control"  name="filtroFechaInicio" id="filtroFechaInicio" />
+				<span class="input-group-addon">A</span>
+				<input type="text" class="input-sm form-control"  name="filtroFechaFin" id="filtroFechaFin" />
+			</div>
+		</div>
+
 		<div class="col-md-2">
-			<label for="">Prioridad</label>
-			<select name="prioridad_[]"  id="" class="form-control prioridadSelect prioridadSelect1" style="width: 100%">
+			<label for=""><i class="fa fa-bookmark"></i> Prioridad</label>
+			<select name="prioridad_[]"  id="filtroPrioridad" class="form-control prioridadSelect prioridadSelect1" style="width: 100%">
+				<option value="">Seleccione ...</option>
 				<option value="Alta">Alta</option>
 				<option value="Media">Media</option>
 				<option value="Baja">Baja</option>
 			</select>
 		</div>
 
-			@if(Auth::user()->id_rol ==1)
-		<div class="col-md-2">
+		@if(Auth::user()->id_rol ==1)
+			<div class="col-md-2">
 
-				<label for="">Consultor</label>
-				<select name="consultor_[]" id="consultor_" class="form-control consultorSelect consultorSelect1" style="width: 100%">
+				<label for=""><i class="fa fa-user"></i> Consultor</label>
+				<select name="consultor_[]" id="filtroConsultor" class="form-control consultorSelect consultorSelect1" style="width: 100%">
+					<option value="">Seleccione ...</option>
 					@foreach($consultores as $consultor)
 						<option value="{{$consultor->id}}">{{$consultor->name}}</option>
 					@endforeach
 				</select>
-				</div>
-			@endif
+			</div>
+		@endif
 
-			@if(Auth::user()->id_rol !=2)
-		<div class="col-md-2">
 
-				<label for="">Empresa</label>
-				<select name="empresa[]"  id="empresa" class="form-control empresaSelect empresaSelect1" style="width: 100%">
+	</div>
+
+	<br>
+	<div class="row text-center">
+
+		@if(Auth::user()->id_rol !=2)
+			<div class="col-md-2">
+
+				<label for=""><i class="fa fa-hospital-o"></i> Empresa</label>
+				<select name="empresa[]"  id="filtroEmpresa" class="form-control empresaSelect empresaSelect1" style="width: 100%">
+					<option value="">Seleccione ...</option>
 					@foreach($empresas as $empresa)
 						<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
 					@endforeach
 				</select>
-					</div>
-			@endif
+			</div>
+		@endif
 
 		<div class="col-md-2">
-			<label for="">Tipo</label>
-			<select name="tipo_[]" id="tipo_" class="form-control  tipoSelect tipoSelect1" style="width: 100%">
+			<label for=""><i class="fa fa-dot-circle-o"></i> Tipo</label>
+			<select name="tipo_[]" id="filtroTipo" class="form-control  tipoSelect tipoSelect1" style="width: 100%">
+				<option value="">Seleccione ...</option>
 				<option value="Sin asignar">Sin asignar</option>
 				<option value="Soporte">Soporte</option>
 				<option value="Desarrollo">Desarrollo</option>
@@ -78,32 +99,65 @@
 				<option value="Instalación">Instalación</option>
 			</select>
 		</div>
-		<br><br>
-	</div>
-	<br>
-	<div class="row">
+
+
 		<div class="col-md-2">
-			<button class="btn btn-success " style="width: 100%">
-				<span class="fa fa-search"></span> Filtrar
-			</button>
-		</div>
+		<label for=""><i class="fa fa-list"></i> Módulo</label>
+		<select name="modulo_[]" id="filtroModulo" class="form-control moduloSelect moduloSelect1">
+			@foreach($modulos as $modulo)
+				<option value="{{$modulo->nombre}}">{{$modulo->nombre}}</option>
+			@endforeach
+		</select>
 	</div>
 
-	</form>
+	</div>
+
 	<br>
 	<div class="row">
+
+
+		<div class="btn-toolbar" role="toolbar">
+
+			<div class="btn-group" role="group">
+				<button class="btn btn-success" type="button" id="filtrar" style="width: 100%">
+					<span class="fa fa-search"></span> Filtrar
+				</button>
+			</div>
+
+			<div class="btn-group" role="group">
+
+				@if(isset($flag))
+					<button class="btn btn-primary"  type="button" onclick="location.href='/misTickets';" style="width: 100%">
+						<span class="fa fa-refresh"></span> Limpiar
+					</button>
+				@else
+
+				<button class="btn btn-primary" type="button" onclick="location.href='/consultartickets';" style="width: 100%">
+					<span class="fa fa-refresh"></span> Limpiar
+				</button>
+					@endif
+			</div>
+
+		</div>
+
+	</div>
+
+	{!! Form::close() !!}
+	<br>
+	<div class="row" id="contenidoTickets">
 
 
 		<div class="col-md-12">
 	<table class="table table-striped table-condensed" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 		<thead>
-			<th>Vista Previa</th>
-			<th>Numero</th>
+			<th>Ver</th>
+			<th>N°</th>
 			<th>Estado</th>
 			@if(isset($tickets[0]->empresa))
 			<th>Empresa</th>
 			@endif
+			<th>Módulo</th>
 			<th>Fecha</th>
 			<th>Prioridad</th>
 			<th>Consultor</th>
@@ -122,24 +176,60 @@
 			</td>
 			<td>{{$t->id}}</td>
 					@if($t->estado==0)
-						<td><span class="label label-danger">Pendiente</span></td>
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+									<b>PENDIENTE</b>
+								</div>
+							</div>
+						</td>
                         @endif
 					@if($t->estado==2)
-						<td><span class="label label-warning">En proceso</span></td>
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+									<b>PROCESO</b>
+								</div>
+							</div>
+						</td>
                         @endif
 					@if($t->estado==3)
-						<td><span class="label label-primary">Por confirmar</span></td>
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+									<b>CONFIRMAR</b>
+								</div>
+							</div>
+						</td>
                         @endif
 					@if($t->estado==4)
-						<td><span class="label label-primary" style="background-color: grey;">Reasignado</span></td>
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-primary progress-bar-striped"  role="progressbar"
+									 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color: grey;">
+									<b>REASIGNADO</b>
+								</div>
+							</div>
+						</td>
 					@endif
                     @if($t->estado==1)
-						<td><span class="label label-success">Cerrado</span></td>
+						<td>
+						<div class="progress">
+							<div class="progress-bar progress-bar-success progress-bar-striped"  role="progressbar"
+								 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%; ">
+								<b>CERRADO</b>
+							</div>
+						</div>
+						</td>
 					@endif
 			@if(isset($t->empresa))
 			<td>{{$t->empresa}}</td>
 			@endif
 
+			<td>{{$t->modulo}}</td>
 			<td>{{$t->fecha}}</td>
 			@if($t->prioridad==NULL)
 			<td>No asignada</td>
@@ -244,9 +334,10 @@
 		<div class="bg-danger text-center" style="padding-top: 50px; padding-bottom: 50px"><h4>No hay tickets para mostrar</h4></div>
 		@endif
 	</table>
+            {{ $tickets->appends(Request::all())->render() }}
 		</div>
 	</div>
-	{{ $tickets->links() }}
+
 </div>
 
 <script>

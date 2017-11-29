@@ -50,11 +50,18 @@ $('#guardar').click(function(e){
 		error: function(res){
 			var errores = JSON.parse(res.responseText);
 
-			if(errores.descripcion){
-				$('#error1').html(errores.descripcion);
-			}else{
-				$('#error1').html('');
-			}
+
+            if(errores.descripcion){
+                $('#error1').html(errores.descripcion);
+            }else{
+                $('#error1').html('');
+            }
+
+            if(errores.moduloTicket){
+                $('#errorModuloTicket').html(errores.moduloTicket);
+            }else{
+                $('#errorModuloTicket').html('');
+            }
 
 			if(errores.evidencia1){
 				$('#error2').html(errores.evidencia1);
@@ -97,4 +104,56 @@ function vistaPrevia2(id){
 	$(botona).css('display', '');
 }
 
+/*
+function filtrarTicket(id) {
+	var numero=$('#filtroNumero').val();
+	var prioridad_=$('#filtroPrioridad').val();
+	var consultor_=$('#filtroConsultor').val();
+	var estado=$('#filtroEstado').val();
+	var empresa=$('#filtroEmpresa').val();
+	var tipo_=$('#filtroTipo').val();
+	var modulo_=$('#filtroModulo').val();
+    var tokken = $('input[name="_token"]').val();
+
+
+	if(id==0){
+		var url='filtrar_tickets';
+	}
+    if(id==1){
+        var url='filtrar_tickets2';
+    }
+	$.ajax({
+		url: url,
+		type: 'GET',
+        headers: {'X-CSRF-TOKEN':tokken},
+        data: {numero:numero,prioridad_:prioridad_,consultor_:consultor_,estado:estado,empresa:empresa,tipo_:tipo_,modulo:modulo_},
+		success: function (respuesta) {
+			if(respuesta!="OK") {
+                $('#contenidoTickets').html(respuesta);
+            }
+
+        }
+	});
+
+}*/
+
+$('#filtrar').click(function (event) {
+    var numero=$('#filtroNumero').val();
+    var prioridad_=$('#filtroPrioridad').val();
+    var consultor_=$('#filtroConsultor').val();
+    var estado=$('#filtroEstado').val();
+    var empresa=$('#filtroEmpresa').val();
+    var tipo_=$('#filtroTipo').val();
+    var modulo_=$('#filtroModulo').val();
+    var inicio=$('#filtroFechaInicio').val();
+    var fin_=$('#filtroFechaFin').val();
+
+//alert("numero="+numero+"Prioridad="+prioridad_+"COnsultor="+consultor_+"Estado="+estado+"empresa="+empresa+"Tipo="+tipo_+"Modulo="+modulo_+"Inicio="+inicio+"Fin="+fin_);
+
+    if(numero!='' || prioridad_!=null || consultor_!=null || estado!=null || empresa!=null || tipo_!=null || modulo_!=null || inicio!='-' || fin_!='-'){
+        $('#formFiltros').submit();
+	}else{
+        event.preventDefault();
+	}
+});
 
