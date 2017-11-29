@@ -19,11 +19,12 @@
 
 		<table class="table table-striped" align="center" style="width: 100%">
 			<thead>
-			<th>Vista previa</th>
-			<th>Numero</th>
+			<th>Ver</th>
+			<th>N°</th>
 			@if(isset($tickets[0]->empresa))
 				<th>Empresa</th>
 			@endif
+			<th>Módulo</th>
 			<th>Fecha</th>
 			<th>Prioridad</th>
 			<th>Consultor</th>
@@ -47,6 +48,7 @@
 							<td>{{$t->empresa}}</td>
 						@endif
 
+						<td>{{$t->modulo}}</td>
 						<td>{{$t->fecha}}</td>
 						@if($t->prioridad=='')
 							<td>No asignada</td>
