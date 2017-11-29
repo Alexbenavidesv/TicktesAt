@@ -4,66 +4,182 @@ $('#btnvisita').click(function(event) {
 	var nombrepar = $('#nombrepar').val();
 	var displaymotivo = $('#motivovis').css("display");
 	var displayrecoleccion = $('#recoleccionvis').css("display");
-	var displaycliente = $('#clientefut').css("display");
 	var displaytelefono = $('#clientefuttel').css("display");
 	var motivovis = $('#motivovistext').val();
 	var recoleccionvis = $('#recoleccionvistext').val();
 	var prospectcliente = $('#futurocliente').val();
 	var prospecttelcliente = $('#telfuturocliente').val();
+	var nomclientenuevo = $('#nomclientenuevo').val();
+	var nitclientenuevo = $('#nitclientenuevo').val();
+	var estadovisita = $('#estadovis').val();
+	var noexiste = $('#noexiste').val();
+	
 
-	if (displaymotivo=='block') {
-		if (motivovis=='') {
-			$('#errormotivovis').html('Debe llenar el motivo de la visita');
-			event.preventDefault()
-		}else {
-			$('#errormotivovis').html('');
+	var tipovisita = $('#tipovis').val();
+
+
+	if (tipovisita=='Presentación') {
+		if (estadovisita=='Programada') {
+			if (fechayhora=='') {
+				$('#errorfechavis').html('Ingrese hora y fecha de programación de la visita');
+				event.preventDefault();
+			}else {
+				$('#errorfechavis').html('');
+			}
 		}
-	}
 
-	if (displayrecoleccion=='block') {
+		if (lugarvis=='') {
+			$('#errorlugarvis').html('Debe ingresar el lugar de la visita');
+			event.preventDefault();
+		}else {
+			$('#errorlugarvis').html('');
+		}
+
+		if (motivovis=='') {
+			$('#errormotivovis').html('Debe ingresar el motivo de la visita');
+			event.preventDefault();
+		}else {
+			$('#motivovis').html('');
+		}
+
 		if (recoleccionvis=='') {
-			$('#errorrecoleccionvis').html('Debe llenar los datos recolectados en la visita');
-			event.preventDefault()
+			$('#errorrecoleccionvis').html('Debe ingresar los datos recolectados en la visita');
+			event.preventDefault();			
 		}else {
 			$('#errorrecoleccionvis').html('');
 		}
-	}
 
-	if (displaycliente=='block') {
-		if (prospectcliente=='') {
-			$('#errorclientenvis').html('Debe llenar el nombre del cliente visitado');
-			event.preventDefault()
-		}else {
-			$('#errorclientenvis').html('');
+		if (noexiste==1) {
+			if (nomclientenuevo=='') {
+				$('#errcliennow').html('Debe ingresar el nombre del nuevo cliente');
+				event.preventDefault();
+			}else {
+				$('#errcliennow').html('');
+			}
+
+			if (nitclientenuevo=='') {
+				$('#errcliennownit').html('Debe ingresar el nit del nuevo cliente');
+				event.preventDefault();
+			}else {
+				$('#errcliennownit').html('');
+			}
 		}
-	}
 
-	if (displaytelefono=='block') {
 		if (prospecttelcliente=='') {
-			$('#errortelclientenvis').html('Debe llenar el telefono del cliente visitado');
-			event.preventDefault()
+			$('#errortelclientenvis').html('Debe ingresar el telefono del cliente visitado');
+			event.preventDefault();
 		}else {
 			$('#errortelclientenvis').html('');
 		}
 	}
 
-	if (fechayhora == '') {
-		$('#errorfechavis').html('Debe indicar fecha y hora de la visita');
-		event.preventDefault();
-	}else {
-		$('#errorfechavis').html('');
+
+	if (tipovisita=='Consultoría') {
+		if (estadovisita=='Programada') {
+			if (fechayhora=='') {
+				$('#errorfechavis').html('Ingrese hora y fecha de programación de la visita');
+				event.preventDefault();
+			}else {
+				$('#errorfechavis').html('');
+			}
+		}
+
+		if (lugarvis=='') {
+			$('#errorlugarvis').html('Debe ingresar el lugar de la visita');
+			event.preventDefault();
+		}else {
+			$('#errorlugarvis').html('');
+		}
+
+		if (motivovis=='') {
+			$('#errormotivovis').html('Debe ingresar el motivo de la visita');
+			event.preventDefault();
+		}else {
+			$('#motivovis').html('');
+		}
+
+		if (recoleccionvis=='') {
+			$('#errorrecoleccionvis').html('Debe ingresar los datos recolectados en la visita');
+			event.preventDefault();			
+		}else {
+			$('#errorrecoleccionvis').html('');
+		}
+
+		if (noexiste==1) {
+			if (nomclientenuevo=='') {
+				$('#errcliennow').html('Debe ingresar el nombre del nuevo cliente');
+				event.preventDefault();
+			}else {
+				$('#errcliennow').html('');
+			}
+
+			if (nitclientenuevo=='') {
+				$('#errcliennownit').html('Debe ingresar el nit del nuevo cliente');
+				event.preventDefault();
+			}else {
+				$('#errcliennownit').html('');
+			}
+		}
+
+		if (prospecttelcliente=='') {
+			$('#errortelclientenvis').html('Debe ingresar el telefono del cliente visitado');
+			event.preventDefault();
+		}else {
+			$('#errortelclientenvis').html('');
+		}
 	}
 
-	if (lugarvis == '') {
-		$('#errorlugarvis').html('Debe indicar el lugar de la visita');
-		event.preventDefault();
-	}else {
-		$('#errorlugarvis').html('');
+	if (tipovisita=='Soporte') {
+		if (estadovisita=='Programada') {
+			if (fechayhora=='') {
+				$('#errorfechavis').html('Ingrese hora y fecha de programación de la visita');
+				event.preventDefault();
+			}else {
+				$('#errorfechavis').html('');
+			}
+		}
+
+		if (lugarvis=='') {
+			$('#errorlugarvis').html('Debe ingresar el lugar de la visita');
+			event.preventDefault();
+		}else {
+			$('#errorlugarvis').html('');
+		}
+
+
+		if (motivovis=='') {
+			$('#errormotivovis').html('Debe ingresar el motivo de la visita');
+			event.preventDefault();
+		}else {
+			$('#motivovis').html('');
+		}
+
+		if (recoleccionvis=='') {
+			$('#errorrecoleccionvis').html('Debe ingresar los datos recolectados en la visita');
+			event.preventDefault();			
+		}else {
+			$('#errorrecoleccionvis').html('');
+		}
+
 	}
 
-	
+	if (tipovisita=='Capacitación') {
+		if (estadovisita=='Programada') {
+			if (fechayhora=='') {
+				$('#errorfechavis').html('Ingrese hora y fecha de programación de la visita');
+				event.preventDefault();
+			}else {
+				$('#errorfechavis').html('');
+			}
+		}
 
-
+		if (lugarvis=='') {
+			$('#errorlugarvis').html('Debe ingresar el lugar de la visita');
+			event.preventDefault();
+		}else {
+			$('#errorlugarvis').html('');
+		}
+	}
 
 	/*if (nombrepar == '') {
 		$('#errornombrepar').html('Debe llenar estos campos');
