@@ -44,12 +44,25 @@ $(document).ready(function() {
              $('#visempresa').css("display", "none");
         }
 
+        if (tipovis == 'Soporte') {
+            $('#clientefut').css("display", "none");
+            $('#nomclientenuevo').css("display", "none");
+            $('#nitclientenuevo').css("display", "none");
+            $('#clientefuttel').css("display", "none");
+            $('#satisdiv').css("display", "none");
+            $('#participantes').css("display", "none");
+            $('#tabla').css("display", "none");
+            $('#visempresa').css("display", "block");
+            $('#motivovis').css("display", "block");
+            $('#recoleccionvis').css("display", "block");
+        }
+
         if (tipovis == 'Capacitación') {
             $('#motivovis').css("display", "none");
             $('#recoleccionvis').css("display", "none");
             $('#clientefut').css("display", "none");
             $('#satisdiv').css("display", "none");
-             $('#clientefuttel').css("display", "none");
+            $('#clientefuttel').css("display", "none");
             $('#participantes').css("display", "block");
             $('#tabla').css("display", "block");
             $('#visempresa').css("display", "block");
@@ -74,4 +87,33 @@ $('#enviarevidenciavis').click(function(event) {
         $('#errevidenciavis').html('Debe añadir una evidencia');
         event.preventDefault();
     }
+});
+
+$(document).ready(function() {
+    $('#estadovis').change(function(event) {
+        var estadovis = $('#estadovis').val();
+        //alert(estadovis);
+        if (estadovis=='PorProgramar') {
+            $('#visfechahora').css("display", "none");
+        }else {
+            $('#visfechahora').css("display", "block");
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    $('#noexiste').change(function() {
+        if($(this).is(":checked")) {
+            $(this).attr("value", "1");
+            $('#nomclientenuevo').css("display", "block");
+            $('#nitclientenuevo').css("display", "block");
+            $('#visitado').css("display", "none");
+        }else {
+            $(this).attr("value", "0");
+            $('#nomclientenuevo').css("display", "none");
+            $('#nitclientenuevo').css("display", "none");
+            $('#visitado').css("display", "block");
+        }
+    });
 });

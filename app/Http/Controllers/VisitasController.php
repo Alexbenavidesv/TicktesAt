@@ -34,42 +34,24 @@ class VisitasController extends Controller
             DB::beginTransaction();
 
             try {
-                //INSERCION A LA TABLA VISITAS
+               /* //INSERCION A LA TABLA VISITAS
                 $visita = new Visita();
 
-                $visita->tipo =  $request->tipovis;
-                $visita->lugar = $request->lugarvis;
-                $visita->fecha = $request->fechayhoravis;
-                if ($request->motivovistext!='' || $request->motivovistext!=null) {
+                if ($request->tipovis=='Presentación') {
+                    $visita->tipo =  $request->tipovis;
+                    $visita->lugar = $request->lugarvis;
+
+                    if ($request->estadovis=='Programada') {
+                        $visita->fecha = $request->fechayhoravis;
+                    }
+
                     $visita->motivovisita = $request->motivovistext;
-                }
-
-                if ($request->recoleccionvistext!='' || $request->recoleccionvistext!=null) {
                     $visita->recoleccion = $request->recoleccionvistext;
-                }
 
-                if ($request->futurocliente!='' || $request->futurocliente!=null) {
-                    $visita->cliente = $request->futurocliente;
-                }
-
-                if ($request->telfuturocliente!='' || $request->telfuturocliente!=null) {
-                    $visita->telefono = $request->telfuturocliente;
-                }
-
-                if ($request->motivovistext!='' || $request->motivovistext!=null) {
-                    $visita->id_empresa = null;
-                }else{
-                    $visita->id_empresa = $request->empresavis;
-                }
-
-                if ($request->motivovistext!='' || $request->motivovistext!=null) {
-                    $visita->satisfaccion = $request->satisfaccion;
+                    $visita->id_consultor = Auth::user()->id;
+                    $visita->save();
                 }
                 
-                $visita->id_consultor = Auth::user()->id;
-                $visita->save();
-
-
                 //INSERCION A LA TABLA VISITADOS
 
                 //$visitado = new Visitado();
@@ -99,8 +81,8 @@ class VisitasController extends Controller
                         $visitado = new Visitado($arrData);
                         $visitado->save();
                     } 
-                }
-
+                }*/
+                
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollback();
