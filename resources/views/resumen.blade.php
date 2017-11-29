@@ -132,7 +132,11 @@
 
                 ?>
 
-                <tr>
+                @if($resolucion<55)
+                <tr class="active danger">
+                    @else
+                        <tr>
+                        @endif
 
                     <td>
                         {{$c}}
