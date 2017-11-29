@@ -26,13 +26,22 @@
 	  		<div class="form-group">
 	  			<label for="tipovisita">Seleccione el tipo de visita</label>
 	  			<select class="form-control" name="tipovis" id="tipovis">
-				  <option value="Presentación">Presentación</option>
-				  <option value="Consultoría">Consultoría</option>
-				  <option value="Capacitación">Capacitación</option>
-				</select>
+  				  <option value="Presentación">Presentación</option>
+  				  <option value="Consultoría">Consultoría</option>
+  				  <option value="Capacitación">Capacitación</option>
+            <option value="Soporte">Soporte</option>
+				 </select>
 	  		</div>
+
+        <div class="form-group">
+          <label for="tipovisita">Estado visita</label>
+          <select class="form-control" name="estadovis" id="estadovis">
+            <option value="PorProgramar">Por programar</option>
+            <option value="Programada">Programada</option>
+         </select>
+        </div>
 	  		
-		    <div class="form-group">
+		    <div class="form-group" style="display: none" id="visfechahora">
 		      <p id="errorfechavis" class="text-danger" style="font-size: 14px;"></p>
 		      <label for="fechayhoravis">Fecha y hora</label>
 		      <input type="datetime-local" class="form-control" id="fechayhoravis" name="fechayhoravis">
@@ -57,12 +66,37 @@
           <label for="">Recolección de la visita</label>
           <textarea class="form-control" rows="3" name="recoleccionvistext" id="recoleccionvistext" maxlength="1000" style="resize: none;"></textarea>
         </div>
+        <br>
 
         <div id="clientefut" style="display: block">
+          <div class="row">
+            <div class="col-md-6" style="display: block" id="visitado">
+              <label for="">Cliente visitado</label>
+              <select class="form-control" name="viscliente" id="viscliente">
+                <option value="">2</option>
+                <option value="">2</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="">¿El cliente no existe?</label>
+              <input  style="margin-left: 3px" type="checkbox" value="" id="noexiste" name="noexiste">
+            </div>
+          </div>
           <br>
-          <p id="errorclientenvis" class="text-danger" style="font-size: 14px;"></p>
-          <label for="">Cliente visitado</label>
-          <input type="text" class="form-control" id="futurocliente" name="futurocliente">
+        </div>
+
+        <div id="nomclientenuevo" style="display: none;">
+          <br>
+          <p id="errcliennow" class="text-danger" style="font-size: 14px;"></p>
+          <label for="">Nombre del nuevo cliente</label>
+          <input type="text" class="form-control" id="nuevoclientenom" name="nuevoclientenom">
+        </div>
+
+        <div id="nitclientenuevo" style="display: none;">
+          <br>
+          <p id="errcliennownit" class="text-danger" style="font-size: 14px;"></p>
+          <label for="">Nit del nuevo cliente</label>
+          <input type="text" class="form-control" id="nuevoclientenit" name="nuevoclientenit">
         </div>
 
         <div id="clientefuttel" style="display: block">
