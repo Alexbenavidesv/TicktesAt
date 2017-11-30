@@ -76,3 +76,5 @@ Route::get('/crear_contrato','ContratosController@crear')->middleware('auth','se
 Route::get('/modulos','ContratosController@modulos')->middleware('auth','sesion','rootconsultor');
 Route::post('/guardar_modulo','ContratosController@guardar_modulo')->middleware('auth','sesion','rootconsultor');
 Route::get('/descargar_manual/{file}','ContratosController@descargar')->middleware('auth','sesion','rootconsultor');
+
+Route::post('/guardarContrato', 'ContratosController@guardarContrato');

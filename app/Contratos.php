@@ -9,6 +9,6 @@ class Contratos extends Model
     protected $table='contrato';
 
     protected $fillable=[
-        'id_empresa', 'estado'
+        'tipo', 'totalhoras', 'id_empresa', 'estado'
     ];
 }

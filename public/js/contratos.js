@@ -1,96 +1,138 @@
-/**
- * Created by Alex on 27/11/2017.
- */
+function Modulo(id, modulo){
+    var id = id;
+    var modul = modulo;
+    var tds='';
+    var filas = $('#fila tr').length;
 
-var modulos=$('#modulosContrato');
-
-var datos=[];
-
-modulos.change(function () {
-
-if(modulos.val()!=null){
-
-    var html='';
-    var vector=modulos.val();
-
-
+    if (filas==0) {
+       tds+='<tr id="fila'+id+'"><td><input type="hidden" class="clase" name="idmodulo[]" value="'+id+'"></td><td><input class="form-control" type="text" name="nombremodulo[]" value="'+modul+'"></td><td><input type="number" class="form-control clase1 clase2" min="1" name="horasmodulo[]" onmouseover="sumar()"></td><td><select class="form-control" name="tipopago[]"><option value="1">PAGADO</option><option value="2">POR PAGAR</option><option value="3">CORTESIA</option></select></td><td><button type="button" class="btn btn-danger" style="width: 100%" onclick="quitar('+id+')"><i class="fa fa-minus"></i></button></td></tr>'; 
+       $('#fila').append(tds);
+    }else if (filas>0) {
+        var vector = [];
+        var variable = '';
+        $('.clase').each(function() {
+          variable = $(this).val();
+          vector.push(variable); 
+        });  
+        var validador='';
         for (var i = 0; i < vector.length; i++) {
-            var nombre=vector[i].split('-');
-
-            if(datos.length>0){
-             var pos=datos.indexOf(nombre[1]);
-             if(!(pos>=0)){
-                 datos.push(nombre[1]);
-             }
-
-            }else{
-                datos.push(nombre[1]);
+            if (id==vector[i]) {
+                validador = '1';
             }
+         } 
 
-            html+='<div class="col-md-3">' +
-                    '<div class="panel panel-success">'+
-                    '<div class="panel-heading text-center">'+
-                     '<b> Modulo '+nombre[1]+'</b>'+
-                     '</div>'+
-                    '<div class="panel-body">'+
-                    '<label for="">Cantidad de horas </label>'+
-                    '<label for="" style="color: red;" id="errorHoras'+i+'"></label>'+
-                    '<input type="number" min="1" id="horas'+i+'"class="form-control" placeholder="Horas">'+
-                    '<br>'+
-                    '<label for="">Tipo pago</label>'+
-                    '<select  id="tipoPago'+i+'" class="form-control">'+
-                    '<option value="Pagadas">Pagadas</option>'+
-                    '<option value="Por pagar">Por pagar</option>'+
-                    '<option value="Cortesia">Cortesia</option>'+
-                '</select>'+
-                '</div>'+
-                '</div> ' +
-                '</div>';
+         if (validador=='1') {
+         }else {
+             tds+='<tr id="fila'+id+'"><td><input type="hidden" class="clase" name="idmodulo[]" value="'+id+'"></td><td><input class="form-control" type="text" name="nombremodulo[]" value="'+modul+'"></td><td><input type="number" class="form-control clase1 clase2" min="1" name="horasmodulo[]" onmouseover="sumar()"></td><td><select class="form-control" name="tipopago[]"><option value="1">PAGADO</option><option value="2">POR PAGAR</option><option value="3">CORTESIA</option></select></td><td><button type="button" class="btn btn-danger" style="width: 100%" onclick="quitar('+id+')"><i class="fa fa-minus"></i></button></td></tr>'; 
+             $('#fila').append(tds);
+         }
+    }
+}
+
+function sumar(){
+$('.clase2').change(function(event) {
+      var horas_total = 0
+      $('.clase2').each(
+        function(index, value) {
+          if ( $.isNumeric( $(this).val() ) ){
+            horas_total = horas_total + eval($(this).val());
+          //console.log(importe_total);
         }
-
-    $('#listModulos').html(
-     html
-    );
-
-    $('#boton').html(
-        '<div><button type="button" class="btn btn-success" onclick="guardarContrato()"><i class="fa fa-save"></i> Guardar</button></div>'
-    );
-alert(datos);
-}
-else{
-    $('#listModulos').html('');
-    $('#boton').html('');
-}
-
-
+       } 
+      );
+    $("#inputTotal").val(horas_total);
 });
-
-function seleccionarModulo(id) {
-    $('#modulo'+id).css('display','none');
 }
 
-function deseleccionarModulo(id) {
-    $('#menos'+id).css('display','none');
-    $('#mas'+id).css('display','inline');
-    $('#panel'+id).css('display','none');
+
+
+
+function quitar(id){
+    $('#fila'+id).remove();
 }
 
-function guardarContrato() {
-    var vector=modulos.val();
 
-    for (var i = 0; i < vector.length; i++) {
-        var horas = $('#horas'+i).val();
 
-        if(horas!=''){
-            $('#errorHoras'+i).html('');
-        }
-        else{
-            $('#errorHoras'+i).html('Debes agregar las horas');
-        }
 
+$('#guardarContrato').click(function(event) {
+    var empresa = $('#empresa').val();
+    var filas = $('#fila tr').length;
+    var validador='';
+    //alert(filas);
+    //event.preventDefault();
+    if (empresa==null) {
+        $('#errorempresacon').html('Debe escoger una empresa');
+        //event.preventDefault();
+        validador = '1';
+    }else {
+       $('#errorempresacon').html('');
+       validador = '0'; 
+    }
+
+    if (filas==0) {
+        $('#errorfilas').html('Debe escoger por lo menos un modulo');
+        //event.preventDefault();
+        validador='1';
+    }else {
+        $('.clase1').each(function() {
+          var valor = $(this).val();
+          if (valor=='') {
+              $('#errorfilas').html('Debe llenar las horas de los modulos seleccionados');
+              //event.preventDefault();
+              validador='1';
+          }else {
+              $('#errorfilas').html('');
+              validador='0';
+          }
+      });
     }
 
 
-}
+    if (validador=='0') {
+        var tokkk = $('input[name="_token"]').val();
+        var dattt = new FormData($('#formcontrato')[0]);
+
+        $.ajax({
+            url: 'guardarContrato',
+            type: 'POST',
+            headers: {'X-CSRF-TOKEN':tokkk},
+            data: dattt,
+            contentType: false,
+            processData: false,
+            success: function(res){
+            if (res=='ok') {
+                var url = window.location.href;
+                swal({
+                    title: "Contrado guardado con exito",
+                    // text: "You will not be able to recover this imaginary file!",
+                    //timer: 3000,
+                    type: "success",
+                    confirmButtonText: "Ok",
+                    closeOnConfirm: false
+                  },
+                  function(isConfirm){
+                    if (isConfirm) {
+                      location.reload();
+                      //window.location.href = "consultartickets";
+                    }
+                  });
+                  $(location).attr('href', url);
+            }else {
+                swal({
+                  title: "Ha ocurrido un error",
+                  // text: "u will not be able to recover this imaginary file!",
+                  type: "error",
+                  confirmButtonText: "Ok",
+                  closeOnConfirm: true
+                });
+              }
+            }
+        });  
+    }
+});
+
+
+
+ 
 
 

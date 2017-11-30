@@ -9,6 +9,6 @@ class Modulo_contrato extends Model
     protected $table='modulo_contrato';
 
     protected $fillable=[
-        'id_contrato', 'id_modulo','tipo_pago'
+        'horas', 'id_contrato', 'id_modulo','tipo_pago'
     ];
 }
