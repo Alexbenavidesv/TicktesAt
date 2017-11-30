@@ -142,12 +142,12 @@
 		<div class="col-md-12">
 	<table class="table table-striped table-condensed" align="center" style="width: 100%">
 		@if(count($tickets)>0)
-		<thead>
-			<th>Vista previa</th>
-			<th>Numero</th>
+			<thead>
+			<th>Ver</th>
+			<th>N°</th>
 			<th>Estado</th>
 			@if(isset($tickets[0]->empresa))
-			<th>Empresa</th>
+				<th>Empresa</th>
 			@endif
 			<th>Módulo</th>
 			<th>Fecha</th>
@@ -155,7 +155,7 @@
 			<th>Consultor</th>
 			<th>Tipo</th>
 			<th>Controles</th>
-		</thead>
+			</thead>
 		@foreach($tickets as $t)
 			@if($t->prioridad=='')
 		<tr class="danger">
@@ -221,8 +221,8 @@
 			<td>{{$t->empresa}}</td>
 			@endif
 
-			<td>{{$t->modulo}}</td>
-			<td>{{$t->fecha}}</td>
+					<td>{{$t->modulo}}</td>
+					<td>{{$t->fecha}}</td>
 			@if($t->prioridad=='')
 			<td>No asignada</td>
 			@else
