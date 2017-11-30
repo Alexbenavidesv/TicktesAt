@@ -548,7 +548,7 @@ class TicketController extends Controller
                 ->select('ticket.id', 'ticket.tipo', 'ticket.modulo', 'ticket.estado', 'respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
-                ->paginate(15);
+               ->paginate(15);
         } else {
             $consulta2 = Empresa::join('users', 'empresa.id', 'users.id_empresa')
                 ->where('users.id', $iduser)
@@ -567,7 +567,6 @@ class TicketController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(15);
         }
-        //dd($tickets);
         return view('listarTickes', compact('tickets', 'consultores', 'empresas', 'modulos'));
     }
 
@@ -593,8 +592,9 @@ class TicketController extends Controller
     }
 
     public function filtros(Request $request)
-    {    if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
-            $request->tipo_!='' || $request->numero!='' || $request->modulo!='' || $request->filtroFechaInicio!='' ||
+    {
+        if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
+            $request->tipo_!='' || $request->numero!='' || $request->modulo_!='' || $request->filtroFechaInicio!='' ||
             $request->filtroFechaFin!='') {
 
           $iduser = Auth::user()->id;
@@ -688,8 +688,8 @@ $modulos=Modulos::all();
 
 
        else{
-           //return redirect('consultartickets');
-           return "OK";
+           return redirect('consultartickets');
+           //return "OK";
        }
     }
 
@@ -708,7 +708,7 @@ $modulos=Modulos::all();
             ->where('respuesta.tipo', 'APERTURA')
             ->join('consultores', 'ticket.id_consultor', 'consultores.id')
             //->where('consultores.id', $iduser)
-            ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+            ->select('ticket.id', 'ticket.tipo', 'ticket.estado','ticket.modulo','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                 'consultores.nombre AS consultor', 'empresa.nombre AS empresa', 'users.id AS iduser', 'users.name AS nomusuario')
             ->orderBy('id', 'desc')
             ->paginate(15);
@@ -779,7 +779,7 @@ $modulos=Modulos::all();
                 ->where('respuesta.tipo', 'APERTURA')
                 ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                 ->where('consultores.id', $iduser)
-                ->select('ticket.id', 'ticket.tipo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+                ->select('ticket.id', 'ticket.tipo', 'ticket.modulo','ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
                     'consultores.nombre AS consultor', 'empresa.nombre AS empresa')
                 ->orderBy('id', 'desc')
                 ->paginate(15);
@@ -856,7 +856,7 @@ $modulos=Modulos::all();
             ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
             ->where('respuesta.tipo', 'APERTURA')
             ->join('consultores', 'ticket.id_consultor', 'consultores.id')
-            ->select('ticket.id', 'ticket.tipo','ticket.area', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha', 'ticket.prioridad',
+            ->select('ticket.id', 'ticket.tipo','ticket.area','ticket.modulo', 'ticket.estado','respuesta.descripcion', 'respuesta.fecha','ticket.prioridad',
                 'consultores.nombre AS consultor', 'empresa.nombre AS empresa', 'users.id AS iduser', 'users.name AS nomusuario')
             ->orderBy('id', 'desc')
             ->get();
