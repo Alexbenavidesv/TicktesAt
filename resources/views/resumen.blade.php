@@ -230,8 +230,11 @@
                      }
                     ?>
 
-                    <tr>
-
+                @if(count($informes[2])>0)
+                    <tr class="active danger">
+                        @else
+                            <tr >
+@endif
                         <td>
                             {{$mes}}
                         </td>
