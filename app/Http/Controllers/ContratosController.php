@@ -3,15 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use App\Modulos;
 use App\Temas;
 use App\Empresa;
+use App\Contratos;
+use App\Modulo_contrato;
 use DB;
 
 class ContratosController extends Controller
 {
     public function lista(){
-        return view('contratos');
+        $contratos = Contratos::join('empresa', 'contrato.id_empresa', 'empresa.id')
+        ->select('empresa.nombre', 'contrato.id', 'contrato.tipo', 'contrato.totalhoras')
+        ->get();
+        //dd($contratos);
+        return view('contratos', compact('contratos'));
     }
 
     public function crear(){
@@ -80,5 +88,39 @@ class ContratosController extends Controller
             return response()->download($url);
         }
         abort(404);
+    }
+
+    public function guardarContrato(Request $request){
+        DB::beginTransaction();
+
+        try {
+            $contrato = new Contratos();
+
+            $contrato->tipo = $request->tipocontrato;
+            $contrato->totalhoras = $request->inputTotal; 
+            $contrato->id_empresa = $request->empresa;
+            $contrato->estado = 1;
+            $contrato->save();
+
+            $id_contrato = Contratos::max('id');
+            $idmodulo = Input::get('idmodulo');
+            $horas = Input::get('horasmodulo');
+            $tipopago = Input::get('tipopago');
+
+            foreach($idmodulo as $key => $n ) {  
+                $arrData = array( 
+                    "horas" => $horas[$key],
+                    "id_contrato" => $id_contrato,
+                    "id_modulo" => $idmodulo[$key],
+                    "tipo_pago" => $tipopago[$key]             
+                );
+                $modulo_contrato = new modulo_contrato($arrData);
+                $modulo_contrato->save();
+            } 
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+        return 'ok';
     }
 }
