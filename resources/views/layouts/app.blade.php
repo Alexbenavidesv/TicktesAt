@@ -145,6 +145,7 @@
                         <li id="btnusuarios"><a href="/usuarios" ><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
                         <li id="btnempresas"><a href="/empresas"><i class="fa fa-industry" aria-hidden="true"></i> Empresas</a></li>
                     @endif
+                        
                     @if(Auth::user()->id_rol !=3)
                         <li id="btntickets"><a href="/crear_ticket"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
                     @endif
@@ -167,7 +168,9 @@
 
 
                 @endif
-                <!--
+
+
+                    <!--
                 @if(Auth::user()->id_rol !=2)
                     <li><a href="/formatoVisita"><i class="fa fa-file-text-o" aria-hidden="true"></i> Formato de visita</a></li>
 @endif

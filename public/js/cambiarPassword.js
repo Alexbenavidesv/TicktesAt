@@ -3,7 +3,6 @@
  */
 
     $("#cambiarPass").click(function(){
-
         var pass1 = $('#pass1').val();
         var pass2 = $('#pass2').val();
         var token = $('input[name="_token"]').val();

@@ -212,8 +212,8 @@ class TicketController extends Controller
 
     }
 
-    public function filtro_resumen($fecha)
-    {
+    public function filtro_resumen($fecha){
+
         $fechas = explode('-', $fecha);
         $mes = $fechas[0];
         $anio = $fechas[1];
@@ -420,7 +420,10 @@ class TicketController extends Controller
             $porcentaje = number_format($porcentaje, 0);
         }
 
-       return view('resumen', compact('ticketsMesActual', 'sinAsignar', 'porReasignar','ticketsResueltos', 'ticketsPendientes', 'mesActual', 'anioActual', 'porcentaje', 'informacionMeses'));
+        $mes_=$mes;
+        $anio_=$anio;
+
+       return view('resumen', compact('ticketsMesActual', 'sinAsignar', 'porReasignar','ticketsResueltos', 'ticketsPendientes', 'mesActual', 'anioActual', 'porcentaje', 'informacionMeses','mes_','anio_'));
 
 
     }
