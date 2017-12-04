@@ -18,8 +18,11 @@ class ContratosController extends Controller
         $contratos = Contratos::join('empresa', 'contrato.id_empresa', 'empresa.id')
         ->select('empresa.nombre', 'contrato.id', 'contrato.tipo', 'contrato.totalhoras')
         ->get();
+
+        $modulos = Modulo_contrato::join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
+        ->get();
         //dd($contratos);
-        return view('contratos', compact('contratos'));
+        return view('contratos', compact('contratos', 'modulos'));
     }
 
     public function crear(){
@@ -91,36 +94,57 @@ class ContratosController extends Controller
     }
 
     public function guardarContrato(Request $request){
-        DB::beginTransaction();
+        $validar = Contratos::join('empresa', 'contrato.id_empresa', 'empresa.id')
+        ->where('empresa.id', $request->empresa)
+        ->get();
 
-        try {
-            $contrato = new Contratos();
+        //dd($validar);
+        if (count($validar)>0) {
+            return 'no';
+        }else{
+            DB::beginTransaction();
 
-            $contrato->tipo = $request->tipocontrato;
-            $contrato->totalhoras = $request->inputTotal; 
-            $contrato->id_empresa = $request->empresa;
-            $contrato->estado = 1;
-            $contrato->save();
+            try {
+                $contrato = new Contratos();
 
-            $id_contrato = Contratos::max('id');
-            $idmodulo = Input::get('idmodulo');
-            $horas = Input::get('horasmodulo');
-            $tipopago = Input::get('tipopago');
+                $contrato->tipo = $request->tipocontrato;
+                $contrato->totalhoras = $request->inputTotal; 
+                $contrato->id_empresa = $request->empresa;
+                $contrato->estado = 1;
+                $contrato->save();
 
-            foreach($idmodulo as $key => $n ) {  
-                $arrData = array( 
-                    "horas" => $horas[$key],
-                    "id_contrato" => $id_contrato,
-                    "id_modulo" => $idmodulo[$key],
-                    "tipo_pago" => $tipopago[$key]             
-                );
-                $modulo_contrato = new modulo_contrato($arrData);
-                $modulo_contrato->save();
-            } 
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
+                $id_contrato = Contratos::max('id');
+                $idmodulo = Input::get('idmodulo');
+                $horas = Input::get('horasmodulo');
+                $tipopago = Input::get('tipopago');
+
+                foreach($idmodulo as $key => $n ) {  
+                    $arrData = array( 
+                        "horas" => $horas[$key],
+                        "id_contrato" => $id_contrato,
+                        "id_modulo" => $idmodulo[$key],
+                        "tipo_pago" => $tipopago[$key]             
+                    );
+                    $modulo_contrato = new modulo_contrato($arrData);
+                    $modulo_contrato->save();
+                } 
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+            }
+            return 'ok';
         }
-        return 'ok';
+    }
+
+
+    public function editarHoras(Request $request){
+        $idmodulo = Input::get('idmodulo');
+        $nombremodulo = Input::get('nombremodulo');
+        $horasmodulo = Input::get('horasmodulo');
+
+        foreach ($idmodulo as $key => $n) {
+            $modulo = Modulos::findOrFail($idmodulo[$key]);
+            echo $modulo;
+        }
     }
 }
