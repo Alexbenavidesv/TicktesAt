@@ -24,7 +24,23 @@
                 </div>
             </div>
         </div>
+        <?php
+        $days = date("t"); //total de dias del mes actual
 
+        if(!(isset($mes_) && isset($anio_))){
+            $mes=date('m');
+            $anio=date('Y');
+            $fechaInicio=$mes.'/01/'.$anio;
+            $fechaFin=$mes.'/'.$days.'/'.$anio;
+            }
+            else{
+                $mes=$mes_;
+                $anio=$anio_;
+                $fechaInicio=$mes.'/01/'.$anio;
+                $fechaFin=$mes.'/'.$days.'/'.$anio;
+        }
+
+        ?>
 
 
         <div for="" class="">
@@ -32,31 +48,41 @@
         </div>
 
         <div class="row text-center">
-            <div class="col-md-2 alert alert-info"  style="margin-left: 2%;">
+            <a href="/consultartickets">
+                <div class="col-md-2 alert alert-info"  style="margin-left: 2%;">
                <h4> <i class="fa fa-ticket"></i>  @if(Auth::user()->id_rol==1)  Solicitados @else Asignados @endif </h4>
                 <h3>{{count($ticketsMesActual)}}</h3>
             </div>
+            </a>
 
+            <a href="/filtrar_tickets?estado[]=1&filtroFechaInicio={{$fechaInicio}}&filtroFechaFin={{$fechaFin}}">
             <div class="col-md-2 alert alert-success" style="margin-left: 2%;">
                 <h4> <i class="fa fa-check"></i> Resueltos </h4>
                 <h3>{{count($ticketsResueltos)}}</h3>
             </div>
+            </a>
 
+            <a href="/filtrar_tickets?estado[]=0&estado[]=2&estado[]=3&filtroFechaInicio={{$fechaInicio}}&filtroFechaFin={{$fechaFin}}">
             <div class="col-md-2 alert alert-danger " style="margin-left: 2%;">
                 <h4> <i class="fa fa-hourglass-half"></i> Por resolver </h4>
                 <h3>{{count($ticketsPendientes)}}</h3>
             </div>
+            </a>
 
             @if(Auth::user()->id_rol==1)
-            <div class="col-md-2 alert alert-warning" style="margin-left: 2%;">
+                <a href="/filtrar_tickets?consultor[]=1&filtroFechaInicio={{$fechaInicio}}&filtroFechaFin={{$fechaFin}}">
+                <div class="col-md-2 alert alert-warning" style="margin-left: 2%;">
                 <h4> <i class="fa fa-user-times"></i> Sin asignar</h4>
                 <h3>{{count($sinAsignar)}}</h3>
             </div>
+                </a>
 
+                <a href="/filtrar_tickets?estado[]=4&filtroFechaInicio={{$fechaInicio}}&filtroFechaFin={{$fechaFin}}">
                 <div class="col-md-2 alert alert-warning" style="margin-left: 2%;">
                     <h4> <i class="fa fa-refresh"></i> Por reasignar</h4>
                     <h3>{{count($porReasignar)}}</h3>
                 </div>
+                </a>
 
             @endif
 
@@ -230,8 +256,11 @@
                      }
                     ?>
 
-                    <tr>
-
+                @if(count($informes[2])>0)
+                    <tr class="active danger">
+                        @else
+                            <tr >
+@endif
                         <td>
                             {{$mes}}
                         </td>

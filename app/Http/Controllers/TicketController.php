@@ -212,8 +212,8 @@ class TicketController extends Controller
 
     }
 
-    public function filtro_resumen($fecha)
-    {
+    public function filtro_resumen($fecha){
+
         $fechas = explode('-', $fecha);
         $mes = $fechas[0];
         $anio = $fechas[1];
@@ -245,6 +245,15 @@ class TicketController extends Controller
             ->where('respuesta.tipo', 'APERTURA')
             ->whereMonth('respuesta.fecha', $mesActual)
             ->whereYear('respuesta.fecha', $anio)
+            ->join('consultores', 'ticket.id_consultor', 'consultores.id')
+            ->where('consultores.id', 1)
+            ->get();
+
+
+        $porReasignar = Ticket::where('ticket.area', '!=', NULL)
+            ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
+            ->where('respuesta.tipo', 'APERTURA')
+            ->whereMonth('respuesta.fecha', $mesActual)
             ->join('consultores', 'ticket.id_consultor', 'consultores.id')
             ->where('consultores.id', 1)
             ->get();
@@ -318,6 +327,7 @@ class TicketController extends Controller
                     ->whereYear('respuesta.fecha', $anio)
                     ->join('consultores', 'ticket.id_consultor', 'consultores.id')
                     ->get();
+
             } else {
                 $info2 = Ticket::where('ticket.estado', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -329,7 +339,7 @@ class TicketController extends Controller
                     ->get();
             }
 
-            if (Auth::user()->id == 1) {
+            if (Auth::user()->id_rol == 1) {
                 $info3 = Ticket::where('ticket.estado', '!=', 1)
                     ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                     ->where('respuesta.tipo', 'APERTURA')
@@ -410,7 +420,10 @@ class TicketController extends Controller
             $porcentaje = number_format($porcentaje, 0);
         }
 
-        return view('resumen', compact('ticketsMesActual', 'sinAsignar', 'ticketsResueltos', 'ticketsPendientes', 'mesActual', 'anioActual', 'porcentaje', 'informacionMeses'));
+        $mes_=$mes;
+        $anio_=$anio;
+
+       return view('resumen', compact('ticketsMesActual', 'sinAsignar', 'porReasignar','ticketsResueltos', 'ticketsPendientes', 'mesActual', 'anioActual', 'porcentaje', 'informacionMeses','mes_','anio_'));
 
 
     }
