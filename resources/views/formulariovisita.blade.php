@@ -15,8 +15,9 @@
 	  			<p id="errorempresavis" class="text-danger" style="font-size: 14px;"></p>
 	  			<label for="empresa">Seleccione una empresa</label>
 	  			<select class="form-control" name="empresavis" id="empresavis">
-				  @foreach($empresas as $e)
-				  @if($e->nombre != 'AT Soluciones')
+          <option value="">Seleccione</option>
+          @foreach($empresas as $e)
+          @if($e->nombre != 'AT Soluciones')
 				  <option value="{{$e->id}}">{{$e->nombre}}</option>
 				  @endif
 				  @endforeach
@@ -32,6 +33,13 @@
             <option value="Soporte">Soporte</option>
 				 </select>
 	  		</div>
+
+        <div class="form-group"  style="display: none" id="divmodulovis">
+          <label for="tipovisita">Seleccione el Modulo</label>
+          <select class="form-control" name="modulovis" id="modulovis">
+            <option value="">Selecccione la empresa</option>
+         </select>
+        </div>
 
         <div class="form-group">
           <label for="tipovisita">Estado visita</label>
@@ -125,28 +133,23 @@
 	            <button type="button" class="btn btn-default" id="del" style="width: 50%"><i class="fa fa-minus" aria-hidden="true"></i></button>
 	           </div><br>
     	   </div>	
+         <p id="errortabla" class="text-danger" style="font-size: 14px;"></p>
     	   <table id="tabla" class="table table-striped table-hover table-bordered table-condensed" style="display: none">
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Cedula</th>
                   <th>Cargo</th>
                   <th>Telefono</th>
-                  <th>Correo</th>
-                  <th>Observación</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <p id="errornombrepar" class="text-danger" style="font-size: 14px;"></p>
-                  <td><input type="text" name="nombrepar[]" id="nombrepar" class="form-control" placeholder="Nombre del participante"></td>
-                  <td><input type="text" name="cedulapar[]" id="cedulapar" class="form-control" placeholder="Cedula del participante"></td>
+                  <td><input type="text" name="nombrepar[]" id="nombrepar" class="form-control clase" placeholder="Nombre del participante"></td>
                   <td>
-                    <input type="text" name="cargopar[]" id="cargopar" class="form-control" placeholder="Cargo del participante">
+                    <input type="text" name="cargopar[]" id="cargopar" class="form-control clase1" placeholder="Cargo del participante">
                   </td>
-                  <td><input type="text" name="telefonopar[]" id="telefonopar" class="form-control" placeholder="Telefono del participante"></td>
-                  <td><input type="text" name="correopar[]" id="correopar" class="form-control" placeholder="Correo del participante"></td>
-                  <td><input type="text" name="observacionpar[]" id="observacionpar" class="form-control" placeholder="Observación"></td>
+                  <td><input type="text" name="telefonopar[]" id="telefonopar" class="form-control clase2" placeholder="Telefono del participante"></td>
                 </tr>
               </tbody>
             </table>

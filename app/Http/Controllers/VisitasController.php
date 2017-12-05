@@ -9,12 +9,18 @@ use App\Empresa;
 use App\Visita;
 use App\Visitado;
 use App\Evidencia;
+use App\Contratos;
 use DB;
 
 class VisitasController extends Controller
 {
 	public function index(){
-		$empresas = Empresa::all();
+		$empresas = Contratos::join('empresa', 'contrato.id_empresa', 'empresa.id')
+        ->where('contrato.estado', 1)
+        ->select('empresa.id', 'empresa.nombre')
+        ->get();
+
+        //dd($empresas);
 
 		return view('formulariovisita', compact('empresas'));
 	}
@@ -232,5 +238,17 @@ class VisitasController extends Controller
         ->get();
 
         return view('visitasGral', compact('visitas', 'visitas2'));
+    }
+
+
+    public function modulos($id){
+        $modulos = Empresa::where('empresa.id', $id)
+        ->join('contrato', 'empresa.id', 'contrato.id_empresa')
+        ->join('modulo_contrato', 'contrato.id', 'modulo_contrato.id_contrato')
+        ->join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
+        ->select('modulos.id', 'modulos.nombre')
+        ->get();
+
+        return $modulos;
     }
 }

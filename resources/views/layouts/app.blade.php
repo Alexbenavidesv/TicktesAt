@@ -170,18 +170,18 @@
                 @endif
 
 
-                    <!--
+        
                 @if(Auth::user()->id_rol !=2)
                     <li><a href="/formatoVisita"><i class="fa fa-file-text-o" aria-hidden="true"></i> Formato de visita</a></li>
-@endif
+                @endif
 
                 @if(Auth::user()->id_rol !=2)
                     <li><a href="/listarvisitas"><i class="fa fa-file-text" aria-hidden="true"></i> Mis visitas</a></li>
-@endif
+                @endif
 
                 @if(Auth::user()->id_rol ==1)
                     <li><a href="/listarvisitasgrl"><i class="fa fa-bars" aria-hidden="true"></i> Todas las visitas</a></li>
-@endif -->
+                @endif
                 </ul>
             </div>
 
