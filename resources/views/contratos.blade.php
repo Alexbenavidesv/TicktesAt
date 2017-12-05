@@ -41,11 +41,12 @@
 				        <h4 class="modal-title">Modulos</h4>
 				      </div>
 				      <div class="modal-body">
-				      	<form id="editadohoras">
+				      	<form id="editadohoras{{$con->id}}">
 				      		{{ csrf_field() }}
 				      		@foreach($modulos as $mod)
 				      		@if($mod->id_contrato==$con->id)
 				      		<div class="row">	
+				      			<input type="hidden" name="idcontrado" id="idcontrato" value="{{$con->id}}">
 				      			<input type="hidden" name="idmodulo[]" id="idmodulo[]" value="{{$mod->id}}">
 				      			<div class="col-md-1"></div>
 				      			<div class="col-md-4">
@@ -64,7 +65,7 @@
 				      	</form>
 				      </div>
 				      <div class="modal-footer">
-				      	<button type="button" class="btn btn-success" data-dismiss="modal" id="editarhoras">Guardar</button>
+				      	<button type="button" class="btn btn-success" data-dismiss="modal" onclick="editar({{$con->id}})">Guardar</button>
 				        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 				      </div>
 				    </div>
