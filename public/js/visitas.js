@@ -4,12 +4,9 @@ $(document).ready(function(){
      */
     $("#add").click(function(){
         var nuevaFila="<tr>";
-        nuevaFila+="<td><input type='text' name='nombrepar[]' id='nombrepar' class='form-control' placeholder='Nombre del participante'></td>"
-        nuevaFila+="<td><input type='text' name='cedulapar[]' id='cedulapar' class='form-control' placeholder='Cedula del participante'></td>"
-        nuevaFila+="<td><input type='text' name='cargopar[]' id='cargopar' class='form-control' placeholder='Cargo del participante'></td>"
-        nuevaFila+="<td><input type='text' name='telefonopar[]' id='telefonopar' class='form-control' placeholder='Telefono del participante'></td>"
-        nuevaFila+="<td><input type='text' name='correopar[]' id='correopar' class='form-control' placeholder='Correo del participante'></td>"
-        nuevaFila+="<td><input type='text' name='observacionpar[]' id='observacionpar' class='form-control' placeholder='Observación'></td>"
+        nuevaFila+="<td><input type='text' name='nombrepar[]' id='nombrepar' class='form-control clase' placeholder='Nombre del participante'></td>"
+        nuevaFila+="<td><input type='text' name='cargopar[]' id='cargopar' class='form-control clase1' placeholder='Cargo del participante'></td>"
+        nuevaFila+="<td><input type='text' name='telefonopar[]' id='telefonopar' class='form-control clase2' placeholder='Telefono del participante'></td>"
         nuevaFila+="</tr>";
         $("#tabla").append(nuevaFila);
     });
@@ -21,7 +18,7 @@ $(document).ready(function(){
     $("#del").click(function(){
         // Obtenemos el total de columnas (tr) del id "tabla"
         var trs=$("#tabla tr").length;
-        if(trs>1)
+        if(trs>2)
         {
             // Eliminamos la ultima columna
             $("#tabla tr:last").remove();
@@ -42,6 +39,7 @@ $(document).ready(function() {
              $('#participantes').css("display", "none");
              $('#tabla').css("display", "none");
              $('#visempresa').css("display", "none");
+             $('#divmodulovis').css("display", "none");
         }
 
         if (tipovis == 'Soporte') {
@@ -55,6 +53,7 @@ $(document).ready(function() {
             $('#visempresa').css("display", "block");
             $('#motivovis').css("display", "block");
             $('#recoleccionvis').css("display", "block");
+            $('#divmodulovis').css("display", "none");
         }
 
         if (tipovis == 'Capacitación') {
@@ -66,6 +65,7 @@ $(document).ready(function() {
             $('#participantes').css("display", "block");
             $('#tabla').css("display", "block");
             $('#visempresa').css("display", "block");
+            $('#divmodulovis').css("display", "block");
         }
     });
 });
@@ -116,4 +116,20 @@ $(document).ready(function() {
             $('#visitado').css("display", "block");
         }
     });
+});
+
+
+$('#empresavis').change(function(event) {
+    var empresa = $('#empresavis').val();
+    $('#modulovis').html('');
+
+    $.ajax({
+        url: '/llamrModulos/'+empresa,
+        type: 'GET',
+        success: function(res){
+            for (var i = 0; i < res.length; i++) {
+                $('#modulovis').append('<option value="'+res[i].id+'">'+res[i].nombre+'</option>');
+            }
+        }
+    })
 });
