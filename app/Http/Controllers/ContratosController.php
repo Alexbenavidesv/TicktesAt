@@ -138,13 +138,52 @@ class ContratosController extends Controller
 
 
     public function editarHoras(Request $request){
-        $idmodulo = Input::get('idmodulo');
-        $nombremodulo = Input::get('nombremodulo');
-        $horasmodulo = Input::get('horasmodulo');
+        DB::beginTransaction();
 
-        foreach ($idmodulo as $key => $n) {
-            $modulo = Modulos::findOrFail($idmodulo[$key]);
-            echo $modulo;
+        try {
+                $idcontrato = $request->idcontrado;
+                $idmodulo = Input::get('idmodulo');
+                $nombremodulo = Input::get('nombremodulo');
+                $horasmodulo = Input::get('horasmodulo');
+                //echo $request->idcontrado;
+                $vector = array();
+
+                foreach ($idmodulo as $key => $n) {
+                    //echo $modulo;
+                    $modulo_contrato = Modulo_contrato::where('modulo_contrato.id_contrato', $idcontrato)
+                    ->where('modulo_contrato.id_modulo', $idmodulo[$key])
+                    ->select('modulo_contrato.id')
+                    ->get();
+
+                    $modcon = Modulo_contrato::findOrFail($modulo_contrato[0]->id);
+                    $modcon->horas = $horasmodulo[$key];
+                    $modcon->save();
+
+                    $vector[]=$horasmodulo[$key];
+                }
+
+                $total = array_sum($vector);
+
+                $contrato = Contratos::findOrFail($idcontrato);
+
+                $totalhoras =  $contrato->totalhoras;
+
+
+                if ($total > $totalhoras ) {
+                  $contrato->totalhoras = $total;
+                  $contrato->save();
+                }
+
+                if ($total < $totalhoras) {
+                    $diferencia = $totalhoras - $total;
+                    $contrato->totalhoras = $totalhoras - $diferencia;
+                    $contrato->save();
+                }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
         }
+
+        return 'ok';
     }
 }
