@@ -119,7 +119,7 @@ $('#guardarContrato').click(function(event) {
                   $(location).attr('href', url);
             }else {
                 swal({
-                  title: "Ha ocurrido un error",
+                  title: "La empresa tiene un contrato activo actualmente",
                   // text: "u will not be able to recover this imaginary file!",
                   type: "error",
                   confirmButtonText: "Ok",
@@ -129,6 +129,37 @@ $('#guardarContrato').click(function(event) {
             }
         });  
     }
+});
+
+
+function Ver(id){
+    $('#ocultarcontrato'+id).css('display', '');
+    $('#vercontrato'+id).css('display', 'none');
+    //alert(id);
+    $('#contenidocontrato'+id).css('display', '');
+}
+
+
+function Ocultar(id){
+    $('#ocultarcontrato'+id).css('display', 'none');
+    $('#vercontrato'+id).css('display', '');
+    $('#contenidocontrato'+id).css('display', 'none');
+    //alert(id);
+}
+
+
+$('#editarhoras').click(function(event) {
+    var token = $('input[name="_token"]').val();
+    var data = new FormData($('#editadohoras')[0]);
+
+    $.ajax({
+        url: '/editarHoras',
+        type: 'POST',
+        headers: {'X-CSRF-TOKEN':token},
+        data: data,
+        contentType: false,
+        processData: false
+    });
 });
 
 

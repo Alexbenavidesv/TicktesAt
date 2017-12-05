@@ -78,3 +78,4 @@ Route::post('/guardar_modulo','ContratosController@guardar_modulo')->middleware(
 Route::get('/descargar_manual/{file}','ContratosController@descargar')->middleware('auth','sesion','rootconsultor');
 
 Route::post('/guardarContrato', 'ContratosController@guardarContrato');
+Route::post('/editarHoras', 'ContratosController@editarHoras');
