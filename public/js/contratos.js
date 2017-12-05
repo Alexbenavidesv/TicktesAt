@@ -147,10 +147,9 @@ function Ocultar(id){
     //alert(id);
 }
 
-
-$('#editarhoras').click(function(event) {
+function editar(id){
     var token = $('input[name="_token"]').val();
-    var data = new FormData($('#editadohoras')[0]);
+    var data = new FormData($('#editadohoras'+id)[0]);
 
     $.ajax({
         url: '/editarHoras',
@@ -158,9 +157,38 @@ $('#editarhoras').click(function(event) {
         headers: {'X-CSRF-TOKEN':token},
         data: data,
         contentType: false,
-        processData: false
+        processData: false,
+        success: function(res){
+        if (res=='ok') {
+            var url = window.location.href;
+            swal({
+                title: "Horas editadas con exito",
+                // text: "You will not be able to recover this imaginary file!",
+                //timer: 3000,
+                type: "success",
+                confirmButtonText: "Ok",
+                closeOnConfirm: false
+              },
+              function(isConfirm){
+                if (isConfirm) {
+                  location.reload();
+                  //window.location.href = "consultartickets";
+                }
+              });
+              $(location).attr('href', url);
+        }else {
+            swal({
+              title: "Error al editar las horas",
+              // text: "u will not be able to recover this imaginary file!",
+              type: "error",
+              confirmButtonText: "Ok",
+              closeOnConfirm: true
+            });
+          }
+        }
     });
-});
+}
+
 
 
 
