@@ -195,4 +195,10 @@ class ContratosController extends Controller
 
         return view('modulos',compact('modulos','temas'));
     }
+
+    public function filtrarContratos($tipo,$empresa){
+        if($tipo!='' || $empresa!=''){
+            echo 'OK';
+        }
+    }
 }

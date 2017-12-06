@@ -14,7 +14,7 @@ class Modulos extends Model
 
     public function scopeNombre($query,$nombre){
         if (trim($nombre) != "") {
-            return $query->where('modulos.nombre','like',$nombre);
+            return $query->where('modulos.nombre','like','%'.$nombre.'%');
         }
     }
 

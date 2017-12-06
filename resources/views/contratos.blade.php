@@ -6,17 +6,22 @@
 
 @section('content')
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
-	<h1 style="margin-left: 25%">Listado de contratos</h1>
-	<div class="row">
-		<div class="col col-md-1"></div>
-		<div class="col col-md-9">
+
+	<div class="row text-center">
+		<h1>Listado de contratos</h1>
+		<div class="col col-md-2">
+
+		</div>
+
+
+		<div class="col col-md-10">
 			<table class="table table-striped" style="width: 100%">
-		    <tr>
-		  	  <th>N°</th>
-		  	  <th>Tipo</th>
-		  	  <th>Horas</th>
-		  	  <th>Empresa</th>
-		  	  <th>Vista previa</th>
+		    <tr class="text-center" >
+		  	  <th style="text-align: center">N°</th>
+		  	  <th style="text-align: center">Tipo</th>
+		  	  <th style="text-align: center">Horas</th>
+		  	  <th style="text-align: center">Empresa</th>
+		  	  <th style="text-align: center">Vista previa</th>
 		    </tr>
 		    @foreach($contratos as $con)
 		    <tr>
