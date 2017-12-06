@@ -186,4 +186,13 @@ class ContratosController extends Controller
 
         return 'ok';
     }
+
+    public function filtrarModulos($nombre){
+        $modulos=Modulos::where('id','>',0)
+            ->nombre($nombre)
+            ->orderBy('id','DESC')->paginate(15);
+        $temas=Temas::all();
+
+        return view('modulos',compact('modulos','temas'));
+    }
 }
