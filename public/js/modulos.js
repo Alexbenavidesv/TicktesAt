@@ -112,3 +112,14 @@ function agregarModulo() {
 
 
 }
+
+$('#filtroModulos').click(function () {
+    var nombre=$('#nomModulo').val();
+    if(nombre!=''){
+        location.href='/filtrarm/'+nombre;
+    }
+});
+
+$('#filtroModulosLimpiar').click(function () {
+        location.href='/modulos';
+});
