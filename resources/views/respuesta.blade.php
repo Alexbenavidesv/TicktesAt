@@ -81,9 +81,6 @@
                     <input  style="margin-left: 3px" type="checkbox" value="" id="reasignar" name="reasignar">  <label style="font-size: 1.2em;"> <b>Solicitar reasignación</b></label>
                 </div>
 
-                <div class="checkbox" style="background-color: lightgrey; border-radius: 0.1em;">
-                    <input  style="margin-left: 3px" type="checkbox" value="" id="asignarConsultor" name="asignarConsultor">  <label style="font-size: 1.2em;"> <b>Asignar consultor</b></label>
-                </div>
 
               <div id="area" style="display: none">
                   <br>
@@ -94,17 +91,26 @@
                   </select>
               </div>
 
+
+
+          @endif
+
+            @if(Auth::user()->id_rol == 1)
+                <div class="checkbox" style="background-color: lightgrey; border-radius: 0.1em;">
+                    <input  style="margin-left: 3px" type="checkbox" value="" id="asignarConsultor" name="asignarConsultor">  <label style="font-size: 1.2em;"> <b>Asignar consultor</b></label>
+                </div>
+
                 <div id="nuevoConsultor" style="display: none">
                     <br>
                     <label for="">Seleccione el consultor</label>
                     <select name="consultorNuevo_" id="consultorNuevo_" class="form-control" style="width: 70%">
                         @foreach($consultores as $consultor)
                             <option value="{{$consultor->id}}">{{$consultor->nombre}}</option>
-                            @endforeach
+                        @endforeach
                     </select>
                 </div>
+            @endif
 
-          @endif
           @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 3)
           <div class="form-group" id="select">
               <label for="finalizado">Estado</label>
