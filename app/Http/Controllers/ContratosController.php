@@ -19,10 +19,12 @@ class ContratosController extends Controller
         ->select('empresa.nombre', 'contrato.id', 'contrato.tipo', 'contrato.totalhoras')
         ->get();
 
+        $empresas=Empresa::all();
+
         $modulos = Modulo_contrato::join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
         ->get();
         //dd($contratos);
-        return view('contratos', compact('contratos', 'modulos'));
+        return view('contratos', compact('contratos', 'modulos','empresas'));
     }
 
     public function crear(){
@@ -196,9 +198,21 @@ class ContratosController extends Controller
         return view('modulos',compact('modulos','temas'));
     }
 
-    public function filtrarContratos($tipo,$empresa){
-        if($tipo!='' || $empresa!=''){
-            echo 'OK';
+    public function filtrarContratos(Request $request){
+        if($request->tipoContrato_!='' || $request->empresaContrato_!=null){
+
+            $contratos = Contratos::tipo($request->tipoContrato_)
+                ->empresa($request->empresaContrato_)
+                ->join('empresa', 'contrato.id_empresa', 'empresa.id')
+                ->select('empresa.nombre', 'contrato.id', 'contrato.tipo', 'contrato.totalhoras')
+                ->get();
+
+            $empresas=Empresa::all();
+
+            $modulos = Modulo_contrato::join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
+                ->get();
+
+            return view('contratos', compact('contratos', 'modulos','empresas'));
         }
     }
 }

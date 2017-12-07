@@ -191,6 +191,22 @@ function editar(id){
 
 
 
+$('#filtroContratos').click(function () {
+
+    var tipo=$('#tipoContrato_').val();
+    var empresa=$('#empresaContrato_').val();
+
+    if(tipo!='' || empresa!=null){
+        $( "#filtrosContratos" ).submit();
+    }
+
+});
+
+$('#filtroContratosLimpiar').click(function () {
+    location.href='/contratos';
+});
+
+
 
  
 
