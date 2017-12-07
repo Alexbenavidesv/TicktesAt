@@ -8,8 +8,32 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 
 	<div class="row text-center">
-		<h1>Listado de contratos</h1>
+		<h1 style="margin-top: -1.2%;">Listado de contratos</h1> <BR>
 		<div class="col col-md-2">
+
+
+			<label class="label label-primary" style="font-weight: bold; font-size: 1.1em;">FILTROS</label>
+			<br><br>
+			<form action="/filtrarc" method="get" id="filtrosContratos">
+				<label for="">Tipo</label>
+				<select name="tipoContrato_" id="tipoContrato_" class="form-control">
+					<option value="">Seleccione...</option>
+					<option value="MONTAJE">MONTAJE</option>
+					<option value="CAPACITACIÓN">CAPACITACIÓN</option>
+				</select>
+				<br>
+				<label for="">Empresa</label>
+				<select name="empresaContrato_[]"  id="empresaContrato_" class="form-control empresaSelect empresaSelect1" style="width: 100%">
+					<option value="">Seleccione ...</option>
+					@foreach($empresas as $empresa)
+						<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+					@endforeach
+				</select>
+				<br><br>
+				<button type="button" class="btn btn-success btn-sm" style="width: 100%;" id="filtroContratos"><i class="fa fa-search"></i> Buscar</button>
+				<br><br>
+				<button type="button" class="btn btn-warning btn-sm" style="width: 100%;" id="filtroContratosLimpiar"><i class="fa fa-list"></i> Ver todo</button>
+			</form>
 
 		</div>
 

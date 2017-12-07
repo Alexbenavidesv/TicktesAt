@@ -77,7 +77,7 @@ Route::get('/modulos','ContratosController@modulos')->middleware('auth','sesion'
 Route::post('/guardar_modulo','ContratosController@guardar_modulo')->middleware('auth','sesion','rootconsultor');
 Route::get('/descargar_manual/{file}','ContratosController@descargar')->middleware('auth','sesion','rootconsultor');
 Route::get('/filtrarm/{nombre}','ContratosController@filtrarModulos')->middleware('auth','sesion','rootconsultor');
-Route::get('/filtrarc/{tipo}/{empresa}','ContratosController@filtrarContratos')->middleware('auth','sesion','rootconsultor');
+Route::get('/filtrarc/','ContratosController@filtrarContratos')->middleware('auth','sesion','rootconsultor');
 
 Route::post('/guardarContrato', 'ContratosController@guardarContrato');
 Route::post('/editarHoras', 'ContratosController@editarHoras');
