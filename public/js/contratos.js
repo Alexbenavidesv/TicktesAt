@@ -36,7 +36,6 @@ $('.clase2').change(function(event) {
         function(index, value) {
           if ( $.isNumeric( $(this).val() ) ){
             horas_total = horas_total + eval($(this).val());
-          //console.log(importe_total);
         }
        } 
       );
@@ -58,8 +57,6 @@ $('#guardarContrato').click(function(event) {
     var empresa = $('#empresa').val();
     var filas = $('#fila tr').length;
     var validador='';
-    //alert(filas);
-    //event.preventDefault();
     if (empresa==null) {
         $('#errorempresacon').html('Debe escoger una empresa');
         //event.preventDefault();
@@ -104,8 +101,6 @@ $('#guardarContrato').click(function(event) {
                 var url = window.location.href;
                 swal({
                     title: "Contrado guardado con exito",
-                    // text: "You will not be able to recover this imaginary file!",
-                    //timer: 3000,
                     type: "success",
                     confirmButtonText: "Ok",
                     closeOnConfirm: false
@@ -113,14 +108,12 @@ $('#guardarContrato').click(function(event) {
                   function(isConfirm){
                     if (isConfirm) {
                       location.reload();
-                      //window.location.href = "consultartickets";
                     }
                   });
                   $(location).attr('href', url);
             }else {
                 swal({
                   title: "La empresa tiene un contrato activo actualmente",
-                  // text: "u will not be able to recover this imaginary file!",
                   type: "error",
                   confirmButtonText: "Ok",
                   closeOnConfirm: true
@@ -144,49 +137,49 @@ function Ocultar(id){
     $('#ocultarcontrato'+id).css('display', 'none');
     $('#vercontrato'+id).css('display', '');
     $('#contenidocontrato'+id).css('display', 'none');
-    //alert(id);
 }
 
 function editar(id){
-    var token = $('input[name="_token"]').val();
+
+
+
+
+   var token = $('input[name="_token"]').val();
     var data = new FormData($('#editadohoras'+id)[0]);
 
-    $.ajax({
-        url: '/editarHoras',
-        type: 'POST',
-        headers: {'X-CSRF-TOKEN':token},
-        data: data,
-        contentType: false,
-        processData: false,
-        success: function(res){
-        if (res=='ok') {
-            var url = window.location.href;
-            swal({
-                title: "Horas editadas con exito",
-                // text: "You will not be able to recover this imaginary file!",
-                //timer: 3000,
-                type: "success",
-                confirmButtonText: "Ok",
-                closeOnConfirm: false
-              },
-              function(isConfirm){
-                if (isConfirm) {
-                  location.reload();
-                  //window.location.href = "consultartickets";
-                }
-              });
-              $(location).attr('href', url);
-        }else {
-            swal({
-              title: "Error al editar las horas",
-              // text: "u will not be able to recover this imaginary file!",
-              type: "error",
-              confirmButtonText: "Ok",
-              closeOnConfirm: true
-            });
-          }
-        }
-    });
+        $.ajax({
+            url: '/editarHoras',
+            type: 'POST',
+            headers: {'X-CSRF-TOKEN':token},
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function(res){
+               // console.log(res);
+            if (res=='ok') {
+                var url = window.location.href;
+                swal({
+                    title: "Horas editadas con exito",
+                    type: "success",
+                    confirmButtonText: "Ok",
+                    closeOnConfirm: false
+                  },
+                  function(isConfirm){
+                    if (isConfirm) {
+                      location.reload();
+                    }
+                  });
+                  $(location).attr('href', url);
+            }else {
+                swal({
+                  title: "Error al editar las horas",
+                  type: "error",
+                  confirmButtonText: "Ok",
+                  closeOnConfirm: true
+                });
+              }
+            }
+        });
 }
 
 
@@ -207,18 +200,63 @@ $('#filtroContratosLimpiar').click(function () {
 });
 
 
-$('#agregarModuloContrato').click(function () {
+
+function agregarModuloContrato(id) {
+    $('#nmodulo'+id).css('display','none');
+    $('#cnmodulo'+id).css('display','inline');
+    $('#modulosExtra'+id).addClass('alert alert-info');
+
+    var idcontrato=$('#idcontrato'+id).val();
 
     $.ajax({
-       url: '/modulos_contrato',
-       type: 'GET',
+        url: '/modulos_contrato',
+        data:{id_contrato:idcontrato} ,
+        type: 'GET',
         success: function (res) {
-            alert(res);
+             var cont=res.length;
+             var html='<div class="row text-center" style="font-weight: bold; color: black;">' +
+                 '<div class="col-md-4">' +
+                 'Módulo'+
+                 '</div>' +
+                 '<div class="col-md-4">' +
+                 'Horas'+
+                 '</div>' +
+                 '<div class="col-md-4">' +
+                 'Tipo pago'+
+                 '</div>' +
+                 '</div>  ';
+             for(var i=0;i<cont;i++){
+                 html+='<div class="row">' +
+                     '<div class="col-md-4">' +
+                     '<input type="hidden" class="form-control" name="idNuevosModulos[]" value="'+ res[i].id +'">' +
+                     '<input type="text" class="form-control"  value="'+ res[i].nombre +'" readonly>' +
+                     '</div>' +
+                     '<div class="col-md-4">' +
+                     '<input type="number" name="horasNuevosModulos[]" value="0" min="1" class="form-control">' +
+                     '</div>' +
+                     '<div class="col-md-4">' +
+                     '<select name="nuevoTipoPago[]" class="form-control" id="">'+
+                     '<option value="1">PAGADO</option>'+
+                     '<option value="2">POR PAGAR</option>'+
+                     '<option value="3">CORTESIA</option>'+
+                     '</select>' +
+                     '</div>' +
+                     '</div>';
+             }
+            $('#modulosExtra'+id).html(html);
         }
 
     });
+}
 
-});
+
+
+function cancelarAgregarModulos(id) {
+    $('#cnmodulo'+id).css('display','none');
+    $('#nmodulo'+id).css('display','inline');
+    $('#modulosExtra'+id).removeClass('alert alert-info');
+    $('#modulosExtra'+id).html('');
+}
 
 
  
