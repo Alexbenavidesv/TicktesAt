@@ -215,4 +215,10 @@ class ContratosController extends Controller
             return view('contratos', compact('contratos', 'modulos','empresas'));
         }
     }
+
+
+    public function modulos_contrato(){
+        return "OK";
+    }
+
 }

@@ -207,6 +207,19 @@ $('#filtroContratosLimpiar').click(function () {
 });
 
 
+$('#agregarModuloContrato').click(function () {
+
+    $.ajax({
+       url: '/modulos_contrato',
+       type: 'GET',
+        success: function (res) {
+            alert(res);
+        }
+
+    });
+
+});
+
 
  
 

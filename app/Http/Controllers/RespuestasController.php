@@ -123,7 +123,7 @@ class RespuestasController extends Controller
 
         if ($request->asignarConsultor==1) {
 
-            $ticket->prioridad = NULL;
+            $ticket->prioridad = $request->prioridadTicket_;
             $ticket->id_consultor = $request->consultorNuevo_;
             $ticket->tipo = 'Sin asignar';
         }

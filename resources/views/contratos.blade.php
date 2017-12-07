@@ -91,11 +91,15 @@
 				      		</div>
 				      		@endif
 							@endforeach
+							<div style="text-align: left">
+								<button type="button" id="agregarModuloContrato" class="btn btn-warning btn-sm" style="width: 25%;"><i class="fa fa-plus"></i> Agregar Modulo</button>
+							</div>
+
 				      	</form>
 				      </div>
 				      <div class="modal-footer">
-				      	<button type="button" class="btn btn-success" data-dismiss="modal" onclick="editar({{$con->id}})">Guardar</button>
-				        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				      	<button type="button" class="btn btn-success btn-sm" data-dismiss="modal" onclick="editar({{$con->id}})">Guardar</button>
+				        <button type="button" class="btn btn-danger btn-sm"  data-dismiss="modal">Cerrar</button>
 				      </div>
 				    </div>
 
