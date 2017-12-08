@@ -30,7 +30,7 @@
 			  		<td>{{$cap->lugar}}</td>
 			  		<td>{{date_format(date_create($cap->fechainicio), 'Y-m-d g:i A')}}</td>
 			  		<td>{{date_format(date_create($cap->fechafin), 'Y-m-d g:i A')}}</td>
-			  		<td>{{$cap->duracion}}</td>
+			  		<td>{{$cap->duracion}} horas</td>
 			  		<td>{{$cap->empresa}}</td>
 			  		<td>{{$cap->consultor}}</td>
 			  		<td>{{$cap->modulo}}</td>
