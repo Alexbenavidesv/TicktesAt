@@ -188,8 +188,6 @@ function Calcular(){
 
     var diferencia = fecha2.diff(fecha1, "hours");
 
-    console.log(diferencia);
-
     $('#oculto').val(diferencia);
 }
 
