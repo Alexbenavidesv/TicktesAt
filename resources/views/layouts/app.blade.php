@@ -21,6 +21,7 @@
     <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/style3.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.css">
     <link href="/css/select2.min.css" rel="stylesheet" />
@@ -251,14 +252,16 @@
         });
 
 
-
-
         $('.buscarFecha').datepicker( {
             format: "mm-yyyy",
             viewMode: "months",
             minViewMode: "months",
             language: "es",
+        });
 
+        $('#fechainicio').datepicker({
+            format: "yyyy-mm-dd",
+            locale: "es"
         });
 
         $('.input-daterange').datepicker({
@@ -271,6 +274,7 @@
 <script>window.jQuery || document.write('<script src="{{ asset("js/jquery2.0.3.min.js")}}"><\/script>')</script>
 <!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.js"></script>
+<script src="{{ asset('js/Moment.js') }}"></script>
 <script src="{{ asset('js/usuarios.js') }}"></script>
 <script src="{{ asset('js/ticket.js') }}"></script>
 <script src="{{ asset('js/empresa.js') }}"></script>
@@ -287,6 +291,15 @@
 <script src="{{ asset('js/solicitar.js') }}"></script>
 <script src="{{ asset('js/modulos.js') }}"></script>
 <script src="{{ asset('js/contratos.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#datetimepicker3').datetimepicker({
+            format: 'LT'
+        });    
+    });
+</script>
 </body>
 </html>
 

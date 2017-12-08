@@ -2,17 +2,21 @@ $('#btnvisita').click(function(event) {
 	var fechayhora =  $('#fechayhoravis').val();
 	var lugarvis  = $('#lugarvis').val();
 	var nombrepar = $('#nombrepar').val();
-	var displaymotivo = $('#motivovis').css("display");
-	var displayrecoleccion = $('#recoleccionvis').css("display");
-	var displaytelefono = $('#clientefuttel').css("display");
-	var motivovis = $('#motivovistext').val();
 	var recoleccionvis = $('#recoleccionvistext').val();
 	var prospectcliente = $('#futurocliente').val();
 	var prospecttelcliente = $('#telfuturocliente').val();
 	var nomclientenuevo = $('#nomclientenuevo').val();
 	var nitclientenuevo = $('#nitclientenuevo').val();
 	var estadovisita = $('#estadovis').val();
-	var noexiste = $('#noexiste').val();
+	var empresavis = $('#empresavis').val();
+	var fechainicio = $('#fechainicio').val();
+	var horainicio = $('#horainicio').val();
+	var horafin = $('#horafin').val();
+	var oculto = $('#oculto').val();
+	var disponibles = $('#disponible').val();
+	var viscliente = $('#viscliente').val();
+	var iniciosoporte = $('#iniciosoporte').val();
+	var finsoporte = $('#finsoporte').val();
 	
 
 	var tipovisita = $('#tipovis').val();
@@ -28,18 +32,25 @@ $('#btnvisita').click(function(event) {
 			}
 		}
 
+		if (viscliente=='') {
+			$('#errorclientenvis').html('Debe ingresar el nombre del prospecto visitado');
+			event.preventDefault();
+		}else {
+			$('#errorclientenvis').html('');
+		}
+
 		if (lugarvis=='') {
 			$('#errorlugarvis').html('Debe ingresar el lugar de la visita');
 			event.preventDefault();
 		}else {
 			$('#errorlugarvis').html('');
 		}
-
+		//alert(motivovis);
 		if (motivovis=='') {
 			$('#errormotivovis').html('Debe ingresar el motivo de la visita');
 			event.preventDefault();
 		}else {
-			$('#motivovis').html('');
+			$('#errormotivovis').html('');
 		}
 
 		if (recoleccionvis=='') {
@@ -49,21 +60,7 @@ $('#btnvisita').click(function(event) {
 			$('#errorrecoleccionvis').html('');
 		}
 
-		if (noexiste==1) {
-			if (nomclientenuevo=='') {
-				$('#errcliennow').html('Debe ingresar el nombre del nuevo cliente');
-				event.preventDefault();
-			}else {
-				$('#errcliennow').html('');
-			}
 
-			if (nitclientenuevo=='') {
-				$('#errcliennownit').html('Debe ingresar el nit del nuevo cliente');
-				event.preventDefault();
-			}else {
-				$('#errcliennownit').html('');
-			}
-		}
 
 		if (prospecttelcliente=='') {
 			$('#errortelclientenvis').html('Debe ingresar el telefono del cliente visitado');
@@ -95,7 +92,7 @@ $('#btnvisita').click(function(event) {
 			$('#errormotivovis').html('Debe ingresar el motivo de la visita');
 			event.preventDefault();
 		}else {
-			$('#motivovis').html('');
+			$('#errormotivovis').html('');
 		}
 
 		if (recoleccionvis=='') {
@@ -105,20 +102,11 @@ $('#btnvisita').click(function(event) {
 			$('#errorrecoleccionvis').html('');
 		}
 
-		if (noexiste==1) {
-			if (nomclientenuevo=='') {
-				$('#errcliennow').html('Debe ingresar el nombre del nuevo cliente');
-				event.preventDefault();
-			}else {
-				$('#errcliennow').html('');
-			}
-
-			if (nitclientenuevo=='') {
-				$('#errcliennownit').html('Debe ingresar el nit del nuevo cliente');
-				event.preventDefault();
-			}else {
-				$('#errcliennownit').html('');
-			}
+		if (viscliente=='') {
+			$('#errorclientenvis').html('Debe ingresar el nombre del prospecto visitado');
+			event.preventDefault();
+		}else {
+			$('#errorclientenvis').html('');
 		}
 
 		if (prospecttelcliente=='') {
@@ -129,14 +117,28 @@ $('#btnvisita').click(function(event) {
 		}
 	}
 
+
+
 	if (tipovisita=='Soporte') {
-		if (estadovisita=='Programada') {
-			if (fechayhora=='') {
-				$('#errorfechavis').html('Ingrese hora y fecha de programación de la visita');
-				event.preventDefault();
-			}else {
-				$('#errorfechavis').html('');
-			}
+		if (empresavis=='') {
+			$('#errorempresavis').html('Debe seleccionar una empresa');
+			event.preventDefault();
+		}else {
+			$('#errorempresavis').html('');
+		}
+
+		if (iniciosoporte=='') {
+			$('#errorsoporte1').html('Debe seleccionar la hora y fecha de inicio del soporte');
+			event.preventDefault();
+		}else {
+			$('#errorsoporte1').html('');
+		}
+
+		if (finsoporte=='') {
+			$('#errorsoporte').html('Debe seleccionar la hora y fecha de finalización del soporte');
+			event.preventDefault();
+		}else {
+			$('#errorsoporte').html('');
 		}
 
 		if (lugarvis=='') {
@@ -151,7 +153,7 @@ $('#btnvisita').click(function(event) {
 			$('#errormotivovis').html('Debe ingresar el motivo de la visita');
 			event.preventDefault();
 		}else {
-			$('#motivovis').html('');
+			$('#errormotivovis').html('');
 		}
 
 		if (recoleccionvis=='') {
@@ -163,14 +165,38 @@ $('#btnvisita').click(function(event) {
 
 	}
 
+
+
+
+
 	if (tipovisita=='Capacitación') {
-		if (estadovisita=='Programada') {
-			if (fechayhora=='') {
-				$('#errorfechavis').html('Ingrese hora y fecha de programación de la visita');
-				event.preventDefault();
-			}else {
-				$('#errorfechavis').html('');
-			}
+
+		if (disponibles<oculto) {
+			$('#errorhoras2').html('las horas ingresadas deben ser menor o igual a las disponibles');
+			event.preventDefault();
+		}else {
+			$('#errorhoras2').html('');
+		}
+
+		if (horainicio=='') {
+			$('#errorhoras').html('Debe ingresar las fechas de inicio y fin');
+			event.preventDefault();
+		}else {
+			$('#errorhoras').html('');
+		}
+
+		if (horafin=='') {
+			$('#errorhoras').html('Debe ingresar las fechas de inicio y fin');
+			event.preventDefault();
+		}else {
+			$('#errorhoras').html('');
+		}
+
+		if (empresavis=='') {
+			$('#errorempresavis').html('Debe seleccionar una empresa');
+			event.preventDefault();
+		}else {
+			$('#errorempresavis').html('');
 		}
 
 		if (lugarvis=='') {

@@ -10,7 +10,9 @@ use App\Visita;
 use App\Visitado;
 use App\Evidencia;
 use App\Contratos;
+use App\Modulo_contrato;
 use DB;
+use Carbon\Carbon;
 
 class VisitasController extends Controller
 {
@@ -26,116 +28,204 @@ class VisitasController extends Controller
 	}
 
 	public function guardarVisita(Request $request){
-		if($request->isMethod('post')) {
-            Validator::make($request->all(), [
-                'fechayhoravis' => 'required',
-                'lugarvis' => 'required|string',
-            ], [
-                'fechayhoravis.required' => 'Debes ingresar la fecha y hora de la visita',
-                'lugarvis.required' => 'Debes ingresar el lugar de la visita',
-                'lugarvis.string' => 'El lugar de la visita debe ser alfanumerico',
+        //dd($request->motivovistext);
 
-            ])->validate();
+        DB::beginTransaction();
 
-            DB::beginTransaction();
+        try {
+           //INSERCION A LA TABLA VISITAS
+            $visita = new Visita();
 
-            try {
-               /* //INSERCION A LA TABLA VISITAS
-                $visita = new Visita();
+            if ($request->tipovis=='Capacitación') {
+                $visita->tipo = $request->tipovis;
+                $visita->lugar = $request->lugarvis;
+                $visita->id_empresa = $request->empresavis;
+                $visita->fecha = $request->fechainicio;
+                $visita->id_modulo = $request->modulovis;
+                $visita->id_consultor = Auth::user()->id;
+                $visita->fechainicio = $request->horainicio;
+                $visita->fechafin = $request->horafin;
+                $visita->duracion = $request->oculto;
 
-                if ($request->tipovis=='Presentación') {
-                    $visita->tipo =  $request->tipovis;
-                    $visita->lugar = $request->lugarvis;
+                $visita->save();
 
-                    if ($request->estadovis=='Programada') {
-                        $visita->fecha = $request->fechayhoravis;
-                    }
+                $idmodulo = $request->modulovis;
+                $idempresa = $request->empresavis;
+                //dd($request->oculto);
+                $horas = $request->oculto;
 
-                    $visita->motivovisita = $request->motivovistext;
-                    $visita->recoleccion = $request->recoleccionvistext;
+                $consulta = Empresa::where('empresa.id', $idempresa)
+                ->join('contrato', 'empresa.id', 'contrato.id_empresa')
+                ->join('modulo_contrato', 'contrato.id', 'modulo_contrato.id_contrato')
+                ->where('modulo_contrato.id_modulo', $idmodulo)
+                ->join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
+                ->select('modulo_contrato.id AS idmodcon', 'contrato.id AS idcontrato', 'contrato.totalhoras', 'modulo_contrato.horas')
+                ->get();
 
-                    $visita->id_consultor = Auth::user()->id;
-                    $visita->save();
-                }
-                
+                $contrato = Contratos::findOrFail($consulta[0]->idcontrato);
+                $modulo_contrato = Modulo_contrato::findOrFail($consulta[0]->idmodcon);
+
+                //dd($horas);
+
+                $contrato->totalhoras = $consulta[0]->totalhoras - $horas;
+                $contrato->save();
+
+                $modulo_contrato->horas = $consulta[0]->horas - $horas;
+                $modulo_contrato->save();
+
+
                 //INSERCION A LA TABLA VISITADOS
-
-                //$visitado = new Visitado();
+                $visitado = new Visitado();
                 $id_visita = Visita::max('id');
 
-                //$item_id = Input::get('item_id');
-                //$user_id = Input::get('user_id');
                 $nombre = Input::get('nombrepar');
-                $identificacion = Input::get('cedulapar');
                 $cargo = Input::get('cargopar');
                 $telefono = Input::get('telefonopar');
-                $correo = Input::get('correopar');
-                $observacion = Input::get('observacionpar');
 
                 if ($nombre[0]!='' || $nombre[0]!=null) {
                     foreach($nombre as $key => $n ) {   
                         //dd($cargo[$key]);
                         $arrData = array( 
                             "nombre" => $nombre[$key],
-                            "identificacion" => $identificacion[$key], 
                             "cargo" => $cargo[$key], 
                             "telefono" => $telefono[$key], 
-                            "correo" => $correo[$key],
-                            "observacion" => $observacion[$key],
                             "id_visita" =>   $id_visita                
                         );
                         $visitado = new Visitado($arrData);
                         $visitado->save();
                     } 
-                }*/
-                
-                DB::commit();
-            } catch (Exception $e) {
-                DB::rollback();
+                }
             }
 
-            /*$id_visita2 = Visita::max('id');
-
-            $visitapdf = Visita::where('visitas.id', $id_visita2)
-            ->join('empresa', 'visitas.id_empresa', 'empresa.id')
-            ->join('consultores', 'visitas.id_consultor', 'consultores.id')
-            ->select('empresa.nombre AS empresa', 'consultores.nombre AS consultor', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha')
-            ->get();
 
 
-            $visitados = Visitado::where('visitados.id_visita', $id_visita2)->get();
-            //dd($visitados);
+            if ($request->tipovis=='Presentación') {
+                //dd($request->motivovistext);
+                $fechahora = Carbon::parse($request->fechayhoravis);
+                //dd($fechahora);
+                $visita->tipo = $request->tipovis;
+                $visita->lugar = $request->lugarvis;
+                $visita->fecha = $fechahora;
+                $visita->estado = 1;
+                $visita->motivovisita = $request->motivovistext;
+                $visita->recoleccion = $request->recoleccionvistext;
+                $visita->cliente = $request->viscliente;
+                $visita->telefono = $request->telfuturocliente;
+                $visita->satisfaccion = $request->satisfaccion;
+                $visita->id_consultor = Auth::user()->id;
 
-             $pdf = \App::make('dompdf.wrapper');
-             $pdf->loadView('pdfVisita', compact('visitapdf', 'visitados'));
-             return $pdf->stream();*/
+                $visita->save();
+            }
 
-             return back()->withInput();
+
+
+            if ($request->tipovis=='Consultoría') {
+                $fechahora = Carbon::parse($request->fechayhoravis);
+                //dd($request->tipovis);
+                $visita->tipo = $request->tipovis;
+                $visita->lugar = $request->lugarvis;
+                $visita->fecha = $fechahora;
+                $visita->estado = 1;
+                $visita->motivovisita = $request->motivovistext;
+                $visita->recoleccion = $request->recoleccionvistext;
+                $visita->cliente = $request->viscliente;
+                $visita->telefono = $request->telfuturocliente;
+                $visita->satisfaccion = $request->satisfaccion;
+                $visita->id_consultor = Auth::user()->id;
+
+                $visita->save();
+            }
+
+
+
+
+            if ($request->tipovis=='Soporte') {
+                $horainicio = $request->iniciosoporte;
+                $horafin = $request->finsoporte;
+
+                $horai = Carbon::parse($horainicio);
+                $horaf = Carbon::parse($horafin);
+
+                $diferencia = $horai->diffInHours($horaf);
+
+                $visita->id_empresa = $request->empresavis;
+                $visita->tipo = $request->tipovis;
+                $visita->fechainicio = $horai;
+                $visita->fechafin = $horaf;
+                $visita->duracion = $diferencia;
+                $visita->lugar = $request->lugarvis;
+                $visita->motivovisita = $request->motivovistext;
+                $visita->recoleccion = $request->recoleccionvistext;
+                $visita->id_consultor = Auth::user()->id;
+
+                $visita->save();
+            }
+
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
         }
+
+        /*$id_visita2 = Visita::max('id');
+
+        $visitapdf = Visita::where('visitas.id', $id_visita2)
+        ->join('empresa', 'visitas.id_empresa', 'empresa.id')
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->select('empresa.nombre AS empresa', 'consultores.nombre AS consultor', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha')
+        ->get();
+
+
+        $visitados = Visitado::where('visitados.id_visita', $id_visita2)->get();
+        //dd($visitados);
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadView('pdfVisita', compact('visitapdf', 'visitados'));
+        return $pdf->stream();*/
+
+        return back()->withInput();
 	}
 
 
 
     public function listado(){
-        $visitas = Visita::join('consultores', 'visitas.id_consultor', 'consultores.id')
-        ->where('consultores.id', Auth::user()->id)
-        //->join('empresa', 'visitas.id_empresa', 'empresa.id')
-        //->where('visitas.id_empresa', '!=', null)
-        ->select('consultores.nombre AS consultor', 'visitas.id', 'visitas.tipo', 'visitas.fecha', 'visitas.motivovisita AS motivo', 'visitas.recoleccion', 'visitas.cliente', 'visitas.estado')
-        ->orderBy('id', 'desc')
-        ->get();
-
-        $visitas2 = Visita::join('consultores', 'visitas.id_consultor', 'consultores.id')
-        ->where('consultores.id', Auth::user()->id)
+        $tipo1='Capacitación';
+        $tipo2='Consultoría';
+        $tipo3='Presentación';
+        $tipo4='Soporte';
+        
+        $capacitacion = Visita::where('visitas.tipo', $tipo1)
         ->join('empresa', 'visitas.id_empresa', 'empresa.id')
-        ->where('visitas.id_empresa', '!=', null)
-        ->select('empresa.nombre AS empresa')
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->where('consultores.id', Auth::user()->id)
+        ->join('modulos', 'visitas.id_modulo', 'modulos.id')
+        ->select('visitas.id', 'visitas.lugar', 'visitas.fecha', 'empresa.nombre AS empresa', 'consultores.nombre AS consultor', 'modulos.nombre AS modulo', 'visitas.fechainicio', 'visitas.fechafin', 'visitas.duracion')
         ->get();
 
-        return view('listadovisitas', compact('visitas', 'visitas2'));
+        $consultoria = Visita::where('visitas.tipo', $tipo2)
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->where('consultores.id', Auth::user()->id)
+        ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha', 'visitas.motivovisita', 'visitas.recoleccion', 'visitas.cliente', 'visitas.telefono', 'visitas.satisfaccion', 'consultores.nombre AS consultor', 'visitas.estado')
+        ->get();
+
+        $presentacion = Visita::where('visitas.tipo', $tipo3)
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->where('consultores.id', Auth::user()->id)
+        ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha', 'visitas.motivovisita', 'visitas.recoleccion', 'visitas.cliente', 'visitas.telefono', 'visitas.satisfaccion', 'consultores.nombre AS consultor', 'visitas.estado')
+        ->get();
+
+        $soporte = Visita::where('visitas.tipo', $tipo4)
+        ->join('empresa', 'visitas.id_empresa', 'empresa.id')
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->where('consultores.id', Auth::user()->id)
+        ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fechainicio', 'visitas.fechafin', 'visitas.duracion', 'visitas.motivovisita', 'visitas.recoleccion','empresa.nombre AS empresa', 'consultores.nombre AS consultor')
+        ->get();
+
+        return view('listadovisitas', compact('capacitacion', 'consultoria', 'presentacion', 'soporte'));
     }
 
     public function verPdf($id){
+        //dd($id);
         $visita = Visita::where('visitas.id', $id)
         ->select('visitas.id', 'visitas.tipo')
         ->get();
@@ -154,14 +244,27 @@ class VisitasController extends Controller
             ->get();
 
             $visitados = '';
+
         }else if ($tipo=='Capacitación') {
             $visitapdf = Visita::where('visitas.id', $id)
             ->join('empresa', 'visitas.id_empresa', 'empresa.id')
             ->join('consultores', 'visitas.id_consultor', 'consultores.id')
-            ->select('empresa.nombre AS empresa', 'consultores.nombre AS consultor', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha')
+            ->join('modulos', 'visitas.id_modulo', 'modulos.id')
+            ->select('empresa.nombre AS empresa', 'consultores.nombre AS consultor', 'visitas.tipo', 'visitas.lugar', 'visitas.fechainicio', 'visitas.fechafin', 'visitas.duracion', 'modulos.nombre AS modulo')
             ->get();
 
             $visitados = Visitado::where('visitados.id_visita', $id)->get();
+
+        }else if ($tipo=='Soporte') {
+            $visitapdf = Visita::where('visitas.id', $id)
+            ->join('empresa', 'visitas.id_empresa', 'empresa.id')
+            ->join('consultores', 'visitas.id_consultor', 'consultores.id')            
+            ->select('empresa.nombre AS empresa', 'consultores.nombre AS consultor', 'visitas.tipo', 'visitas.lugar', 'visitas.fechainicio', 'visitas.fechafin', 'visitas.duracion', 'visitas.motivovisita AS motivo', 'visitas.recoleccion')
+            ->get();
+
+            //dd($visitapdf);
+
+            $visitados = '';
         }
 
 		
@@ -170,11 +273,14 @@ class VisitasController extends Controller
         return $pdf->stream();
     }
 
+
+
+
     public function evidencia($id){
         $evidencia = Visita::where('visitas.id', $id)
         ->join('evidencia', 'visitas.id', 'evidencia.id_visita')
         ->join('users', 'evidencia.id_user', 'users.id')
-        ->select('visitas.id', 'evidencia.fecha', 'evidencia.id_user AS usuario', 'evidencia.imagen', 'users.name')
+        ->select('visitas.id', 'evidencia.fecha', 'evidencia.id_user AS usuario', 'evidencia.imagen', 'users.name', 'evidencia.respvisible', 'evidencia.respnovisible', 'evidencia.id AS idevidencia')
         ->get();
 
         $visita = Visita::where('visitas.id', $id)->get();
@@ -182,6 +288,10 @@ class VisitasController extends Controller
 
         return view('evidenciaVisita', compact('evidencia', 'visita'));
     }
+
+
+
+
 
     public function guardarEvidencia(Request $request){
         if($request->isMethod('post')) {
@@ -196,6 +306,8 @@ class VisitasController extends Controller
 
             date_default_timezone_set('America/Bogota');
             $fecha = date("Y/m/d H:i:s");
+
+            $evidencia->respvisible = $request->comentariov;
 
             if ($request->evidenciavis) {
                 $img = $request->file('evidenciavis');
@@ -226,18 +338,37 @@ class VisitasController extends Controller
     }
 
     public function listGeneral(){
-        $visitas = Visita::join('consultores', 'visitas.id_consultor', 'consultores.id')
-        ->select('consultores.nombre AS consultor', 'visitas.id', 'visitas.tipo', 'visitas.fecha', 'visitas.motivovisita AS motivo', 'visitas.recoleccion', 'visitas.cliente', 'visitas.estado')
-        ->orderBy('id', 'desc')
-        ->get();
-
-        $visitas2 = Visita::join('consultores', 'visitas.id_consultor', 'consultores.id')
+        $tipo1='Capacitación';
+        $tipo2='Consultoría';
+        $tipo3='Presentación';
+        $tipo4='Soporte';
+        
+        $capacitacion = Visita::where('visitas.tipo', $tipo1)
         ->join('empresa', 'visitas.id_empresa', 'empresa.id')
-        ->where('visitas.id_empresa', '!=', null)
-        ->select('empresa.nombre AS empresa')
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->join('modulos', 'visitas.id_modulo', 'modulos.id')
+        ->select('visitas.id', 'visitas.lugar', 'visitas.fecha', 'empresa.nombre AS empresa', 'consultores.nombre AS consultor', 'modulos.nombre AS modulo', 'visitas.fechainicio', 'visitas.fechafin', 'visitas.duracion')
         ->get();
 
-        return view('visitasGral', compact('visitas', 'visitas2'));
+        $consultoria = Visita::where('visitas.tipo', $tipo2)
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha', 'visitas.motivovisita', 'visitas.recoleccion', 'visitas.cliente', 'visitas.telefono', 'visitas.satisfaccion', 'consultores.nombre AS consultor', 'visitas.estado')
+        ->get();
+
+        $presentacion = Visita::where('visitas.tipo', $tipo3)
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha', 'visitas.motivovisita', 'visitas.recoleccion', 'visitas.cliente', 'visitas.telefono', 'visitas.satisfaccion', 'consultores.nombre AS consultor', 'visitas.estado')
+        ->get();
+
+        $soporte = Visita::where('visitas.tipo', $tipo4)
+        ->join('empresa', 'visitas.id_empresa', 'empresa.id')
+        ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+        ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fechainicio', 'visitas.fechafin', 'visitas.duracion', 'visitas.motivovisita', 'visitas.recoleccion','empresa.nombre AS empresa', 'consultores.nombre AS consultor')
+        ->get();
+
+        //dd($soporte[0]->fechainicio);
+
+        return view('visitasGral', compact('capacitacion', 'consultoria', 'presentacion', 'soporte'));
     }
 
 
@@ -245,10 +376,34 @@ class VisitasController extends Controller
         $modulos = Empresa::where('empresa.id', $id)
         ->join('contrato', 'empresa.id', 'contrato.id_empresa')
         ->join('modulo_contrato', 'contrato.id', 'modulo_contrato.id_contrato')
+        ->where('modulo_contrato.horas', '>', 0)
         ->join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
         ->select('modulos.id', 'modulos.nombre')
         ->get();
 
         return $modulos;
+    }
+
+    public function horasModulos(Request $request){
+        $modulos = Empresa::where('empresa.id', $request->idempresa)
+        ->join('contrato', 'empresa.id', 'contrato.id_empresa')
+        ->join('modulo_contrato', 'contrato.id', 'modulo_contrato.id_contrato')
+        ->join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
+        ->where('modulos.id', $request->idmodulo)
+        ->select('modulo_contrato.horas')
+        ->get();
+
+        return $modulos[0]->horas;
+    }
+
+
+    public function finalizar(Request $request){
+        $visita = Visita::findOrFail($request->ocultoid);
+
+        $visita->estado = 2;
+
+        $visita->save();
+
+        return 'ok';
     }
 }

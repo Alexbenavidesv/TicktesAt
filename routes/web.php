@@ -71,6 +71,9 @@ Route::get('descargar/{parametro}', 'VisitasController@descargar')->middleware('
 Route::get('listarvisitasgrl', 'VisitasController@listGeneral')->middleware('auth','sesion', 'root');
 
 Route::get('llamrModulos/{id}', 'VisitasController@modulos');
+Route::get('llamarHorasModulo', 'VisitasController@horasModulos');
+
+Route::post('finalizarVisita', 'VisitasController@finalizar');
 
 
 //Rutas para contratos
