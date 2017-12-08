@@ -9,6 +9,6 @@ class Visita extends Model
     protected $table='visitas';
 
     protected $fillable=[
-        'tipo', 'lugar', 'fecha', 'id_empresas', 'motivovisita', 'recoleccion', 'cliente', 'telefono', 'satisfaccion', 'id_consultor'
+        'tipo', 'lugar', 'fecha', 'fechainicio', 'fechafin', 'duracion', 'id_empresa', 'motivovisita', 'recoleccion', 'cliente', 'telefono', 'satisfaccion', 'id_consultor', 'id_modulo', 'estado'
     ];
 }
