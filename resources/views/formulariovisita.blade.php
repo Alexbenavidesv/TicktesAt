@@ -50,6 +50,7 @@
 
         <div class="row">
           <div class="col-md-6">
+            <p id="errorcontrato" class="text-danger" style="font-size: 14px;"></p>
             <div class="form-group"  style="display: none" id="divcontratovis">
               <label for="tipovisita">Seleccione el Contrato</label>
               <select class="form-control" name="contratovis" id="contratovis">
@@ -57,6 +58,7 @@
             </div>       
           </div>
           <div class="col-md-6">
+            <p id="errormodulo" class="text-danger" style="font-size: 14px;"></p>
             <div class="form-group"  style="display: none" id="divmodulovis">
               <label for="tipovisita">Seleccione el Modulo</label>
               <select class="form-control" name="modulovis" id="modulovis">
