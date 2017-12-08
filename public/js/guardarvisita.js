@@ -170,7 +170,6 @@ $('#btnvisita').click(function(event) {
 
 
 	if (tipovisita=='Capacitación') {
-
 		if (disponibles<oculto) {
 			$('#errorhoras2').html('las horas ingresadas deben ser menor o igual a las disponibles');
 			event.preventDefault();

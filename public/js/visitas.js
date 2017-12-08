@@ -45,6 +45,7 @@ $(document).ready(function() {
              $('#otrodiv').css("display", "none");
              $('#divhorasing').css("display", "none");
              $('#visfechahora').css("display", "block");
+             $('#divcontratovis').css('display', 'none');
         }
 
         if (tipovis == 'Soporte') {
@@ -64,7 +65,7 @@ $(document).ready(function() {
             $('#otrodiv').css("display", "block");
             $('#divhorasing').css("display", "none");
             $('#visfechahora').css("display", "none");
-
+            $('#divcontratovis').css('display', 'none');
         }
 
         if (tipovis == 'Capacitación') {
@@ -76,8 +77,6 @@ $(document).ready(function() {
             $('#participantes').css("display", "block");
             $('#tabla').css("display", "block");
             $('#visempresa').css("display", "block");
-            $('#divmodulovis').css("display", "block");
-            $('#divhoras').css("display", "block");
             $('#divcualquiera').css("display", "none");
             $('#otrodiv').css("display", "none");
             $('#visfechahora').css("display", "none");
@@ -116,62 +115,71 @@ $('#enviarevidenciavis').click(function(event) {
 
 
 
-$(document).ready(function() {
-    $('#noexiste').change(function() {
-        if($(this).is(":checked")) {
-            $(this).attr("value", "1");
-            $('#nomclientenuevo').css("display", "block");
-            $('#nitclientenuevo').css("display", "block");
-            $('#visitado').css("display", "none");
-        }else {
-            $(this).attr("value", "0");
-            $('#nomclientenuevo').css("display", "none");
-            $('#nitclientenuevo').css("display", "none");
-            $('#visitado').css("display", "block");
-        }
-    });
-});
 
 
 $('#empresavis').change(function(event) {
     var empresa = $('#empresavis').val();
-    $('#modulovis').html('');
+    $('#contratovis').html('');
     $('#horasmodulo').html('');
     $('#divhorasing').css('display', 'none');
+    $('#divcontratovis').css('display', 'block');
 
     $.ajax({
-        url: '/llamrModulos/'+empresa,
+        url: '/llamrContratros/'+empresa,
         type: 'GET',
         success: function(res){
-            $('#modulovis').append('<option value="">Seleccione el modulo</option>');
+            $('#contratovis').append('<option value="">Seleccione el contrato</option>');
             for (var i = 0; i < res.length; i++) {
                 
-                $('#modulovis').append('<option value="'+res[i].id+'">'+res[i].nombre+'</option>');
+                $('#contratovis').append('<option value="'+res[i].id+'">'+res[i].tipo+'</option>');
             }
         }
     })
 });
 
 
+$('#contratovis').change(function(event) {
+    var idcontrato = $('#contratovis').val();
+    $('#divmodulovis').css("display", "block");
+    $('#divhorasing').css("display", "block");
+    $('#modulovis').html('');
+    $('#horasmodulo').html('');
+
+    //alert(idcontrato);
+
+    $.ajax({
+        url: '/llamarModulos/'+idcontrato,
+        type: 'GET',
+        success: function(res){
+            $('#modulovis').append('<option value="">Seleccione el modulo</option>');
+            for (var i = 0; i < res.length; i++) {   
+                $('#modulovis').append('<option value="'+res[i].id+'">'+res[i].nombre+'</option>');
+            }
+        }
+    });
+    
+});
 
 $('#modulovis').change(function(event) {
     var idmodulo = $('#modulovis').val();
-    var idempresa = $('#empresavis').val();
-    //alert(idmodulo);
+    var idcontrato = $('#contratovis').val();
+    $('#divhoras').css("display", "block");
     $('#horasmodulo').html('');
-    $('#inghoras').html('');
-    $('#divhorasing').css('display', 'none');
 
     $.ajax({
-        url: '/llamarHorasModulo',
+        url: '/llamarHoras',
         type: 'GET',
-        data: {idmodulo: idmodulo, idempresa: idempresa},
+        data: {idmodulo: idmodulo, idcontrato: idcontrato},
         success: function(res){
-            $('#horasmodulo').html('<input type="text" class="form-control" value="'+res+'" id="disponible" readonly>');
-            $('#divhorasing').css('display', 'block');
+            $('#horasmodulo').append('<input type="text" class="form-control" value="'+res+'" id="disponible" readonly>');
         }
     });
 });
+
+
+
+
+
 
 function Calcular(){
     var fecha1 = moment($('#horainicio').val());
@@ -179,6 +187,8 @@ function Calcular(){
     var disponibles = $('#disponible').val();
 
     var diferencia = fecha2.diff(fecha1, "hours");
+
+    console.log(diferencia);
 
     $('#oculto').val(diferencia);
 }
