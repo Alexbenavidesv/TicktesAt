@@ -40,6 +40,11 @@ $(document).ready(function() {
              $('#tabla').css("display", "none");
              $('#visempresa').css("display", "none");
              $('#divmodulovis').css("display", "none");
+             $('#divhoras').css("display", "none");
+             $('#divcualquiera').css("display", "block");
+             $('#otrodiv').css("display", "none");
+             $('#divhorasing').css("display", "none");
+             $('#visfechahora').css("display", "block");
         }
 
         if (tipovis == 'Soporte') {
@@ -54,6 +59,12 @@ $(document).ready(function() {
             $('#motivovis').css("display", "block");
             $('#recoleccionvis').css("display", "block");
             $('#divmodulovis').css("display", "none");
+            $('#divhoras').css("display", "none");
+            $('#divcualquiera').css("display", "none");
+            $('#otrodiv').css("display", "block");
+            $('#divhorasing').css("display", "none");
+            $('#visfechahora').css("display", "none");
+
         }
 
         if (tipovis == 'Capacitación') {
@@ -66,6 +77,10 @@ $(document).ready(function() {
             $('#tabla').css("display", "block");
             $('#visempresa').css("display", "block");
             $('#divmodulovis').css("display", "block");
+            $('#divhoras').css("display", "block");
+            $('#divcualquiera').css("display", "none");
+            $('#otrodiv').css("display", "none");
+            $('#visfechahora').css("display", "none");
         }
     });
 });
@@ -73,9 +88,19 @@ $(document).ready(function() {
 
 $('#enviarevidenciavis').click(function(event) {
     var evidenciavis = $('#evidenciavis').val();
+    var resvisible = $('#comentariov').val();
+    var resnovisible = $('#comentarionv').val();
     var exte = evidenciavis.substring(evidenciavis.lastIndexOf("."));
     //event.preventDefault();
     //alert(exte);
+    if (resvisible=='') {
+        $('#errorespvisible').html('Debe ingresar un comentario');
+        event.preventDefault();
+    }else {
+       $('#errorespvisible').html(''); 
+    }
+
+
     if (exte != '') {
         if (exte!=".jpg" && exte!=".jpeg" && exte!=".png" && exte!=".PNG" && exte!=".JPEG" && exte!=".JPG" && exte!=".rar" && exte!=".zip") {
             $('#errevidenciavis').html('El archivo debe ser .jpg, .jpeg, .png, .rar, .zip');
@@ -89,17 +114,6 @@ $('#enviarevidenciavis').click(function(event) {
     }
 });
 
-$(document).ready(function() {
-    $('#estadovis').change(function(event) {
-        var estadovis = $('#estadovis').val();
-        //alert(estadovis);
-        if (estadovis=='PorProgramar') {
-            $('#visfechahora').css("display", "none");
-        }else {
-            $('#visfechahora').css("display", "block");
-        }
-    });
-});
 
 
 $(document).ready(function() {
@@ -122,14 +136,92 @@ $(document).ready(function() {
 $('#empresavis').change(function(event) {
     var empresa = $('#empresavis').val();
     $('#modulovis').html('');
+    $('#horasmodulo').html('');
+    $('#divhorasing').css('display', 'none');
 
     $.ajax({
         url: '/llamrModulos/'+empresa,
         type: 'GET',
         success: function(res){
+            $('#modulovis').append('<option value="">Seleccione el modulo</option>');
             for (var i = 0; i < res.length; i++) {
+                
                 $('#modulovis').append('<option value="'+res[i].id+'">'+res[i].nombre+'</option>');
             }
         }
     })
 });
+
+
+
+$('#modulovis').change(function(event) {
+    var idmodulo = $('#modulovis').val();
+    var idempresa = $('#empresavis').val();
+    //alert(idmodulo);
+    $('#horasmodulo').html('');
+    $('#inghoras').html('');
+    $('#divhorasing').css('display', 'none');
+
+    $.ajax({
+        url: '/llamarHorasModulo',
+        type: 'GET',
+        data: {idmodulo: idmodulo, idempresa: idempresa},
+        success: function(res){
+            $('#horasmodulo').html('<input type="text" class="form-control" value="'+res+'" id="disponible" readonly>');
+            $('#divhorasing').css('display', 'block');
+        }
+    });
+});
+
+function Calcular(){
+    var fecha1 = moment($('#horainicio').val());
+    var fecha2 = moment($('#horafin').val());
+    var disponibles = $('#disponible').val();
+
+    var diferencia = fecha2.diff(fecha1, "hours");
+
+    $('#oculto').val(diferencia);
+}
+
+
+function finalizar(id){
+    var finalizado = $('#finalizadovis'+id).val();
+    var ocultoid = $('#idoculto'+id).val();
+    var tok = $('input[name="_token"]').val();
+    //alert(tok);
+    if (finalizado=='SI') {
+        $.ajax({
+        url: '/finalizarVisita',
+        type: 'POST',
+        headers: {'X-CSRF-TOKEN':tok},
+        data: {finalizado: finalizado, ocultoid: ocultoid},
+        success: function(res){
+            if (res=='ok') {
+                var url = window.location.href;
+                swal({
+                    title: "Se ha finalizado la visita",
+                    type: "success",
+                    confirmButtonText: "Ok",
+                    closeOnConfirm: false
+                  },
+                  function(isConfirm){
+                    if (isConfirm) {
+                      location.reload();
+                      //window.location.href = "consultartickets";
+                    }
+                  });
+                  $(location).attr('href', url);
+            }else {
+                swal({
+                  title: "Ha ocurrido un error",
+                  type: "error",
+                  confirmButtonText: "Ok",
+                  closeOnConfirm: true
+                });
+            }
+        },
+      });
+    }
+
+    
+}

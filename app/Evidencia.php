@@ -9,6 +9,6 @@ class Evidencia extends Model
     protected $table='evidencia';
 
     protected $fillable=[
-        'imagen', 'fecha', 'id_user', 'id_visita',
+        'respvisible', 'respnovisible', 'imagen', 'fecha', 'id_user', 'id_visita',
     ];
 }

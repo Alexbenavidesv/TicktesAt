@@ -34,22 +34,55 @@
 				 </select>
 	  		</div>
 
-        <div class="form-group"  style="display: none" id="divmodulovis">
-          <label for="tipovisita">Seleccione el Modulo</label>
-          <select class="form-control" name="modulovis" id="modulovis">
-            <option value="">Selecccione la empresa</option>
-         </select>
+
+        <div class="row" id="otrodiv" style="display: none">
+          <p id="errorsoporte1" class="text-danger" style="font-size: 14px;"></p>
+          <p id="errorsoporte" class="text-danger" style="font-size: 14px;"></p>
+          <div class="col-md-6">
+            <label for="">Fecha y hora inicio</label>
+            <input type="datetime-local" class="form-control" id="iniciosoporte" name="iniciosoporte" step="3600">
+          </div>
+          <div class="col-md-6">
+            <label for="">Fecha y hora fin</label>
+            <input type="datetime-local" class="form-control" id="finsoporte" name="finsoporte" step="3600">
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="tipovisita">Estado visita</label>
-          <select class="form-control" name="estadovis" id="estadovis">
-            <option value="PorProgramar">Por programar</option>
-            <option value="Programada">Programada</option>
-         </select>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group"  style="display: none" id="divmodulovis">
+              <label for="tipovisita">Seleccione el Modulo</label>
+              <select class="form-control" name="modulovis" id="modulovis">
+                <option value="">Selecccione la empresa</option>
+             </select>
+            </div>       
+          </div>
+          <div class="col-md-6" id="divhoras" style="display: none">
+             <label for="tipovisita">Horas disponibles</label>
+             <div id="horasmodulo"></div>            
+          </div>
         </div>
+        
+ 
+          <div class="row" id="divhorasing" style="display: none">
+            <p id="errorhoras" class="text-danger" style="font-size: 14px;"></p>
+            <p id="errorhoras2" class="text-danger" style="font-size: 14px;"></p>
+            <div class="form-group col-md-6">
+               <label for="">Fecha y hora inicio</label>
+               <input type="datetime-local" class="form-control" id="horainicio" name="horainicio" onblur="Calcular()" step="3600">
+            </div>
+
+            <div class="form-group col-md-6">
+               <label for="">Fecha y hora fin</label>
+               <input type="datetime-local" class="form-control" id="horafin" name="horafin" onblur="Calcular()" step="3600">
+
+               <input type="hidden" value="" id="oculto" name="oculto">
+
+               <div id="algo"></div>
+            </div>
+          </div><br>
 	  		
-		    <div class="form-group" style="display: none" id="visfechahora">
+		    <div class="form-group" style="display: block" id="visfechahora">
 		      <p id="errorfechavis" class="text-danger" style="font-size: 14px;"></p>
 		      <label for="fechayhoravis">Fecha y hora</label>
 		      <input type="datetime-local" class="form-control" id="fechayhoravis" name="fechayhoravis">
@@ -79,32 +112,12 @@
         <div id="clientefut" style="display: block">
           <div class="row">
             <div class="col-md-6" style="display: block" id="visitado">
+              <p id="errorclientenvis" class="text-danger" style="font-size: 14px;"></p>
               <label for="">Cliente visitado</label>
-              <select class="form-control" name="viscliente" id="viscliente">
-                <option value="">2</option>
-                <option value="">2</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label for="">¿El cliente no existe?</label>
-              <input  style="margin-left: 3px" type="checkbox" value="" id="noexiste" name="noexiste">
+              <input type="text" class="form-control" id="viscliente" name="viscliente">
             </div>
           </div>
           <br>
-        </div>
-
-        <div id="nomclientenuevo" style="display: none;">
-          <br>
-          <p id="errcliennow" class="text-danger" style="font-size: 14px;"></p>
-          <label for="">Nombre del nuevo cliente</label>
-          <input type="text" class="form-control" id="nuevoclientenom" name="nuevoclientenom">
-        </div>
-
-        <div id="nitclientenuevo" style="display: none;">
-          <br>
-          <p id="errcliennownit" class="text-danger" style="font-size: 14px;"></p>
-          <label for="">Nit del nuevo cliente</label>
-          <input type="text" class="form-control" id="nuevoclientenit" name="nuevoclientenit">
         </div>
 
         <div id="clientefuttel" style="display: block">
