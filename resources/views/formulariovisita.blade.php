@@ -50,13 +50,25 @@
 
         <div class="row">
           <div class="col-md-6">
-            <div class="form-group"  style="display: none" id="divmodulovis">
-              <label for="tipovisita">Seleccione el Modulo</label>
-              <select class="form-control" name="modulovis" id="modulovis">
-                <option value="">Selecccione la empresa</option>
+            <p id="errorcontrato" class="text-danger" style="font-size: 14px;"></p>
+            <div class="form-group"  style="display: none" id="divcontratovis">
+              <label for="tipovisita">Seleccione el Contrato</label>
+              <select class="form-control" name="contratovis" id="contratovis">
              </select>
             </div>       
           </div>
+          <div class="col-md-6">
+            <p id="errormodulo" class="text-danger" style="font-size: 14px;"></p>
+            <div class="form-group"  style="display: none" id="divmodulovis">
+              <label for="tipovisita">Seleccione el Modulo</label>
+              <select class="form-control" name="modulovis" id="modulovis">
+                <option value="">Selecccione el modulo</option>
+             </select>
+            </div>       
+          </div>
+        </div>
+
+        <div class="row">
           <div class="col-md-6" id="divhoras" style="display: none">
              <label for="tipovisita">Horas disponibles</label>
              <div id="horasmodulo"></div>            

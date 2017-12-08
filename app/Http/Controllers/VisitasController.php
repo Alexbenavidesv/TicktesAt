@@ -18,8 +18,8 @@ class VisitasController extends Controller
 {
 	public function index(){
 		$empresas = Contratos::join('empresa', 'contrato.id_empresa', 'empresa.id')
-        ->where('contrato.estado', 1)
         ->select('empresa.id', 'empresa.nombre')
+        ->groupBy('id', 'nombre')
         ->get();
 
         //dd($empresas);
@@ -46,28 +46,30 @@ class VisitasController extends Controller
                 $visita->fechainicio = $request->horainicio;
                 $visita->fechafin = $request->horafin;
                 $visita->duracion = $request->oculto;
+                $visita->id_contrato = $request->contratovis;
 
                 $visita->save();
 
                 $idmodulo = $request->modulovis;
-                $idempresa = $request->empresavis;
+                $idcontrato = $request->contratovis;
                 //dd($request->oculto);
                 $horas = $request->oculto;
 
-                $consulta = Empresa::where('empresa.id', $idempresa)
-                ->join('contrato', 'empresa.id', 'contrato.id_empresa')
-                ->join('modulo_contrato', 'contrato.id', 'modulo_contrato.id_contrato')
-                ->where('modulo_contrato.id_modulo', $idmodulo)
-                ->join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
-                ->select('modulo_contrato.id AS idmodcon', 'contrato.id AS idcontrato', 'contrato.totalhoras', 'modulo_contrato.horas')
+                $consulta = Modulo_contrato::where('modulo_contrato.id_modulo', $idmodulo)
+                ->where('modulo_contrato.id_contrato', $idcontrato)
+                ->select('modulo_contrato.id', 'modulo_contrato.horas')
                 ->get();
 
-                $contrato = Contratos::findOrFail($consulta[0]->idcontrato);
-                $modulo_contrato = Modulo_contrato::findOrFail($consulta[0]->idmodcon);
+                $consulta2 = Contratos::where('contrato.id', $idcontrato)
+                ->select('contrato.totalhoras')
+                ->get(); 
+
+                $contrato = Contratos::findOrFail($idcontrato);
+                $modulo_contrato = Modulo_contrato::findOrFail($consulta[0]->id);
 
                 //dd($horas);
 
-                $contrato->totalhoras = $consulta[0]->totalhoras - $horas;
+                $contrato->totalhoras = $consulta2[0]->totalhoras - $horas;
                 $contrato->save();
 
                 $modulo_contrato->horas = $consulta[0]->horas - $horas;
@@ -372,11 +374,16 @@ class VisitasController extends Controller
     }
 
 
-    public function modulos($id){
-        $modulos = Empresa::where('empresa.id', $id)
-        ->join('contrato', 'empresa.id', 'contrato.id_empresa')
-        ->join('modulo_contrato', 'contrato.id', 'modulo_contrato.id_contrato')
-        ->where('modulo_contrato.horas', '>', 0)
+    public function contratos($id){
+        $contratos = Contratos::where('contrato.id_empresa', $id)
+        ->select('contrato.id', 'contrato.tipo')
+        ->get();
+
+        return $contratos;
+    }
+
+    public function Modulos($id){
+        $modulos = Modulo_contrato::where('modulo_contrato.id_contrato', $id)
         ->join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
         ->select('modulos.id', 'modulos.nombre')
         ->get();
@@ -385,15 +392,12 @@ class VisitasController extends Controller
     }
 
     public function horasModulos(Request $request){
-        $modulos = Empresa::where('empresa.id', $request->idempresa)
-        ->join('contrato', 'empresa.id', 'contrato.id_empresa')
-        ->join('modulo_contrato', 'contrato.id', 'modulo_contrato.id_contrato')
-        ->join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
-        ->where('modulos.id', $request->idmodulo)
+        $horas = Modulo_contrato::where('modulo_contrato.id_modulo', $request->idmodulo)
+        ->where('modulo_contrato.id_contrato', $request->idcontrato)
         ->select('modulo_contrato.horas')
         ->get();
 
-        return $modulos[0]->horas;
+        return $horas[0]->horas;
     }
 
 

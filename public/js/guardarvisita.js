@@ -17,6 +17,11 @@ $('#btnvisita').click(function(event) {
 	var viscliente = $('#viscliente').val();
 	var iniciosoporte = $('#iniciosoporte').val();
 	var finsoporte = $('#finsoporte').val();
+	var contrato = $('#contratovis').val();
+	var modulo = $('#modulovis').val();
+
+	oculto = parseInt(oculto);
+	
 	
 
 	var tipovisita = $('#tipovis').val();
@@ -170,6 +175,8 @@ $('#btnvisita').click(function(event) {
 
 
 	if (tipovisita=='Capacitación') {
+		//console.log(disponibles);
+		console.log(oculto);
 
 		if (disponibles<oculto) {
 			$('#errorhoras2').html('las horas ingresadas deben ser menor o igual a las disponibles');
@@ -197,6 +204,20 @@ $('#btnvisita').click(function(event) {
 			event.preventDefault();
 		}else {
 			$('#errorempresavis').html('');
+		}
+
+		if (contrato=='') {
+			$('#errorcontrato').html('Debe escoger un contrato');
+			event.preventDefault();
+		}else {
+			$('#errorcontrato').html('');
+		}
+
+		if (modulo=='') {
+			$('#errormodulo').html('Debe escoger un modulo');
+			event.preventDefault();
+		}else {
+			$('#errormodulo').html('');
 		}
 
 		if (lugarvis=='') {
