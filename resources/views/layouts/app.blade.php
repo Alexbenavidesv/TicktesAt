@@ -140,53 +140,161 @@
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
                     @if(Auth::user()->id_rol !=2)
-                        <li id=""><a href="/" ><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
+
+                        <li>
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a style="text-decoration: none;" href="/"><i class="fa fa-home"></i> Inicio</a>
+                                        </h4>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+
                     @endif
                     @if(Auth::user()->id_rol ==1)
-                        <li id="btnusuarios"><a href="/usuarios" ><i class="fa fa-address-card" aria-hidden="true"></i> Usuarios</a></li>
-                        <li id="btnempresas"><a href="/empresas"><i class="fa fa-industry" aria-hidden="true"></i> Empresas</a></li>
-                    @endif
+                            <li>
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a style="text-decoration: none;" href="/usuarios"><i class="fa fa-address-card"></i> Usuarios</a>
+                                            </h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a style="text-decoration: none;" href="/empresas"><i class="fa fa-industry"></i> Usuarios</a>
+                                            </h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                             @endif
+
+                        <li>
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" style="text-decoration: none;" href="#collapse1"><i class="fa fa-ticket"></i> Tickets</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse">
+                                        <ul class="list-group">
+
+                                            @if(Auth::user()->id_rol !=3)
+                                                <li id="btntickets" ><a href="/crear_ticket" class="list-group-item"><i class="fa fa-plus-circle" aria-hidden="true"></i> Crear Ticket <span class="sr-only">(current)</span></a></li>
+                                            @endif
+                                            @if(Auth::user()->id_rol ==1)
+                                                <li id="btnconsultarticketsroot" ><a href="/misTickets" class="list-group-item"><i class="fa fa-address-card-o" aria-hidden="true"></i> Mis Tickets</a></li>
+                                            @endif
+
+                                                <li id="btnconsultartickets" ><a href="/consultartickets" class="list-group-item"><i class="fa fa-search" aria-hidden="true"></i> Consultar Tickets</a></li>
+
+                                                @if(Auth::user()->id_rol !=2)
+                                                <li id="btnconsultartickets" ><a href="/consultarticketsna" class="list-group-item"><i class="fa fa-minus-square-o" aria-hidden="true"></i> Tickets no asignados</a></li>
+                                            @endif
+
+                                                @if(Auth::user()->id_rol !=2)
+                                                    <li ><a href="/tickets_reasignar" class="list-group-item"><i class="fa fa-hourglass-end" aria-hidden="true"></i> Tickets por reasignar</a></li>
+                                                @endif
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                         
-                    @if(Auth::user()->id_rol !=3)
-                        <li id="btntickets"><a href="/crear_ticket"><i class="fa fa-ticket" aria-hidden="true"></i> Crear Tickets <span class="sr-only">(current)</span></a></li>
-                    @endif
-                    @if(Auth::user()->id_rol ==1)
-                        <li id="btnconsultarticketsroot"><a href="/misTickets"><i class="fa fa-address-card-o" aria-hidden="true"></i> Mis Tickets</a></li>
-                    @endif
-                    <li id="btnconsultartickets"><a href="/consultartickets"><i class="fa fa-search" aria-hidden="true"></i> Consultar Tickets</a></li>
+
                     @if(Auth::user()->id_rol !=2)
-                        <li id="btnconsultartickets"><a href="/consultarticketsna"><i class="fa fa-minus-square-o" aria-hidden="true"></i> Tickets no asignados</a></li>
-                    @endif
-                    @if(Auth::user()->id_rol !=2)
-                        <li><a href="/tickets_reasignar"><i class="fa fa-hourglass-end" aria-hidden="true"></i> Tickets por reasignar</a></li>
-                         <li><a href="/modulos"><i class="fa fa-list-alt" aria-hidden="true"></i> Modulos</a></li>
+                            <li>
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a style="text-decoration: none;" href="/modulos"><i class="fa fa-list-alt" aria-hidden="true"></i> Modulos</a>
+                                            </h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
                     @endif
 
                     @if(Auth::user()->id_rol ==1)
 
-                            <li><a href="/crear_contrato"><i class="fa fa-plus-circle" aria-hidden="true"></i> Crear contratos</a></li>
-                        <li><a href="/contratos"><i class="fa fa-list" aria-hidden="true"></i> Consultar contratos</a></li>
+                        <li>
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" style="text-decoration: none;" href="#collapse2"><i class="fa fa-ticket"></i> Contratos</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse">
+                                        <ul class="list-group">
 
+                                            <li><a href="/crear_contrato" class="list-group-item"><i class="fa fa-plus-circle" aria-hidden="true"></i> Crear contratos</a></li>
+                                            <li><a href="/contratos" class="list-group-item"><i class="fa fa-list" aria-hidden="true"></i> Consultar contratos</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
 
                 @endif
 
 
         
                 @if(Auth::user()->id_rol !=2)
-                    <li><a href="/formatoVisita"><i class="fa fa-file-text-o" aria-hidden="true"></i> Formato de visita</a></li>
+
+                            <li>
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" style="text-decoration: none;" href="#collapse3"><i class="fa fa-file-text-o"></i> Visitas</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse3" class="panel-collapse collapse">
+                                            <ul class="list-group">
+
+                                                <li><a href="/formatoVisita" class="list-group-item"><i class="fa fa-file-text-o" aria-hidden="true"></i> Formato de visita</a></li>
+                                                <li><a href="/listarvisitas" class="list-group-item"><i class="fa fa-file-text" aria-hidden="true"></i> Mis visitas</a></li>
+                                                @if(Auth::user()->id_rol ==1)
+                                                    <li><a href="/listarvisitasgrl" class="list-group-item"><i class="fa fa-bars" aria-hidden="true"></i> Todas las visitas</a></li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+
                 @endif
 
-                @if(Auth::user()->id_rol !=2)
-                    <li><a href="/listarvisitas"><i class="fa fa-file-text" aria-hidden="true"></i> Mis visitas</a></li>
-                @endif
 
-                @if(Auth::user()->id_rol ==1)
-                    <li><a href="/listarvisitasgrl"><i class="fa fa-bars" aria-hidden="true"></i> Todas las visitas</a></li>
-                @endif
+
+
+
+
                 </ul>
             </div>
 
             <div style="margin-top: 5%;">
+
                 @yield('content')
             </div>
 
