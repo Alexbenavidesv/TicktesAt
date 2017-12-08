@@ -239,7 +239,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" style="text-decoration: none;" href="#collapse2"><i class="fa fa-ticket"></i> Contratos</a>
+                                            <a data-toggle="collapse" style="text-decoration: none;" href="#collapse2"><i class="fa fa-list"></i> Contratos</a>
                                         </h4>
                                     </div>
                                     <div id="collapse2" class="panel-collapse collapse">
@@ -293,10 +293,16 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a style="text-decoration: none;" href="/empresas"><i class="fa fa-cogs"></i> Parametros</a>
+                                                <a data-toggle="collapse" style="text-decoration: none;" href="#collapse4"><i class="fa fa-cogs"></i> Parametros</a>
                                             </h4>
                                         </div>
+                                        <div id="collapse4" class="panel-collapse collapse">
+                                            <ul class="list-group">
 
+                                                <li><a href="/limite_tickets" class="list-group-item"><i class="fa fa-ban" aria-hidden="true"></i> Limite de tickets</a></li>
+
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -415,6 +421,7 @@
 <script src="{{ asset('js/solicitar.js') }}"></script>
 <script src="{{ asset('js/modulos.js') }}"></script>
 <script src="{{ asset('js/contratos.js') }}"></script>
+<script src="{{ asset('js/limites.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
 
 <script>
