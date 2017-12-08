@@ -60,7 +60,9 @@ Route::post('editarRespuesta', 'RespuestasController@editar')->middleware('auth'
 
 ///Rutas de visitas
 Route::get('formatoVisita', 'VisitasController@index')->middleware('auth','sesion', 'rootconsultor');
+
 Route::post('guardarVisita', 'VisitasController@guardarVisita')->middleware('auth','sesion', 'rootconsultor');
+
 Route::get('listarvisitas', 'VisitasController@listado')->middleware('auth','sesion', 'rootconsultor');
 Route::get('visitaPdf/{id}', 'VisitasController@verPdf')->middleware('auth','sesion', 'rootconsultor');
 Route::get('evidenciaVisita/{id}', 'VisitasController@evidencia')->middleware('auth','sesion', 'rootconsultor');
@@ -68,6 +70,7 @@ Route::post('guardarEvidenciaVisita', 'VisitasController@guardarEvidencia')->mid
 Route::get('descargar/{parametro}', 'VisitasController@descargar')->middleware('auth','sesion', 'rootconsultor');
 Route::get('listarvisitasgrl', 'VisitasController@listGeneral')->middleware('auth','sesion', 'root');
 
+Route::get('llamrModulos/{id}', 'VisitasController@modulos');
 
 
 //Rutas para contratos
@@ -82,3 +85,5 @@ Route::get('/modulos_contrato','ContratosController@modulos_contrato')->middlewa
 
 Route::post('/guardarContrato', 'ContratosController@guardarContrato');
 Route::post('/editarHoras', 'ContratosController@editarHoras');
+
+

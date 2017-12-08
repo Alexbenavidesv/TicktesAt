@@ -179,6 +179,43 @@ $('#btnvisita').click(function(event) {
 		}else {
 			$('#errorlugarvis').html('');
 		}
+
+		var validador;
+
+		$('.clase').each(function(index, el) {
+			validador = $(this).val();		
+		});
+
+		if (validador=='') {
+			$('#errortabla').html('Debe llenar todos estos campos');
+			event.preventDefault();
+		}else {
+			$('#errortabla').html('');
+		}
+
+		var validador2;
+		$('.clase1').each(function(index, el) {
+			validador2 = $(this).val();		
+		});
+
+		if (validador2=='') {
+			$('#errortabla').html('Debe llenar todos estos campos');
+			event.preventDefault();
+		}else {
+			$('#errortabla').html('');
+		}
+
+		var validador3;
+		$('.clase2').each(function(index, el) {
+			validador3 = $(this).val();		
+		});
+
+		if (validador3=='') {
+			$('#errortabla').html('Debe llenar todos estos campos');
+			event.preventDefault();
+		}else {
+			$('#errortabla').html('');
+		}
 	}
 
 	/*if (nombrepar == '') {
