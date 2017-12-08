@@ -174,7 +174,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a style="text-decoration: none;" href="/empresas"><i class="fa fa-industry"></i> Usuarios</a>
+                                                <a style="text-decoration: none;" href="/empresas"><i class="fa fa-industry"></i> Empresas</a>
                                             </h4>
                                         </div>
 
@@ -286,6 +286,22 @@
                 @endif
 
 
+                        @if(Auth::user()->id_rol==1)
+
+                            <li>
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a style="text-decoration: none;" href="/empresas"><i class="fa fa-cogs"></i> Parametros</a>
+                                            </h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                        @endif
 
 
 
