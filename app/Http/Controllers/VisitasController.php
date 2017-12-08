@@ -18,8 +18,8 @@ class VisitasController extends Controller
 {
 	public function index(){
 		$empresas = Contratos::join('empresa', 'contrato.id_empresa', 'empresa.id')
-        ->where('contrato.estado', 1)
         ->select('empresa.id', 'empresa.nombre')
+        ->groupBy('id', 'nombre')
         ->get();
 
         //dd($empresas);

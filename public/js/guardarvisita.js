@@ -17,6 +17,9 @@ $('#btnvisita').click(function(event) {
 	var viscliente = $('#viscliente').val();
 	var iniciosoporte = $('#iniciosoporte').val();
 	var finsoporte = $('#finsoporte').val();
+
+	oculto = parseInt(oculto);
+	
 	
 
 	var tipovisita = $('#tipovis').val();
@@ -170,6 +173,9 @@ $('#btnvisita').click(function(event) {
 
 
 	if (tipovisita=='Capacitación') {
+		//console.log(disponibles);
+		console.log(oculto);
+
 		if (disponibles<oculto) {
 			$('#errorhoras2').html('las horas ingresadas deben ser menor o igual a las disponibles');
 			event.preventDefault();
