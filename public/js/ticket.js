@@ -104,6 +104,21 @@ function vistaPrevia2(id){
 	$(botona).css('display', '');
 }
 
+function verTodo() {
+	$('#verTodo').css('display','none');
+    $('#cVerTodo').css('display','');
+$('.contenidoT').css('display','');
+$('.verTicket').css('display','none');
+
+}
+
+function cerrarVerTodo() {
+    $('#cVerTodo').css('display','none');
+    $('#verTodo').css('display','');
+    $('.contenidoT').css('display','none');
+    $('.verTicket').css('display','');
+}
+
 /*
 function filtrarTicket(id) {
 	var numero=$('#filtroNumero').val();
