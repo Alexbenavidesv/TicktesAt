@@ -85,7 +85,7 @@
 
         <div class="row">
             <div class="col-md-2">
-                <button class="btn btn-primary" style="width: 95%" data-toggle="modal" data-target="#moduloNuevo">
+                <button class="btn btn-success" style="width: 95%" data-toggle="modal" data-target="#moduloNuevo">
                     <i class="fa fa-plus"></i> Agregar modulo
                 </button>
             </div>
@@ -94,8 +94,17 @@
 
         @if(count($modulos)>0)
 
-            <div class="col-md-2">
-
+            <div class="col-md-2 text-center">
+                <label class="label label-primary" style="font-weight: bold; font-size: 1.1em;">FILTROS</label>
+                <br><br>
+                <form >
+                <label for="">Nombre</label>
+                <input type="text" placeholder="Nombre" id="nomModulo" name="nombreModulo" class="form-control">
+                <br>
+                <button type="button" class="btn btn-success btn-sm" style="width: 100%;" id="filtroModulos"><i class="fa fa-search"></i> Buscar</button>
+                    <br><br>
+                    <button type="button" class="btn btn-warning btn-sm" style="width: 100%;" id="filtroModulosLimpiar"><i class="fa fa-list"></i> Ver todo</button>
+                </form>
             </div>
 
         <div class="col-md-10">
@@ -122,84 +131,80 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td>
-                        <div id="temas{{$modulo->id}}" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
+                    <div id="temas{{$modulo->id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
 
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Temas del modulo {{$modulo->nombre}} </h4>
-                                    </div>
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Temas del modulo {{$modulo->nombre}} </h4>
+                                </div>
 
-                                    <div class="modal-body">
-                                        <div>
-                                            @if(count($temas)>0)
+                                <div class="modal-body">
+                                    <div>
+                                        @if(count($temas)>0)
 
-                                                <table class="table table-responsive table-condensed tabled-triped">
-                                                    <tr style="font-weight: bold">
-                                                        <td>
-                                                            Nombre del tema
-                                                        </td>
-                                                        <td>
-                                                            Manual
-                                                        </td>
-                                                    </tr>
+                                            <table class="table table-responsive table-condensed tabled-triped">
+                                                <tr style="font-weight: bold">
+                                                    <td>Nombre del tema
 
-                                                    @foreach($temas as $tema)
-                                                        @if($tema->id_modulo==$modulo->id)
-                                                            <tr>
-                                                                <td>
-                                                                    {{$tema->nombre_tema}}
-                                                                </td>
+                                                    </td>
+                                                    <td>
+                                                        Manual
+                                                    </td>
+                                                </tr>
 
-                                                                <td>
-                                                                    @if($tema->manual!='')
-                                                                        <div class="label label-success">
-                                                                            <a href="descargar_manual/{{$tema->manual}}" style="text-decoration: none; font-size: 1.3em; color: black;">
+                                                @foreach($temas as $tema)
+                                                    @if($tema->id_modulo==$modulo->id)
+                                                        <tr>
+                                                            <td>
+                                                                {{$tema->nombre_tema}}
+                                                            </td>
 
-                                                                                <i class="fa fa-download"></i>
-                                                                    {{$tema->manual}}
+                                                            <td>
+                                                                @if($tema->manual!='')
+                                                                    <div class="label label-success">
+                                                                        <a href="descargar_manual/{{$tema->manual}}" style="text-decoration: none; font-size: 1.3em; color: black;">
 
-                                                                            </a>
-                                                                        </div>
-                                                                        @else
-                                                                        <div class="label label-danger">
-                                                                            SIN MANUAL
-                                                                        </div>
-                                                                    @endif
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
+                                                                            <i class="fa fa-download"></i>
+                                                                            {{$tema->manual}}
 
-                                                </table>
+                                                                        </a>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="label label-danger">
+                                                                        SIN MANUAL
+                                                                    </div>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
 
-                                            @else
+                                            </table>
 
-                                                <div class="alert alert-danger">
-                                                    No existen registros de temas
-                                                </div>
+                                        @else
 
-                                            @endif
+                                            <div class="alert alert-danger">
+                                                No existen registros de temas
+                                            </div>
+
+                                        @endif
 
 
-                                        </div>
-
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button  class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                     </div>
 
                                 </div>
 
+                                <div class="modal-footer">
+                                    <button  class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                </div>
+
                             </div>
+
                         </div>
-                    </td>
-                </tr>
+                    </div>
 
 
 

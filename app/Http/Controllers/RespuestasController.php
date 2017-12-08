@@ -42,7 +42,9 @@ class RespuestasController extends Controller
 
         //dd($usuariorespuesta);
 
-    	return view('respuesta', compact('respuesta', 'estado', 'idconsultor', 'iduser', 'usuariorespuesta'));
+        $consultores=Consultor::where('id','!=',1)->get();
+
+    	return view('respuesta', compact('respuesta', 'estado', 'idconsultor', 'iduser', 'usuariorespuesta','consultores'));
     }
 
     public function guardarRespuesta(Request $request){
@@ -117,6 +119,13 @@ class RespuestasController extends Controller
             $ticket->tipo = 'Sin asignar';
             $ticket->area = $request->area_;
             $ticket->estado = 4;
+        }
+
+        if ($request->asignarConsultor==1) {
+
+            $ticket->prioridad = $request->prioridadTicket_;
+            $ticket->id_consultor = $request->consultorNuevo_;
+            $ticket->tipo = 'Sin asignar';
         }
 
         $ticket->save();

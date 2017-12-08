@@ -10,6 +10,12 @@
 	<table class="table table-striped" align="center" style="width: 100%">
 		@if(count($tickets)>0)
 			<thead>
+			<th>
+				<button type="button" class="btn btn-warning btn-sm" id="verTodo" style="width: 100%;" onclick="verTodo()"><i class="fa fa-eye"></i></button>
+				<button type="button" class="btn btn-danger btn-sm" id="cVerTodo" style="width: 100%; display: none;" onclick="cerrarVerTodo()"><i class="fa fa-eye-slash"></i></button>
+			</th>
+			</thead>
+			<thead>
 			<th>Ver</th>
 			<th>N°</th>
 			<th>Estado</th>
@@ -30,7 +36,7 @@
 				<tr class="success">
 		@endif
 			<td>
-				<a type="button" class="btn btn-warning btn-sm" style="width: 30px" id="infoticket{{$t->id}}" onclick="vistaPrevia({{$t->id}})"><i class="fa fa-eye" aria-hidden="true"></i></a>
+				<a type="button" class="btn btn-warning btn-sm verTicket" style="width: 30px" id="infoticket{{$t->id}}" onclick="vistaPrevia({{$t->id}})"><i class="fa fa-eye" aria-hidden="true"></i></a>
 				<a type="button"  class="btn btn-warning btn-sm" style="width: 30px; display:none" id="infoticket2{{$t->id}}" onclick="vistaPrevia2({{$t->id}})"><i class="fa fa-close" aria-hidden="true"></i></a>
 			</td>
 			<td>{{$t->id}}</td>
@@ -109,7 +115,7 @@
 		</tr>
 		<div>
 			<tr>
-				<td colspan="9" style="display:none;" id="contenidoticket{{$t->id}}">
+				<td colspan="9" style="display:none;" id="contenidoticket{{$t->id}}" class="contenidoT">
 					<div class="alert alert-info">
 					  <strong>{{$t->descripcion}}</strong>
 					</div>

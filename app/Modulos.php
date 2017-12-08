@@ -11,4 +11,11 @@ class Modulos extends Model
     protected $fillable=[
         'nombre',
     ];
+
+    public function scopeNombre($query,$nombre){
+        if (trim($nombre) != "") {
+            return $query->where('modulos.nombre','like','%'.$nombre.'%');
+        }
+    }
+
 }

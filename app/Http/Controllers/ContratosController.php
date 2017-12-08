@@ -19,10 +19,12 @@ class ContratosController extends Controller
         ->select('empresa.nombre', 'contrato.id', 'contrato.tipo', 'contrato.totalhoras')
         ->get();
 
+        $empresas=Empresa::all();
+
         $modulos = Modulo_contrato::join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
         ->get();
         //dd($contratos);
-        return view('contratos', compact('contratos', 'modulos'));
+        return view('contratos', compact('contratos', 'modulos','empresas'));
     }
 
     public function crear(){
@@ -138,10 +140,13 @@ class ContratosController extends Controller
 
 
     public function editarHoras(Request $request){
-        DB::beginTransaction();
+        $nuevos=$request->idNuevosModulos;
+        $horasNuevas=$request->horasNuevosModulos;
+        $tiposNuevos=$request->nuevoTipoPago;
 
+        DB::beginTransaction();
         try {
-                $idcontrato = $request->idcontrado;
+                $idcontrato = $request->idcontrato;
                 $idmodulo = Input::get('idmodulo');
                 $nombremodulo = Input::get('nombremodulo');
                 $horasmodulo = Input::get('horasmodulo');
@@ -162,7 +167,25 @@ class ContratosController extends Controller
                     $vector[]=$horasmodulo[$key];
                 }
 
+                $aux=0;
+                if(isset($nuevos)){
+                    $i=0;
+                    foreach ($horasNuevas as $h){
+                        if($h>0){
+                            $nuevo=new Modulo_contrato();
+                            $nuevo->horas=$h;
+                            $nuevo->id_contrato=$idcontrato;
+                            $nuevo->id_modulo=$nuevos[$i];
+                            $nuevo->tipo_pago=$tiposNuevos[$i];
+                            $nuevo->save();
+                            $aux+=$h;
+                        }
+                        $i++;
+                    }
+                }
+
                 $total = array_sum($vector);
+                $total+=$aux;
 
                 $contrato = Contratos::findOrFail($idcontrato);
 
@@ -186,4 +209,60 @@ class ContratosController extends Controller
 
         return 'ok';
     }
+
+    public function filtrarModulos($nombre){
+        $modulos=Modulos::where('id','>',0)
+            ->nombre($nombre)
+            ->orderBy('id','DESC')->paginate(15);
+        $temas=Temas::all();
+
+        return view('modulos',compact('modulos','temas'));
+    }
+
+    public function filtrarContratos(Request $request){
+        if($request->tipoContrato_!='' || $request->empresaContrato_!=null){
+
+            $contratos = Contratos::tipo($request->tipoContrato_)
+                ->empresa($request->empresaContrato_)
+                ->join('empresa', 'contrato.id_empresa', 'empresa.id')
+                ->select('empresa.nombre', 'contrato.id', 'contrato.tipo', 'contrato.totalhoras')
+                ->get();
+
+            $empresas=Empresa::all();
+
+            $modulos = Modulo_contrato::join('modulos', 'modulo_contrato.id_modulo', 'modulos.id')
+                ->get();
+
+            return view('contratos', compact('contratos', 'modulos','empresas'));
+        }
+    }
+
+
+    public function modulos_contrato(Request $request){
+        $id= $request->id_contrato;
+
+        $arreglo=array();
+
+        $modulosContrato=Modulo_contrato::where('id_contrato',$id)
+            ->get();
+
+        $modulos=Modulos::all();
+
+        foreach ($modulos as $modulo){
+            $flag=false;
+            foreach ($modulosContrato as $mod){
+                if($modulo->id==$mod->id_modulo){
+                    $flag=true;
+                }
+            }
+            if(!$flag) {
+                $arreglo[] = $modulo;
+            }
+        }
+
+        return $arreglo;
+
+
+    }
+
 }

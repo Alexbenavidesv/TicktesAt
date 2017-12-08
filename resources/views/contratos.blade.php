@@ -6,17 +6,46 @@
 
 @section('content')
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
-	<h1 style="margin-left: 25%">Listado de contratos</h1>
-	<div class="row">
-		<div class="col col-md-1"></div>
-		<div class="col col-md-9">
+
+	<div class="row text-center">
+		<h1 style="margin-top: -1.2%;">Listado de contratos</h1> <BR>
+		<div class="col col-md-2">
+
+
+			<label class="label label-primary" style="font-weight: bold; font-size: 1.1em;">FILTROS</label>
+			<br><br>
+			<form action="/filtrarc" method="get" id="filtrosContratos">
+				<label for="">Tipo</label>
+				<select name="tipoContrato_" id="tipoContrato_" class="form-control">
+					<option value="">Seleccione...</option>
+					<option value="MONTAJE">MONTAJE</option>
+					<option value="CAPACITACIÓN">CAPACITACIÓN</option>
+				</select>
+				<br>
+				<label for="">Empresa</label>
+				<select name="empresaContrato_[]"  id="empresaContrato_" class="form-control empresaSelect empresaSelect1" style="width: 100%">
+					<option value="">Seleccione ...</option>
+					@foreach($empresas as $empresa)
+						<option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+					@endforeach
+				</select>
+				<br><br>
+				<button type="button" class="btn btn-success btn-sm" style="width: 100%;" id="filtroContratos"><i class="fa fa-search"></i> Buscar</button>
+				<br><br>
+				<button type="button" class="btn btn-warning btn-sm" style="width: 100%;" id="filtroContratosLimpiar"><i class="fa fa-list"></i> Ver todo</button>
+			</form>
+
+		</div>
+
+
+		<div class="col col-md-10">
 			<table class="table table-striped" style="width: 100%">
-		    <tr>
-		  	  <th>N°</th>
-		  	  <th>Tipo</th>
-		  	  <th>Horas</th>
-		  	  <th>Empresa</th>
-		  	  <th>Vista previa</th>
+		    <tr class="text-center" >
+		  	  <th style="text-align: center">N°</th>
+		  	  <th style="text-align: center">Tipo</th>
+		  	  <th style="text-align: center">Horas</th>
+		  	  <th style="text-align: center">Empresa</th>
+		  	  <th style="text-align: center">Vista previa</th>
 		    </tr>
 		    @foreach($contratos as $con)
 		    <tr>
@@ -38,7 +67,7 @@
 				    <div class="modal-content">
 				      <div class="modal-header">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-				        <h4 class="modal-title">Modulos</h4>
+				        <h4 class="modal-title">Módulos</h4>
 				      </div>
 				      <div class="modal-body">
 				      	<form id="editadohoras{{$con->id}}">
@@ -46,27 +75,45 @@
 				      		@foreach($modulos as $mod)
 				      		@if($mod->id_contrato==$con->id)
 				      		<div class="row">	
-				      			<input type="hidden" name="idcontrado" id="idcontrato" value="{{$con->id}}">
+				      			<input type="hidden" name="idcontrato" id="idcontrato" value="{{$con->id}}">
+				      			<input type="hidden" name="idcontrato" id="idcontrato{{$con->id}}" value="{{$con->id}}">
 				      			<input type="hidden" name="idmodulo[]" id="idmodulo[]" value="{{$mod->id}}">
-				      			<div class="col-md-1"></div>
+				      			<div class="col-md-2"></div>
 				      			<div class="col-md-4">
-				      				<label for="">Nombre modulo</label>
+				      				<label for="">Módulo</label>
 				      				<input type="text" class="form-control" name="nombremodulo[]" id="nombremodulo[]" value="{{$mod->nombre}}" disabled><br>
 				      			</div>
 				      			<div class="col-md-4">
 				      				<label for="">Horas</label>
 				      				<input type="number" min="1" class="form-control claseVal" name="horasmodulo[]" id="horasmodulo[]" value="{{$mod->horas}}"><br>
 				      			</div>
-				      			<div class="col-md-3">
+				      			<div class="col-md-2">
 				      			</div>
 				      		</div>
 				      		@endif
 							@endforeach
+							<div style="text-align: left">
+								<button type="button" onclick="agregarModuloContrato({{$con->id}})" id="nmodulo{{$con->id}}" class="btn btn-warning btn-sm" style="width: 25%;"><i class="fa fa-plus"></i> Agregar módulos</button>
+								<button type="button" onclick="cancelarAgregarModulos({{$con->id}})" id="cnmodulo{{$con->id}}" style="display: none" class="btn btn-danger btn-sm" style="width: 10%;"><i class="fa fa-close"></i> Cancelar nuevos módulos</button>
+								<br><br>
+								<div class="row">
+									<div class="col-md-1"></div>
+									<div class="col-md-10">
+										<div id="modulosExtra{{$con->id}}" class="row">
+
+										</div>
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+
+
+							</div>
+
 				      	</form>
 				      </div>
 				      <div class="modal-footer">
-				      	<button type="button" class="btn btn-success" data-dismiss="modal" onclick="editar({{$con->id}})">Guardar</button>
-				        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				      	<button type="button" class="btn btn-success btn-sm" data-dismiss="modal" onclick="editar({{$con->id}})">Guardar</button>
+				        <button type="button" class="btn btn-danger btn-sm"  data-dismiss="modal">Cerrar</button>
 				      </div>
 				    </div>
 

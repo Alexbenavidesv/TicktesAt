@@ -77,9 +77,10 @@
           </div>
           @if(Auth::user()->id_rol !=2)
 
-                <div class="checkbox" style="background-color: lightgrey; border-radius: 0.1em;">
+                <div class="checkbox" style="background-color: lightgrey; border-radius: 0.1em;" id="reasignarTicket">
                     <input  style="margin-left: 3px" type="checkbox" value="" id="reasignar" name="reasignar">  <label style="font-size: 1.2em;"> <b>Solicitar reasignación</b></label>
                 </div>
+
 
               <div id="area" style="display: none">
                   <br>
@@ -89,7 +90,36 @@
                       <option value="Soporte">Soporte</option>
                   </select>
               </div>
+
+
+
           @endif
+
+            @if(Auth::user()->id_rol == 1)
+                <div class="checkbox" style="background-color: lightgrey; border-radius: 0.1em;" id="nuevoConsultor_">
+                    <input  style="margin-left: 3px" type="checkbox" value="" id="asignarConsultor" name="asignarConsultor">  <label style="font-size: 1.2em;"> <b>Asignar consultor</b></label>
+                </div>
+
+                <div id="nuevoConsultor" style="display: none">
+                    <br>
+                    <label for="">Seleccione el consultor</label>
+                    <select name="consultorNuevo_" id="consultorNuevo_" class="form-control" style="width: 70%">
+                        @foreach($consultores as $consultor)
+                            <option value="{{$consultor->id}}">{{$consultor->nombre}}</option>
+                        @endforeach
+                    </select>
+                    <br>
+
+                    <label for="">Prioridad</label><br>
+                    <select name="prioridadTicket_" id="prioridadTicket_" class="form-control" style="width: 70%">
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+
+                </div>
+            @endif
+
           @if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 3)
           <div class="form-group" id="select">
               <label for="finalizado">Estado</label>
