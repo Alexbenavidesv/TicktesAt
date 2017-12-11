@@ -95,3 +95,36 @@ var url='limiteEditar';
     }
 
 }
+
+
+
+function eliminarLimite(id) {
+
+    var tokken = $('input[name="_token"]').val();
+    var id=$('#idLimiteEliminar'+id).val();
+
+    var url='limiteEliminar';
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {id:id, _token: tokken},
+                success: function (res) {
+                    if(res=='OK'){
+                        swal({
+                                title: "Parametros eliminado con exito!",
+                                type: "success",
+                                confirmButtonText: "Ok",
+                                closeOnConfirm: false
+                            },
+                            function(isConfirm){
+                                if (isConfirm) {
+                                    location.reload();
+                                }
+                            });
+                        location.reload();
+                    }
+                }
+            });
+
+}

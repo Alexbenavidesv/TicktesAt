@@ -95,5 +95,6 @@ Route::post('/editarHoras', 'ContratosController@editarHoras');
 Route::get('/limite_tickets','ParametrosController@limite')->middleware('auth','root');
 Route::post('/guardarLimite','ParametrosController@guardarLimite')->middleware('auth','root');
 Route::post('/limiteEditar','ParametrosController@editarLimite')->middleware('auth','root');
+Route::post('/limiteEliminar','ParametrosController@eliminarLimite')->middleware('auth','root');
 
 
