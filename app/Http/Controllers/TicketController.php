@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Limite_ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -432,7 +433,57 @@ class TicketController extends Controller
     public function index()
     {
         $modulos = Modulos::all();
-        return view("inicio", compact('modulos'));
+        $id_empresa=Auth::user()->id_empresa;
+
+        $pendientes= count(Ticket::join('users','ticket.id_user','users.id')
+            ->join('empresa','users.id_empresa','empresa.id')
+            ->where('ticket.estado',0)
+            ->where('empresa.id',$id_empresa)
+            ->select('ticket.estado')
+            ->get());
+
+        $porConfirmar= count(Ticket::join('users','ticket.id_user','users.id')
+            ->join('empresa','users.id_empresa','empresa.id')
+            ->where('ticket.estado',3)
+            ->where('empresa.id',$id_empresa)
+            ->select('ticket.estado')
+            ->get());
+
+        $limites=Limite_ticket::where('id_empresa',$id_empresa)
+            ->get();
+
+
+        if(count($limites)>0){
+            $limitePend=$limites[0]->pendientes;
+            $limitePorcon=$limites[0]->por_confirmar;
+        }else{
+            $limitePend=0;
+            $limitePorcon=0;
+        }
+
+
+     if($limitePend>0){
+       if($pendientes>=$limitePend){
+          $limpendiente=$pendientes;
+       }else{
+           $limpendiente=0;
+       }
+     }else{
+         $limpendiente=0;
+     }
+
+        if($limitePorcon>0){
+            if($porConfirmar>=$limitePorcon){
+                $limporconfirmar=$porConfirmar;
+            }else{
+                $limporconfirmar=0;
+            }
+        }else{
+            $limporconfirmar=0;
+        }
+
+
+        return view("inicio", compact('modulos','limpendiente','limporconfirmar'));
     }
 
     public function nuevoTicket(Request $req)
