@@ -9,6 +9,27 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
 
   <div class="col-md-12">
+
+
+      @if($limpendiente>0 || $limporconfirmar>0)
+
+    @if($limpendiente>0)
+          <div class="alert alert-danger">
+             <h3> No puedes abrir mas tickets, porque tienes {{$limpendiente}} tickets en estado PENDIENTE</h3>
+          </div>
+        @endif
+
+
+        @if($limporconfirmar>0)
+            <div class="alert alert-danger">
+            <h3>    No puedes abrir mas tickets, porque tienes {{$limporconfirmar}} tickets en estado POR CONFIRMAR </h3>
+            </div>
+        @endif
+
+
+          @else
+
+
   	<h1 class="text-center" style="margin-top: -1%;">Reporte su caso</h1>
   	<br>
   	<div id="mensaje"></div>	
@@ -66,6 +87,7 @@
 
 	  <button type="submit" class="btn btn-primary" id="guardar"><i class="fa fa-ticket"></i> Generar Ticket</button>
 	</form>
+          @endif
   </div>
 </div>
 

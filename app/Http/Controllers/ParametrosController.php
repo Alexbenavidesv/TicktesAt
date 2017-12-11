@@ -44,4 +44,11 @@ class ParametrosController extends Controller
         $limite->save();
         return "OK";
     }
+
+    public function eliminarLimite(Request $request){
+
+        $limite=  Limite_ticket::findOrFail($request->id);
+        $limite->delete();
+        return "OK";
+    }
 }
