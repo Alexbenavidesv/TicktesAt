@@ -66,6 +66,7 @@ $(document).ready(function() {
             $('#divhorasing').css("display", "none");
             $('#visfechahora').css("display", "none");
             $('#divcontratovis').css('display', 'none');
+            $('#divselectcontrato').css('display', 'none');
         }
 
         if (tipovis == 'Capacitación') {
