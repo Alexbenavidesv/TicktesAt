@@ -49,7 +49,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6" id="divselectcontrato">
             <p id="errorcontrato" class="text-danger" style="font-size: 14px;"></p>
             <div class="form-group"  style="display: none" id="divcontratovis">
               <label for="tipovisita">Seleccione el Contrato</label>
