@@ -160,6 +160,7 @@
 							<button type="button" class="btn btn-danger btn-sm" id="cVerTodo" style="width: 100%; display: none;" onclick="cerrarVerTodo()"><i class="fa fa-eye-slash"></i></button>
 
 						</div>
+						@if(Auth::user()->id_rol ==1)
 						<div class="btn-group" role="group" aria-label="...">
 							<button type="button" id="multipleAsignacion" class="btn btn-info btn-sm" style="width: 100%;" >Asignación multiple</button>
 							<button type="button" id="cancelarMultiple" class="btn btn-danger btn-sm" style="width: 100%; display:none;" >Cancelar selección</button>
@@ -169,6 +170,7 @@
 						<div class="btn-group" role="group" aria-label="...">
 							<button type="button" id="crearAsignacionMultiple" data-toggle="modal" data-target="#asignacionConsultor" class="btn btn-info btn-sm" style=" display: none;width: 100%; background-color: #E1841CE6;" >Asignar a consultor</button>
 						</div>
+							@endif
 
 					</div>
 
