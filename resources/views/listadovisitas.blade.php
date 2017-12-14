@@ -6,7 +6,42 @@
 
 @section('content')
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
-	<h1 class="text-center">Mis Visitas</h1><br>
+	<h1 style="margin-top:-1.2%" class="text-center">Mis visitas</h1><br>
+
+
+
+	<div>
+		<form action="/filtroMisVisitas" method="get" id="filtroMisVisitas">
+			<div class="row text-center">
+				<div class="col-md-3">
+					<label for=""><i class="fa fa-calendar"></i> Fechas</label>
+					<div class="input-daterange input-group" id="rangoFecha">
+						<input type="text" class="input-sm form-control"  name="fechaInicioMisVisita" id="fechaInicioMisVisita" />
+						<span class="input-group-addon">A</span>
+						<input type="text" class="input-sm form-control"  name="fechaFinMisVisita" id="fechaFinMisVisita" />
+					</div>
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+	<br>
+	<div class="col-md-2">
+		<button id="filtrarMisVisitas" class="btn btn-success btn-sm" style="width: 80%">
+			<i class="fa fa-search"></i> Filtrar
+		</button>
+	</div>
+
+	<div class="col-md-2">
+		<button id="" onclick="location.href='/listarvisitas'" class="btn btn-primary btn-sm" style="width: 80%; margin-left: -30%;">
+			<i class="fa fa-refresh"></i> Ver todo
+		</button>
+	</div>
+
+	<br><br>
+
+
 		<!--CAPACITACION-->
 		<div class="panel panel-warning">
 		  <div class="panel-heading">Capacitación</div>
