@@ -49,7 +49,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6" id="divselectcontrato">
             <p id="errorcontrato" class="text-danger" style="font-size: 14px;"></p>
             <div class="form-group"  style="display: none" id="divcontratovis">
               <label for="tipovisita">Seleccione el Contrato</label>
@@ -81,12 +81,12 @@
             <p id="errorhoras2" class="text-danger" style="font-size: 14px;"></p>
             <div class="form-group col-md-6">
                <label for="">Fecha y hora inicio</label>
-               <input type="datetime-local" class="form-control" id="horainicio" name="horainicio" onblur="Calcular()" step="3600">
+               <input type="datetime-local" class="form-control" id="horainicio" name="horainicio" onblur="Calcular()">
             </div>
 
             <div class="form-group col-md-6">
                <label for="">Fecha y hora fin</label>
-               <input type="datetime-local" class="form-control" id="horafin" name="horafin" onblur="Calcular()" step="3600">
+               <input type="datetime-local" class="form-control" id="horafin" name="horafin" onblur="Calcular()">
 
                <input type="hidden" value="" id="oculto" name="oculto">
 

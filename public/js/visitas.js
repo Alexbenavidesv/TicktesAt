@@ -66,6 +66,7 @@ $(document).ready(function() {
             $('#divhorasing').css("display", "none");
             $('#visfechahora').css("display", "none");
             $('#divcontratovis').css('display', 'none');
+            $('#divselectcontrato').css('display', 'none');
         }
 
         if (tipovis == 'Capacitación') {
@@ -80,6 +81,7 @@ $(document).ready(function() {
             $('#divcualquiera').css("display", "none");
             $('#otrodiv').css("display", "none");
             $('#visfechahora').css("display", "none");
+            $('#divcontratovis').css('display', 'block');
         }
     });
 });
@@ -186,9 +188,13 @@ function Calcular(){
     var fecha2 = moment($('#horafin').val());
     var disponibles = $('#disponible').val();
 
-    var diferencia = fecha2.diff(fecha1, "hours");
+    var diferencia = fecha2.diff(fecha1, "minutes");
+
+    diferencia = diferencia/60;
 
     $('#oculto').val(diferencia);
+
+    console.log(diferencia);
 }
 
 
