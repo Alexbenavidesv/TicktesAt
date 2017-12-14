@@ -933,4 +933,29 @@ $modulos=Modulos::all();
 
         return view('reasignar', compact('tickets','areas','consultores'));
     }
+
+
+    public function asignarMultiple(Request $request)
+    {
+        Validator::make($request->all(),
+            [
+                'prioridad' => 'required',
+                'consultor' => 'required',
+                'tipo' => 'required',
+            ],
+            [
+                'prioridad.required' => 'Debes escoger una prioridad',
+                'consultor.required' => 'Debes escoger un consultor',
+                'tipo.required' => 'Debes escoger un tipo',
+            ]
+        )->validate();
+
+        foreach ($request->tickets as $id_ticket) {
+            Ticket::where('id', $id_ticket)
+                ->update(['prioridad' => $request->prioridad, 'id_consultor' => $request->consultor, 'tipo' => $request->tipo, 'estado' => 0]);
+        }
+        return "OK";
+    }
+
+
 }

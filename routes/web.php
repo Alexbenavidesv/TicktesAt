@@ -44,6 +44,7 @@ Route::get('consultartickets', 'TicketController@listarTickes')->middleware('aut
 Route::get('filtrar_tickets','TicketController@filtros')->middleware('auth','sesion');
 Route::get('filtrar_tickets2','TicketController@filtros2')->middleware('auth','sesion', 'root');
 Route::post('asignarTicket','TicketController@asignar')->middleware('auth','sesion', 'rootconsultor');
+Route::post('asignarTicketMultiple','TicketController@asignarMultiple')->middleware('auth','sesion', 'root');
 Route::get('reabrir_ticket/{id}','TicketController@reabrir')->middleware('auth','sesion','root');
 Route::get('tickets_reasignar','TicketController@lista_reasignar')->middleware('auth','sesion','rootconsultor');
 Route::get('consultarticketsna', 'TicketController@ticketsNoAsignados')->middleware('auth','sesion', 'rootconsultor');

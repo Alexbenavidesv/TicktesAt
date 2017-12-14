@@ -402,13 +402,12 @@
 </script>
 
 <script>window.jQuery || document.write('<script src="{{ asset("js/jquery2.0.3.min.js")}}"><\/script>')</script>
-<!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script>-->
+ <!--<script src="{{ asset('js/bootstrap.min.js') }}"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.0/sweetalert2.min.js"></script>
 <script src="{{ asset('js/Moment.js') }}"></script>
 <script src="{{ asset('js/usuarios.js') }}"></script>
 <script src="{{ asset('js/ticket.js') }}"></script>
 <script src="{{ asset('js/empresa.js') }}"></script>
-<script src="{{ asset('js/asignar.js') }}"></script>
 <script src="{{ asset('js/inicio.js') }}"></script>
 <script src="{{ asset('js/guardartickets.js') }}"></script>
 <script src="{{ asset('js/editarempresa1.js') }}"></script>
