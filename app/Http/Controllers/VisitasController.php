@@ -227,6 +227,57 @@ class VisitasController extends Controller
         return view('listadovisitas', compact('capacitacion', 'consultoria', 'presentacion', 'soporte'));
     }
 
+
+    public function filtroMisVisitas(Request $request){
+
+        $fechas=array();
+
+        $fechas[]=$request->fechaInicioMisVisita;
+        $fechas[]=$request->fechaFinMisVisita;
+
+        if(count($fechas)==2){
+            $tipo1='Capacitación';
+            $tipo2='Consultoría';
+            $tipo3='Presentación';
+            $tipo4='Soporte';
+
+            $capacitacion = Visita::where('visitas.tipo', $tipo1)
+                ->rango($fechas)
+                ->join('empresa', 'visitas.id_empresa', 'empresa.id')
+                ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+                ->where('consultores.id', Auth::user()->id)
+                ->join('modulos', 'visitas.id_modulo', 'modulos.id')
+                ->select('visitas.id', 'visitas.lugar', 'visitas.fecha', 'empresa.nombre AS empresa', 'consultores.nombre AS consultor', 'modulos.nombre AS modulo', 'visitas.fechainicio', 'visitas.fechafin', 'visitas.duracion')
+                ->get();
+
+            $consultoria = Visita::where('visitas.tipo', $tipo2)
+                ->rango($fechas)
+                ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+                ->where('consultores.id', Auth::user()->id)
+                ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha', 'visitas.motivovisita', 'visitas.recoleccion', 'visitas.cliente', 'visitas.telefono', 'visitas.satisfaccion', 'consultores.nombre AS consultor', 'visitas.estado')
+                ->get();
+
+            $presentacion = Visita::where('visitas.tipo', $tipo3)
+                ->rango($fechas)
+                ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+                ->where('consultores.id', Auth::user()->id)
+                ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fecha', 'visitas.motivovisita', 'visitas.recoleccion', 'visitas.cliente', 'visitas.telefono', 'visitas.satisfaccion', 'consultores.nombre AS consultor', 'visitas.estado')
+                ->get();
+
+            $soporte = Visita::where('visitas.tipo', $tipo4)
+                ->rango($fechas)
+                ->join('empresa', 'visitas.id_empresa', 'empresa.id')
+                ->join('consultores', 'visitas.id_consultor', 'consultores.id')
+                ->where('consultores.id', Auth::user()->id)
+                ->select('visitas.id', 'visitas.tipo', 'visitas.lugar', 'visitas.fechainicio', 'visitas.fechafin', 'visitas.duracion', 'visitas.motivovisita', 'visitas.recoleccion','empresa.nombre AS empresa', 'consultores.nombre AS consultor')
+                ->get();
+
+            return view('listadovisitas', compact('capacitacion', 'consultoria', 'presentacion', 'soporte'));
+        }
+
+	}
+
+
     public function verPdf($id){
         //dd($id);
         $visita = Visita::where('visitas.id', $id)

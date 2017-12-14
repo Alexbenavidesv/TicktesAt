@@ -250,3 +250,13 @@ $('#filtrarVisitas').click(function () {
    }
 
 });
+
+$('#filtrarMisVisitas').click(function () {
+    var inicio=$('#fechaInicioMisVisita').val();
+    var fin=$('#fechaFinMinVisita').val();
+
+    if(inicio!='' && fin!=''){
+        $('#filtroMisVisitas').submit();
+    }
+
+});
