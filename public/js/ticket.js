@@ -134,7 +134,7 @@ $('#filtrar').click(function (event) {
 
 //alert("numero="+numero+"Prioridad="+prioridad_+"COnsultor="+consultor_+"Estado="+estado+"empresa="+empresa+"Tipo="+tipo_+"Modulo="+modulo_+"Inicio="+inicio+"Fin="+fin_);
 
-    if(numero!=0 || prioridad_!=null || consultor_!=null || estado!=null || empresa!=null || tipo_!=null || modulo_!=null || inicio!='' || fin_!=''){
+    if(numero!=0 || prioridad_!=null || consultor_!=null || estado!=null || empresa!=null || tipo_!=null || modulo_!=null || (inicio!='' && fin_!='')){
         $('#formFiltros').submit();
 	}else{
         event.preventDefault();

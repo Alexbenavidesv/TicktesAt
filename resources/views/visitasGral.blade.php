@@ -6,7 +6,49 @@
 
 @section('content')
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main block-center">
-	<h1 class="text-center">Listado de Visitas General</h1><br>
+	<h1 style="margin-top:-1.2%" class="text-center">Listado de visitas general</h1><br>
+
+<div>
+	<form action="/filtroVisitas" method="get" id="filtroVisitas">
+		<div class="row text-center">
+			<div class="col-md-2">
+				<label for=""><i class="fa fa-user"></i> Consultor</label>
+				<select name="consultorVisita_[]" id="filtroConsultorVisita" class="form-control input-sm consultorSelect consultorSelect1" style="width: 100%">
+					<option value="">Seleccione ...</option>
+					@foreach($consultores as $consultor)
+						<option value="{{$consultor->id}}">{{$consultor->nombre}}</option>
+					@endforeach
+				</select>
+			</div>
+
+
+			<div class="col-md-3">
+				<label for=""><i class="fa fa-calendar"></i> Fechas</label>
+				<div class="input-daterange input-group" id="rangoFecha">
+					<input type="text" class="input-sm form-control"  name="fechaInicioVisita" id="fechaInicioVisita" />
+					<span class="input-group-addon">A</span>
+					<input type="text" class="input-sm form-control"  name="fechaFinVisita" id="fechaFinVisita" />
+				</div>
+			</div>
+
+		</div>
+	</form>
+</div>
+	<br>
+	<div class="col-md-2">
+	<button id="filtrarVisitas" class="btn btn-success btn-sm" style="width: 80%">
+	<i class="fa fa-search"></i> Filtrar
+	</button>
+	</div>
+
+	<div class="col-md-2">
+	<button id="" onclick="location.href='/listarvisitasgrl'" class="btn btn-primary btn-sm" style="width: 80%; margin-left: -30%;">
+	<i class="fa fa-refresh"></i> Ver todo
+	</button>
+	</div>
+
+	<br><br>
+
 		<!--CAPACITACION-->
 		<div class="panel panel-warning">
 		  <div class="panel-heading">Capacitación</div>
@@ -63,7 +105,7 @@
 			  		<th>Fecha</th>
 			  		<th>Empresa prospecto</th>
 			  		<th>Telefono prospecto</th>
-			  		<th>Interez</th>
+			  		<th>Interes</th>
 			  		<th>Consultor</th>
 			  		<th>Controles</th>
 			  	</tr>
@@ -144,7 +186,7 @@
 			  		<th>Fecha</th>
 			  		<th>Empresa prospecto</th>
 			  		<th>Telefono prospecto</th>
-			  		<th>Interez</th>
+			  		<th>Interes</th>
 			  		<th>Consultor</th>
 			  		<th>Controles</th>
 			  	</tr>

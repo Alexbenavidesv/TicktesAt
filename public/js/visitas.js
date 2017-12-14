@@ -239,3 +239,14 @@ function finalizar(id){
 
     
 }
+
+$('#filtrarVisitas').click(function () {
+   var consultores=$('#filtroConsultorVisita').val();
+   var inicio=$('#fechaInicioVisita').val();
+   var fin=$('#fechaFinVisita').val();
+
+   if(consultores!=null || (inicio!='' && fin!='')){
+       $('#filtroVisitas').submit();
+   }
+
+});
