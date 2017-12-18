@@ -657,6 +657,7 @@ class TicketController extends Controller
 
     public function filtros(Request $request)
     {
+
         if ($request->prioridad_ != '' || $request->consultor_ != '' || $request->estado != ''  || $request->empresa!='' ||
             $request->tipo_!='' || $request->numero!='' || $request->modulo_!='' || $request->filtroFechaInicio!='' ||
             $request->filtroFechaFin!='') {
