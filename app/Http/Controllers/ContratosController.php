@@ -96,14 +96,14 @@ class ContratosController extends Controller
     }
 
     public function guardarContrato(Request $request){
-        $validar = Contratos::join('empresa', 'contrato.id_empresa', 'empresa.id')
+       /* $validar = Contratos::join('empresa', 'contrato.id_empresa', 'empresa.id')
         ->where('empresa.id', $request->empresa)
         ->get();
 
         //dd($validar);
         if (count($validar)>0) {
             return 'no';
-        }else{
+        }else{    */
             DB::beginTransaction();
 
             try {
@@ -135,7 +135,7 @@ class ContratosController extends Controller
                 DB::rollback();
             }
             return 'ok';
-        }
+       // }
     }
 
 

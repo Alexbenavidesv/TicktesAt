@@ -113,7 +113,7 @@ $('#guardarContrato').click(function(event) {
                   $(location).attr('href', url);
             }else {
                 swal({
-                  title: "La empresa tiene un contrato activo actualmente",
+                  title: "Ha ocurrido un errors",
                   type: "error",
                   confirmButtonText: "Ok",
                   closeOnConfirm: true
