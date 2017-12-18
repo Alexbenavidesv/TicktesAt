@@ -681,10 +681,9 @@ $modulos=Modulos::all();
                 ->where('users.id', $iduser)
                 ->select('roles.nombre')
                 ->get();
-            //dd($consulta);
+
             $rol = $consulta[0]->nombre;
 
-            //dd($rol);
 
             if ($rol == 'Root') {
                 $tickets = Ticket::numero($request->numero)

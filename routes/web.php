@@ -70,6 +70,8 @@ Route::get('evidenciaVisita/{id}', 'VisitasController@evidencia')->middleware('a
 Route::post('guardarEvidenciaVisita', 'VisitasController@guardarEvidencia')->middleware('auth','sesion', 'rootconsultor');
 Route::get('descargar/{parametro}', 'VisitasController@descargar')->middleware('auth','sesion', 'rootconsultor');
 Route::get('listarvisitasgrl', 'VisitasController@listGeneral')->middleware('auth','sesion', 'root');
+Route::get('filtroVisitas', 'VisitasController@filtroVisitas')->middleware('auth','sesion', 'root');
+Route::get('filtroMisVisitas', 'VisitasController@filtroMisVisitas')->middleware('auth','sesion', 'root');
 
 Route::get('llamrContratros/{id}', 'VisitasController@contratos');
 Route::get('llamarModulos/{id}', 'VisitasController@Modulos');
