@@ -10,7 +10,7 @@ $('#guardar').click(function(e){
 		headers: {'X-CSRF-TOKEN':tokken},
 	    data: datos,
 	    contentType: false,
-	    processData: false,
+        processData: false,
 		success: function(res){
 			if (res!=null) {
 				var url = window.location.href;
@@ -240,7 +240,6 @@ $('#multipleAsignacion').click(function () {
 	$('#cancelarMultiple').css('display','');
 	$('.checkMultiple').css('display','');
     $('#crearAsignacionMultiple').css('display','');
-
 });
 
 $('#cancelarMultiple').click(function () {
@@ -274,7 +273,6 @@ $('.checkMultiple').change(function() {
     else{
 		var pos=ticktesMultiples.indexOf(dato);
         ticktesMultiples.splice(pos,1);
-
 	}
 });
 
