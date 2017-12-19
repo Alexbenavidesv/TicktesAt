@@ -70,7 +70,7 @@
             </a>
 
             @if(Auth::user()->id_rol==1)
-                <a href="/filtrar_tickets?consultor_[]=1&filtroFechaInicio={{$fechaInicio}}&filtroFechaFin={{$fechaFin}}">
+                <a href="/filtrar_tickets?consultor_[]=1&estado[]=0&estado[]=2&estado[]=3&filtroFechaInicio={{$fechaInicio}}&filtroFechaFin={{$fechaFin}}">
                 <div class="col-md-2 alert alert-warning" style="margin-left: 2%;">
                 <h4> <i class="fa fa-user-times"></i> Sin asignar</h4>
                 <h3>{{count($sinAsignar)}}</h3>
@@ -130,8 +130,10 @@
 
             @foreach($consultores as $c)
                 @if($id_consultores[$i]!=1)
+                @endif
 
                 <?php
+                $noAsignados_=0;
                 $asignados=0;
                 $resueltos=0;
                 $pendientes=0;
@@ -184,8 +186,8 @@
                     </td>
 
                 </tr>
-                @endif
-            
+
+
                 <?php $i++; ?>
 
             @endforeach

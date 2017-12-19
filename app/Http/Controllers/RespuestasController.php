@@ -125,7 +125,7 @@ class RespuestasController extends Controller
 
             $ticket->prioridad = $request->prioridadTicket_;
             $ticket->id_consultor = $request->consultorNuevo_;
-            $ticket->tipo = 'Sin asignar';
+            $ticket->tipo = $request->tipoNuevoConsultor_;
         }
 
         $ticket->save();
