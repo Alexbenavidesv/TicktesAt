@@ -42,13 +42,15 @@ class TicketController extends Controller
                 ->get();
         }
 
-        $sinAsignar = Ticket::where('ticket.area', NULL)
+        $sinAsignar = Ticket::where('ticket.estado','!=',4)
+            ->where('ticket.area', NULL)
             ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
             ->where('respuesta.tipo', 'APERTURA')
             ->whereMonth('respuesta.fecha', $mesActual)
             ->join('consultores', 'ticket.id_consultor', 'consultores.id')
             ->where('consultores.id', 1)
             ->get();
+
 
         $porReasignar = Ticket::where('ticket.area', '!=', NULL)
             ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
@@ -837,7 +839,8 @@ $modulos=Modulos::all();
         $modulos=Modulos::all();
         $empresas=Empresa::all();
 
-        $tickets = Ticket::join('users', 'ticket.id_user', 'users.id')
+        $tickets = Ticket::where('ticket.estado', '!=', 1)
+                ->join('users', 'ticket.id_user', 'users.id')
                 ->join('empresa', 'users.id_empresa', 'empresa.id')
                 ->join('respuesta', 'ticket.id', 'respuesta.id_ticket')
                 ->where('respuesta.tipo', 'APERTURA')

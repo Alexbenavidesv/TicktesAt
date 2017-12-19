@@ -102,20 +102,32 @@
 
                 <div id="nuevoConsultor" style="display: none">
                     <br>
-                    <label for="">Seleccione el consultor</label>
-                    <select name="consultorNuevo_" id="consultorNuevo_" class="form-control" style="width: 70%">
+                    <label for="">Seleccione el consultor</label><br>
+                    <select name="consultorNuevo_" id="consultorNuevo_" class="form-control consultorSelect" style="width: 70%">
                         @foreach($consultores as $consultor)
                             <option value="{{$consultor->id}}">{{$consultor->nombre}}</option>
                         @endforeach
                     </select>
-                    <br>
+                    <br><br>
 
                     <label for="">Prioridad</label><br>
                     <select name="prioridadTicket_" id="prioridadTicket_" class="form-control" style="width: 70%">
                         <option value="Baja">Baja</option>
                         <option value="Media">Media</option>
                         <option value="Alta">Alta</option>
+                    </select><br>
+
+                    <label for="">Tipo</label><br>
+                   <select name="tipoNuevoConsultor_" id="tipoNuevoConsultor_" class="tipoSelect" style="width: 70%">
+                        <option value="">Selecciona el tipo...</option>
+                        <option value="Soporte">Soporte</option>
+                        <option value="Desarrollo">Desarrollo</option>
+                        <option value="Presentación">Presentación</option>
+                        <option value="Reporte">Reporte</option>
+                        <option value="Capacitación">Capacitación</option>
+                        <option value="Instalación">Instalación</option>
                     </select>
+
 
                 </div>
             @endif
