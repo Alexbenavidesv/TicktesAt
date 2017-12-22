@@ -62,6 +62,15 @@
             </div>
             </a>
 
+
+            <a href="/filtrar_tickets?estado[]=3&filtroFechaInicio={{$fechaInicio}}&filtroFechaFin={{$fechaFin}}">
+                <div class="col-md-2 alert alert-info " style="margin-left: 2%;">
+                    <h4> <i class="fa fa-clock-o"></i> Por confirmar </h4>
+                    <h3>{{count($ticketsPorConfirmar)}}</h3>
+                </div>
+            </a>
+
+
             <a href="/filtrar_tickets?estado[]=0&estado[]=2&estado[]=3&filtroFechaInicio={{$fechaInicio}}&filtroFechaFin={{$fechaFin}}">
             <div class="col-md-2 alert alert-danger " style="margin-left: 2%;">
                 <h4> <i class="fa fa-hourglass-half"></i> Por resolver </h4>
@@ -111,26 +120,32 @@
             $consultores=array();
             $id_consultores1=array();
             $id_consultores=array();
+
             foreach ($ticketsMesActual as $t){
                 $consultores1[]=$t->nombre;
                 $id_consultores1[]=$t->id_consultor;
             }
 
+
+
             $consultores1=array_unique($consultores1);
              foreach ($consultores1 as $aux){
                  $consultores[]=$aux;
              }
+
             $id_consultores1=array_unique($id_consultores1);
             foreach ($id_consultores1 as $aux){
                 $id_consultores[]=$aux;
             }
+
+
+
             $i=0;
             ?>
 
 
             @foreach($consultores as $c)
                 @if($id_consultores[$i]!=1)
-                @endif
 
                 <?php
                 $noAsignados_=0;
@@ -187,7 +202,7 @@
 
                 </tr>
 
-
+@endif
                 <?php $i++; ?>
 
             @endforeach
@@ -205,8 +220,12 @@
                     <td><i class="fa fa-calendar"></i> Mes</td>
                     <td><i class="fa fa-ticket"></i> Solicitados</td>
                     <td><i class="fa fa-check"></i> Resueltos</td>
+                    <td><i class="fa fa-clock-o"></i> Por confirmar</td>
                     <td><i class="fa fa-hourglass-half"></i> Por resolver</td>
-                @if(Auth::user()->id_rol==1)   <td><i class="fa fa-user-times"></i> Sin asignar</td> @endif
+                @if(Auth::user()->id_rol==1)   
+                    <td><i class="fa fa-user-times"></i> Sin asignar</td>
+                    <td><i class="fa fa-refresh"></i> Por reasignar</td>
+                 @endif
                     <td><i class="fa fa-check-circle"></i> Solucionado</td>
                 </tr>
 <?php $i=1;?>
@@ -276,12 +295,19 @@
                         </td>
 
                         <td>
+                            {{count($informes[4])}}
+                        </td>
+
+                        <td>
                             {{count($informes[2])}}
                         </td>
 
                         @if(Auth::user()->id_rol==1)
                         <td>
                             {{count($informes[3])}}
+                        </td>
+                        <td>
+                            {{count($informes[5])}}
                         </td>
                         @endif
 
